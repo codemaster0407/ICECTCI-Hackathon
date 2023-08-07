@@ -1,2 +1,3 @@
 # ICECTCI-Hackathon
-Creating an LLM.
+Creating an LLM for NVIDIA.
+
