@@ -1,4 +1,5 @@
 bitsandbytes
+huggingface_hub[cli,torch]
 git+https://github.com/huggingface/transformers.git@e03a9cc
 git+https://github.com/huggingface/peft.git@42a184f
 git+https://github.com/huggingface/accelerate.git@c9fbb71
@@ -10,3 +11,7 @@ pprint
 pandas
 locale
 rouge
+wandb
+seaborn
+matplotlib
+numpy 
