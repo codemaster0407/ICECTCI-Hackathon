@@ -1,0 +1,3 @@
+JetPack 3.2 with L4T R28.2 is the latest production software release for NVIDIA Jetson TX2, Jetson TX2i and Jetson TX1. It bundles all the Jetson platform software, including TensorRT, cuDNN, CUDA Toolkit, VisionWorks, GStreamer, and OpenCV, all built on top of L4T with LTS Linux kernel.
+Jetson TX2 is the fastest, most power-efficient AI computing device. The latest addition to the industry-leading Jetson platform, this 7.5-watt supercomputer on a module brings true AI computing at the edge.
+Updates for JetPack 3.2 include:Download now > 

@@ -1,0 +1,6 @@
+Researchers from Google’s DeepMind and the University of Oxford developed a deep learning system that outperformed a professional lip reader.
+Using a TITAN X GPU, CUDA and the TensorFlow deep learning framework, the team trained their models on over 100,000 sentences from nearly 5,000 hours of BBC programs. By looking at each speaker’s lips, the system accurately deciphered entire phrases, with examples including “We know there will be hundreds of journalists here as well” and “According to the latest figures from the Office of National Statistics”.
+The AI system annotated about 50% of the words without any errors, compared to the professional who annotated just 12.4%.
+
+“We believe that machine lip readers have enormous practical potential, with applications in improved hearing aids, silent dictation in public spaces (Siri will never have to hear your voice again) and speech recognition in noisy environments,” says Yannis Assael, who is working on a similar deep learning system called LipNet which is being trained on an NVIDIA DGX Station.
+Read more >

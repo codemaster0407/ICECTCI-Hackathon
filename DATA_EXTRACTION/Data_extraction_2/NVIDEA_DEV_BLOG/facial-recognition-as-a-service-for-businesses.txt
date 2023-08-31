@@ -1,0 +1,7 @@
+Russia’s NTechLab, one of the world’s leading facial recognition companies, released a new product called FindFace.Pro that allows businesses to easily integrate their cloud-based REST API into existing products.
+NVIDIA products are used extensively in the technology. The team is using CUDA, GeForce GTX 1080 GPUs, TITAN X GPUs and cuDNN-accelerated deep learning frameworks to train their models and then leverage GPUs in the Amazon cloud for the inference (production) portion.
+“Fast and accurate algorithms are crucial here, as they are able to search through the huge dataset of photos in real time,” said cofounder and CEO Alexander Kabakov.
+Target companies for the product are those that run malls, concert venues, casinos, or any place where many people congregate and there are advantages to being able to track them individually.
+
+A major music festival recently tested the service to supply attendees with photos of themselves from the event – attendees sent a selfie to a bot and it sorted through the official photos looking for their face.
+Read more >

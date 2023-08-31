@@ -1,0 +1,10 @@
+At this week’s Computer Vision and Pattern Recognition conference in Honolulu, NVIDIA CEO Jensen Huang surprised a group of elite deep learning researchers at CVPR to unveil the NVIDIA Tesla V100, our latest GPU, based on our Volta architecture, by presenting it to 15 participants in our NVIDIA AI Labs program.
+“AI is the most powerful technology force that we have ever known,” said Jensen, clad in a short sleeve dress shirt, white jeans and vans, or what he called his “aloha uniform.”
+“I’ve seen everything. I’ve seen the coming and going of the client-server revolution. I’ve seen the coming and going of the PC revolution. Absolutely nothing compares,” he said.
+NVIDIA CEO Jensen Huang presented NVIDIA Tesla V100s to 15 participants in our NVIDIA AI Labs program Saturday evening at the CVPR conference in Honolulu.
+One of the researchers, Silvio Savarese, an associate professor of computer science at Stanford University and director of the school’s SAIL-Toyota Center for AI Research, likened the signed V100 box to a bottle of fine wine.
+He said the V100 would be used for new research on autonomous driving and virtual reality, among other areas.
+“Everything is powered by deep learning,” said Savarese. “We can do things we’ve never done before.”
+Volta, our seventh-generation GPU architecture, provides a 5x improvement in peak teraflops over its predecessor Pascal, and 15x over the Maxwell architecture, launched just two years ago. This performance surpasses by 4x the improvements that Moore’s law would have predicted.
+It’s all supported by Volta-optimized software, including CUDA, cuDNN and TensorRT, which frameworks and applications can easily tap into to accelerate AI and research.
+Read more >

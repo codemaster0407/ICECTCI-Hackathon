@@ -1,0 +1,370 @@
+Configuration
+Kit comes with a very rich and flexible configuration system based on Carbonite settings. Settings is a runtime representation of typical configuration formats (like json, toml, xml), and is basically a nested dictionary of values.
+
+Quick Start
+When you run a kit executable, it doesn’t load any kit app file:
+> kit.exe
+That will start kit and exit, without enabling any extensions or applying any configuration, except for the built-in config: kit-core.json.
+
+Note
+To see all flags call > kit.exe -h
+
+To see default kit settings pass --/app/printConfig=true:
+> kit.exe --/app/printConfig=true
+That will print all settings. This syntax --/ is used to apply settings from the command line. Any setting can be modified in this way. You may notice that the config it printed includes app/printConfig. You can try adding your own settings to the command line and observing them in the printed config to prove yourself that it works as expected.
+Another useful flag to learn early is -v to enable info logging or -vv to enable verbose logging. There are settings to control logging more precisely, but this is an easy way to get more logging in console and debug startup routine.
+> kit.exe -v
+To make kit do something let’s enable some extensions:
+> kit.exe --enable omni.kit.window.script_editor
+That enables a script editor extension. You may also notice that it enabled a few extensions that it depends on. You can stack multiple --enable keywords to enable more extensions.
+You can also add more folders to search in more for extensions with --ext-folder:
+> kit.exe --enable omni.kit.window.script_editor --ext-folder ./exts --enable foo.bar
+That enables you to create e.g exts/foo.bar/extension.toml and start hacking on your own extension right away.
+Those flags, like --enable, --ext-folder and many others are just shorthand for commonly-used settings. For example, they just append to /app/exts/enabled and /app/exts/folders arrays respectively.
+
+
+Application Config
+Settings can also be applied by passing a configuration file as a positional argument to Kit:
+> kit.exe my.toml
+This kind of config file becomes the “Application config”. It receives special treatment from Kit:
+
+The config name becomes application name.
+Separate data, documents and cache folders are created for applications.
+The Folder where this config exists located becomes the application path.
+
+This allows you to build separate applications with their own data and behavior.
+
+
+Kit File
+A Kit file is the recommended way to configure applications.
+> kit.exe my.kit
+Kit files are single-file extensions (basically renamed extension.toml files). Only the [settings] part of them is applied to settings (as with any extension). Here is an example:
+[package]
+title = "My Script Editor App"
+version = "0.1.0"
+keywords = ["app"]
+
+[dependencies]
+"omni.kit.window.script_editor" = {}
+
+[settings]
+foo.bar = "123"
+
+exts."omni.kit.window.script_editor".windowOpenByDefault = true
+
+
+As with any extension, it can be named, versioned and even published to the registry. It defines dependencies in the same format to pull in additional extensions.
+Notice that the setting windowOpenByDefault of the script editor extension is being overridden. Any extension can define its own settings and a guideline is to put them in the extension.toml file of the extension. Check the extension.toml file for omni.kit.window.script_editor. Another guideline is to use the root exts namespace and the name of extension next.
+The goal of the .kit file is to bridge the gap between settings and extensions and have one file that the user can click to run Kit-based application (e.g. if .kit file extensions are associated with kit.exe in the OS).
+
+
+System Configs
+You can create system wide configuration files to override any setting. There are few places to put them:
+
+${shared_documents}/user.toml - To override settings of any kit application in the shared documents folder, typically in (on Windows): C:\Users\[username]\Documents\Kit\shared\user.toml
+${app_documents}/user.toml - To override settings of particular application in the application documents folder, typically in: C:\Users\[username]\Documents\Kit\apps\[app_name]\user.toml
+<app .kit file>\<0 or more levels above>\deps\user.toml - To override settings of any kit application locally, near the application .kit file. Only in portable mode.
+<app .kit file>\<0 or more levels above>\deps\[app_name]\user.toml - To override settings of particular application locally, near the application .kit file. Only in portable mode.
+${shared_program_data}/kit.config.toml - To override settings of any kit application in the shared program data, typically in (on Windows): %PROGRAMDATA%/NVIDIA Corporation/Kit/kit.config.toml
+${app_program_data}/kit.config.toml - To override settings of particular application in the application program data, typically in (on Windows): %PROGRAMDATA%/NVIDIA Corporation/Kit/[app name]/kit.config.toml
+
+To find the path of these folders on your system, you can run Kit with info logging enabled and look for Applied configs: and Non-existent configs: messages at the beginning. Also, Look for Tokens: list in the log. For more info: Tokens.
+
+
+Special Keys
+
+Appending Arrays
+When configs are merged, one value can override another. Sometimes we want to append values for arrays instead of override. For this, use the special ++ key. For example, to add additional extension folders to the /app/folders setting, you can write:
+[app.exts]
+folders."++" = ["c:/temp"]
+
+
+You can put that for instance in user.toml described above to add more extension folder search paths.
+
+
+Importing Other Configs
+You can use the @import@ key to import other config files in that location:
+[foo]
+"@import@": ["./some.toml"],
+
+
+That will import the config some.toml under the key foo. The ./ syntax implies a relative path, and that the config file is in the same folder.
+
+
+
+Portable Mode
+A regular kit-based app installation sets and uses system wide data, cache, logs folders. It also reads the global Omniverse config in a known system-specific location. To know which folders are being used, you can look at tokens, like ${data}, ${cache}, ${logs}. They can be found at the beginning of each log file.
+Kit based apps can also run in a portable mode, using a specified folder as a root for all of those folders. Useful for developers. Local builds by default run in portable mode. There are a few different ways to run kit in portable mode:
+
+Cmd Args
+Pass --portable to run kit in portable mode and optionally pass --portable-root [path] to specify the location of the portable root.
+
+
+Portable Configs (Markers)
+Kit looks for the following configs that force it to run in portable mode. It reads the content of a file if it finds one, and treats it as a path. If a path is relative - it is relative to this config folder. The priority of search is:
+
+App portable config, e.g. foo.portable near foo.kit when run with: kit.exe foo.kit
+Kit portable config near experience, e.g. kit.portable near foo.kit when run with: kit.exe foo.kit
+Kit portable config near kit.exe, e.g. kit.portable near kit.exe
+
+
+
+
+Changing Settings With Command Line
+Any setting can be changed via command line using --/ prefix:
+> kit.exe --/[path/to/setting]=[value]
+Path to setting is separated by / and prefixed by --/.
+For example, if the required option is ignoreUnsavedOnExit as shown in the printed JSON configuration:
+<ISettings root>:
+{
+    "app": {
+        "hangDetector": {
+            "enabled": false,
+            "timeout": 120
+        },
+        "file": {
+            "ignoreUnsavedOnExit": false,
+            ...
+        },
+        ...
+    },
+    ...
+}
+
+
+To change the value of ignoreUnsavedOnExit to true, you need to add --/app/file/ignoreUnsavedOnExit=true to the command line:
+> kit.exe --/app/file/ignoreUnsavedOnExit=true
+To specify a boolean value, true and false strings must be used.
+
+Note
+
+The values are case-insensitive and using --/some/path/to/parameter=false or --/some/path/to/parameter=FaLsE produces the same result
+If you need to set the string value "true" or "false" escape it with double quotes: --/some/path/to/text_parameter=\"false\"
+It is also possible to use --/some/path/to/parameter=0 or --/some/path/to/parameter=1 to set a setting to true or false correspondingly. In this case the actual value in the settings will be an integer, but functions working with settings will correctly convert it to a boolean.
+
+
+Setting a numeric or string value is straightforward:
+> kit.exe --/some/number=7 --/another/number=1.5 --/some/string=test
+If you need to set a string value that can be parsed as a number or a boolean - or if the string value contains whitespaces - use double quotes to escape it:
+> kit.exe --/sets/string/value=\"7\" --/sets/string/with/whitespaces=\"string with spaces\"
+
+Note
+Do not forget to escape the quotes so that the OS doesn’t remove them.
+
+
+Changing an array value with command line
+To set an array value you can:
+
+Specify individual array elements by adding their index in the array at the end of the path to the value:
+
+for example, > kit.exe --/some/array/1=17 will change
+...
+"some": {
+    "array" : [1, 2, 3],
+},
+...
+
+
+into
+...
+"some": {
+    "array" : [1, 17, 3],
+},
+...
+
+
+
+Specify all array elements in the form [value0,value1,...]:
+
+for example, > kit.exe --/some/array=[8,11] replaces
+...
+"some": {
+    "array" : [1, 2, 3],
+},
+...
+
+
+with
+...
+"some": {
+    "array" : [8, 11],
+},
+...
+
+
+
+Note
+You can use whitespace in the square brackets ([val0,  val1, val2]), if you escape the whole expression with double quotes, in order to prevent the OS from separating it into several command line arguments:
+> kit.exe --/some/array="[ 8,  11]"
+
+It is also possible to assign a proper JSON as a parameter value:
+> kit.exe --/my/json/param={\"num\":1,\"str\":\"test\",\"arr\":[1,2,3],\"obj\":{\"info\":42}} results in
+...
+"my": {
+    "json" : {
+        "param" : {
+            "num": 1,
+            "str": "test",
+            "arr": [
+                1,
+                2,
+                3
+            ],
+            "obj": {
+                "info": 42
+            }
+        }
+    }
+},
+...
+
+
+
+
+
+Passing Command Line arguments to extensions
+Kit ignores all command line arguments after --. It also writes those into the /app/cmdLineUnprocessedArgs setting. Extensions can use this setting to access them and process as they wish.
+
+
+Code Examples
+
+Get Setting
+# Settings/Get Setting
+import carb.settings
+
+settings = carb.settings.get_settings()
+
+# get a string
+print(settings.get("/log/file"))
+
+# get an array (tuple)
+print(settings.get("/app/exts/folders"))
+
+# get an array element syntax:
+print(settings.get("/app/exts/folders/0"))
+
+# get a whole dictionary
+exts = settings.get("/app/exts")
+print(exts)
+print(exts["folders"])
+
+# get `None` if doesn't exist
+print(settings.get("/app/DOES_NOT_EXIST_1111"))
+
+
+
+
+Set Setting
+# Settings/Set Setting
+import carb.settings
+
+settings = carb.settings.get_settings()
+
+# set different types into different keys
+# guideline: each extension puts settings in /ext/[ext name]/ and lists them extension.toml for discoverability
+settings.set("/exts/your.ext.name/test/value_int", 23)
+settings.set("/exts/your.ext.name/test/value_float", 502.45)
+settings.set("/exts/your.ext.name/test/value_bool", False)
+settings.set("/exts/your.ext.name/test/value_str", "summer")
+settings.set("/exts/your.ext.name/test/value_array", [9,13,17,21])
+settings.set("/exts/your.ext.name/test/value_dict", { "a": 2, "b": "winter"})
+
+# print all:
+print(settings.get("/exts/your.ext.name/test"))
+
+
+
+
+Set Persistent Setting
+# Settings/Set Persistent Setting
+import carb.settings
+
+settings = carb.settings.get_settings()
+
+# all settings stored under "/persistent" saved between sessions
+# run that snippet again after restarting an app to see that value is still there:
+key = "/persistent/exts/your.ext.name/test/value"
+print("{}: {}".format(key, settings.get(key)))
+settings.set(key, "string from previous session")
+
+# Below is a setting with location of a file where persistent settings are stored.
+# To reset settings: delete it or run kit with `--reset-user`
+print("persistent settings are stored in: {}".format(settings.get("/app/userConfigPath")))
+
+
+
+
+
+Subscribe To Setting Changes
+# Settings/Subscribe To Setting Changes
+import carb.settings
+import omni.kit.app
+
+settings = carb.settings.get_settings()
+
+def on_change(value, change_type: carb.settings.ChangeEventType):
+    print(value, change_type)
+
+# subscribe to value changes, returned object is subscription holder. To unsubscribe - destroy it.
+subscription1 = omni.kit.app.SettingChangeSubscription("/exts/your.ext.name/test/test/value", on_change)
+
+settings.set("/exts/your.ext.name/test/test/value", 23)
+settings.set("/exts/your.ext.name/test/test/value", "fall")
+settings.set("/exts/your.ext.name/test/test/value", None)
+settings.set("/exts/your.ext.name/test/test/value", 89)
+subscription1 = None # no more notifications
+settings.set("/exts/your.ext.name/test/test/value", 100)
+
+
+
+
+
+
+Kit Kernel Settings
+
+/app/enableStdoutOutput (default: true)
+Enable kernel standard output. E.g. when extension starts etc.
+
+
+/app/disableCmdArgs (default: false)
+Disable processing of any command line arguments.
+
+
+/app/printConfig (default: false)
+Print all settings on startup.
+
+
+/app/settings/persistent (default: true)
+Enable saving persistent settings (user.config.json). It autosaves changed persistent settings (/persistent namespace) each frame.
+
+
+/app/settings/loadUserConfig (default: true)
+Enable loading persistent settings (user.config.json) on startup.
+
+
+/app/hangDetector/enabled (default: false)
+Enable hang detector.
+
+
+/app/hangDetector/alwaysEnabled (default: false)
+It true ignore /app/hangDetector/disableReasons settings and keep hang detector always enabled. Normally it is disabled during startup and extensions can choose to disable it.
+
+
+/app/hangDetector/timeout (default: 120)
+Hang detector timeout to trigger (in seconds).
+
+
+/app/quitAfter (default: -1)
+Automatically quit app after X frames (if X is positive).
+
+
+/app/quitAfterMs (default: -1.0)
+Automatically quit app after X milliseconds (if X is positive).
+
+
+/app/fastShutdown (default: false)
+Do not perform full extension shutdown flow. Instead only let subscribers handle IApp shutdown event and terminate.
+
+
+/app/python/logSysStdOutput (default: true)
+Intercept and log all python standard output in carb logger (info level).

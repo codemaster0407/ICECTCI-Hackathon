@@ -1,0 +1,8 @@
+With 40 million monthly unique users, Houzz is leveraging deep learning technology to make it easier for people to discover and buy products and materials that inspire them.
+“People come to Houzz because they want to get everything they need to improve their homes in one place, from inspiration to execution,” said Alon Cohen, Houzz co-founder and president. “Visual Match makes it even easier for people to take action on inspiration, enabling them to view a photo in the Houzz app, tap a product in the photo that they love, and use View in My Room to see the product in their own space before purchasing.”
+The new tool was trained with CUDA, Tesla K40 GPUs and cuDNN on more than 11 million home photos on Houzz. The app then surfaces the furniture and décor that looks similar from the 6 million products available for purchase on the Houzz Marketplace.
+
+Earlier this year, Houzz introduced the View in My Room feature, which lets users place and see any product from the Houzz Marketplace in their own rooms.
+
+The new tool is available for desktop and in the free iOS and Android Houzz apps.
+Read more > 

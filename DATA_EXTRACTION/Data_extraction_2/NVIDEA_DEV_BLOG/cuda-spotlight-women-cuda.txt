@@ -1,0 +1,30 @@
+Today we are pleased to launch the new Women and CUDA website.We received a wide variety of entries from around the world, representing professors, students, researchers, scientists and domain experts. We had recognized several participants earlier as CUDA Spotlights, including Valerie Halyo of Princeton and Monica Syal of Advanced Rotorcraft Technology.CUDA Fellow Lorena Barba comments: “This is a good way to remind people that women write code, participate in open-source projects, and invent things. It’s important to make the technology world more attractive to female students.” Dr. Barba is an associate professor of Engineering and Applied Science at George Washington University.Congrats to the women on our inaugural Women and CUDA list:Sonia Lopez Alarcon, Rochester Institute of Technology | Heterogeneous Computing
+Rommie Amaro, University of California, San Diego | Biological Systems
+Michela Becchi, University of Missouri | GPU Virtualization
+Sunita Chandrasekaran, University of Houston | Scientific Applications
+Sara Falamaki, CSIRO | Image Processing
+Fernanda Foertter, Oak Ridge National Lab | Titan Supercomputer
+Buket Benek Gursoy, ICHEC | Computational Science
+Valerie Halyo, Princeton University | Large Hadron Collider
+Preetha Joy, NeST Software | Performance Optimization
+Charu Kalra, Northeastern University | Performance Optimization
+Elaine Kant, SciComp Inc. | Computational Finance
+Sara Maria Rubio Largo, University of Navarra | Physics
+Miriam Leeser, Northeastern University | Application Acceleration
+Tatyana Makhalova, Perm State National Research Univ. | Computational Modeling
+Janice McCarthy, Duke University | Genetics
+Anna Nelasa, Zaporozhye National Technical University | Number Theory
+Lena Oden, Fraunhofer ITWM | Distributed Computing
+Carla Osthoff, Lab Nacional de Computacao Cientifica | High-Performance Computing
+Maria Pantoja, Santa Clara University | Parallel Programming
+Fanny Nina Paravecino, Northeastern University | High-Performance Computing
+Kenia Picos, CITEDI-IPN | 3D Object Recognition
+Valentina Popescu, LAAS-CNRS Laboratory | Scientific Computing
+Meng Qi, National University of Singapore | Computational Geometry
+Bkhandari E. Ramovna, D. Mendeleyev University | Computational Chemistry
+Neelima B. Reddy, NMAMIT | GPU Optimizations
+Dhivya Sabapathy, IIT Madras | Biomedical Engineering
+Kate Stafford, University of California, San Francisco | Molecular Dynamics
+Monica Syal, Advanced Rotorcraft Technology | Flight Simulation
+Michela Taufer, University of Delaware | High-Performance Computing
+Mae Woods, University College | Human Genome 

@@ -1,0 +1,6 @@
+Hybridizer is a compiler from Altimesh that lets you program GPUs and other accelerators from C# code or .NET Assembly. Using decorated symbols to express parallelism, Hybridizer generates source code or binaries optimized for multicore CPUs and GPUs. In this blog post we illustrate the CUDA target.
+Using parallelization patterns such as Parallel.For, or by distributing parallel work explicitly as you would in CUDA, you can benefit from the compute horsepower of accelerators without learning all the details of their internal architecture. Here is a simple example using Parallel.For with a lambda.
+The Hybridizer Pipeline.
+You can debug and profile this code on the GPU using NVIDIA Nsight Visual Studio Edition. Hybridizer implements advanced C# features including virtual functions and generics.
+A new NVIDIA Developer Blog post by Altimesh, the creators of Hybridizer, demonstrates how you can accelerate your C# and .NET code and profile and debug it all within Visual Studio.
+Read more >

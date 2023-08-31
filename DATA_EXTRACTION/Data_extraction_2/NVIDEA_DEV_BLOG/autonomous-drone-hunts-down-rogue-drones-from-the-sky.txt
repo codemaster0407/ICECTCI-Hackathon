@@ -1,0 +1,7 @@
+Once it classifies the object, the Jetson-powered Airspace drone fires a tethered net to capture the other craft from the sky and safely returns it to its landing pad.
+Airspace is the only drone security solution capable of identifying, tracking, and autonomously removing rogue drones from the sky.
+The start-up is using GeForce GTX 1080 GPUs and DIGITS to train their deep learning model to detect anomalies in the sky and classify rogue drones. Once trained, the drone is equipped with an Jetson TX1 on-board, and uses VisionWorks, TensorRT and CUDA to classify and react to rogue drones in real-time.
+
+Airspace is positioning the drone for use by law enforcement, governments, and even baseball stadiums to protect the athletes and fans from unwanted intruders.
+Read more >
+ 

@@ -1,0 +1,9 @@
+Researchers from UCLA developed a deep learning approach that could quickly produce more accurate images to aid diagnostic medicine.
+In two related papers, the researchers used a GTX 1080 GPU and the cuDNN-accelerated TensorFlow deep learning framework to train their models.
+For the first study, the engineers used CUDA and the GPU-accelerated libraries cuFFT and Thrust to speed up the reconstruction of a hologram to form a microscopic image of an object, which are used to screen for cervical cancer, and blood samples.
+“These results are broadly applicable to any phase recovery and holographic imaging problem, and this deep-learning–based framework opens up myriad opportunities to design fundamentally new coherent imaging systems, spanning different parts of the electromagnetic spectrum, including visible wavelengths and even X-rays,” said Aydogan Ozcan, an associate director of the UCLA California NanoSystems Institute and the Chancellor’s Professor of Electrical and Computer Engineering at the UCLA Henry Samueli School of Engineering and Applied Science.
+“This is an exciting achievement since traditional physics-based hologram reconstruction methods have been replaced by a deep-learning–based computational approach,” said co-author and UCLA postdoctoral scholar Yair Rivenson.
+The other study used the same deep learning framework to improve the resolution and quality of optical microscopic images. The researchers trained their convolutional neural network on a set of low-resolution microscopy images their corresponding high-resolution labels.
+Architecture of their deep neural network trained for microscopic imaging.
+That advance could help diagnosticians or pathologists looking for very small-scale abnormalities in a large blood or tissue sample, and Ozcan said it represents the powerful opportunities for deep learning to improve optical microscopy for medical diagnostics and other fields in engineering and the sciences.
+Read more >

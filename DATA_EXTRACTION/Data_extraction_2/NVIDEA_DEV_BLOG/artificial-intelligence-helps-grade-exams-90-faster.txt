@@ -1,0 +1,11 @@
+Four UC Berkeley researchers developed a program to help grade papers during their time working as teaching assistants – and now, they’ve added artificial intelligence to their app to help instructors speed up the grading process.
+The team launched the online grading app Gradescope two years ago and have accumulated 10 million answers to around 100,000 questions from a wide range of college courses – the app has already shortened the grading process by 50 percent due to its friendly interface and the ability for multiple teaching assistants to grade papers in parallel.
+Their new AI features addresses three challenges: identify question types, distinguishing between different written marks, and recognizing handwriting.
+AI helps turn grading into an automated, highly repeatable exercise by learning to identify and group answers, and thus treat them as batches.
+The addition of AI promises to slash grading times by as much as 90 percent, said Sergey Karayev, a Gradescope co-founder who finished his PhD in computer science in 2014.
+“Traditionally, if you were to give a test to 100 students and they all write the correct answer, you would have to go through all 100 and mark them correct,” said Karayev. “With AI-assisted grading, you could grade one answer and it would apply to all 100 students.”
+
+To help with the complex feature for recognizing numerical, single-word, and single-line answers, the team used Tesla K40 and GeForce GTX 980 Ti GPUs along with CUDA and the cuDNN-accelerated TensorFlow deep learning framework to train their models. Down the road, they plan to apply the recognition feature to grade complex chemistry and engineering diagrams.
+Co-founder Pieter Abbeel, an associate professor of electrical engineering and computer science at Berkeley’s AI Lab, said he used an early version of the company’s AI-boosted grading feature for a computer science final given to more than 600 students and it cut grading time by 75 percent.
+The app is currently in beta testing and will become available this fall.
+Read more >>

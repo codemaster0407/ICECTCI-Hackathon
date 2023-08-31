@@ -1,0 +1,6 @@
+Home insurance quotes could become more accurate as a result of work by Palo Alto-based Cape Analytics, which raised $14 million to use computer vision and deep learning to improve automated property underwriting for insurance companies. 
+The company brings geo-imagery from satellites into its cloud-based platform, and then runs the images through their deep learning algorithms that are able to understand the image and extract structured data.
+Using CUDA, cuDNN and GPUs on the Amazon cloud to train the deep learning models, Cape Analytics is then able to detect the property condition, square footage, roof condition, solar panels and other details.
+Cape Analytics uses imagery and other data to assess houses.
+The investment will help scale the company’s platform to offer nationwide coverage, said Ryan Kottenstette, CEO and cofounder of Cape Analytics
+Read more>

@@ -1,0 +1,7 @@
+The Russian machine learning firm Tselina Data Lab developed a deep learning-based camera algorithm called Fraudoscope that detects lies on facial emotions.
+Trained with CUDA and TITAN X GPUs, the lie-detecting app uses a high-definition camera to observe an interrogation and decode the results. The camera focuses on the interviewee — the software maps changing pixels in the camera feed that correspond to breathing, pulse, pupil dilation, facial tics — and the work-in-progress already has a 75 percent accuracy rate.
+As with traditional polygraph tests, Fraudoscope requires a set of calibration questions with well-known answers and the interviewee is also asked to imagine they’ve just won an Olympic medal – as they make up their imaginary answer, the system learn to recognize the individual’s lie.
+
+The firm hopes one day the algorithm will be smart enough to not require calibration and if fed enough information, it may eventually be able to identify poker players and shoplifters from a glance.
+Read more >
+ 

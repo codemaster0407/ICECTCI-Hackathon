@@ -1,0 +1,6 @@
+A UK startup developed a deep learning-based platform that allows users to visualize new decorations and furniture in their own homes.
+Digital Bridge’s technology integrates into a home décor retailer’s website such as IKEA, Home Depot or John Lewis, and lets you take a photo of your room and remove furniture, wallpaper and other home décor, and replace them with items from a retailer’s catalogue.
+“We have built a computer vision and machine learning platform that allows a user to take a picture of their room with their phone and it automatically recognize the walls, floors, ceilings, objects and lighting conditions in those rooms,” says DigitalBridge founder David Levine whose team is using CUDA, TITAN X GPUs and cuDNN with the Caffe deep learning framework to train their models and then uses Tesla K80 GPUs on the Amazon cloud for the predictions. “We then allow the user to render wallpapers, carpets, paints, artwork and furniture in that room.”
+
+The startup makes money each time an end-user uploads a picture of their room via integrations with DigitalBridge’s API.
+Read more >

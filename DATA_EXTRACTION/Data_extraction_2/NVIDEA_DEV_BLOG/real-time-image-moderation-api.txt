@@ -1,0 +1,5 @@
+Artificial intelligence startup Sightengine developed image analysis technology to detect if images and videos contain offensive material, such as nudity, adult content or suggestive scenes.
+Using CUDA, Tesla K80s and cuDNN with the TensorFlow deep learning framework, the startup trained their deep learning models to determine whether or not an image is safe content and if it is appropriate to use as a profile image for social networking sites – similar to how human moderators would.
+
+Developers and businesses can use Sightengine’s content moderation API which achieves 99% accuracy, and is able to handle millions of images per day.
+Read more >

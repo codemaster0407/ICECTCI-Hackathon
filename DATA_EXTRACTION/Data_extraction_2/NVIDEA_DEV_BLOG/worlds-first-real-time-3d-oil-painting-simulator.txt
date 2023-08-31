@@ -1,0 +1,5 @@
+The painting and drawing tools most people use are 2D, but now a new project gives artists the ability to choose any brush they like, a limitless array of paint colors, and use the same natural twists and turns of the brush to create the rich textures of oil painting, all on a digital canvas.
+Delivering such a realistic, physically-based painting tool requires some heavy-duty computational power, so Adobe Research collaborated with NVIDIA to create the world’s first real-time simulation-based 3D painting system with bristle-level interactions entirely with CUDA. Adobe Researchers Zhili Chen and Byungmoon Kim originally developed Project Wetbrush in 2015, but and have collaborated with NVIDIA software experts to optimize their application performance, allowing them to add even more GPU-accelerated features to the system.
+
+This is just the beginning for the project. Using deep learning, some of the most computationally challenging physical simulations could potentially be added to create more responsive and realistic brush dynamics, or the system could even learn from itself.
+Read more >>

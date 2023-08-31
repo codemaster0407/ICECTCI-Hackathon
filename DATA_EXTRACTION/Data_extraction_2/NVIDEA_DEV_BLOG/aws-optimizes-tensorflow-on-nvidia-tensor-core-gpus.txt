@@ -1,0 +1,9 @@
+Earlier this week, Amazon announced new AWS Deep Learning AMIs tuned for high-performance training on Amazon EC2 instances powered by NVIDIA Tensor Core GPUs.  The Deep Learning AMI on Ubuntu, Amazon Linux, and Amazon Linux 2 now come with an optimized build of TensorFlow 1.13.1 and CUDA 10. GPU instances come with an optimized build of TensorFlow 1.13 that is  configured with CUDA 10 and cuDNN 7.4 to take advantage of mixed-precision training on NVIDIA V100 GPUs powering EC2 P3 instances. The  Deep Learning AMI automatically deploys the most performant build of  TensorFlow optimized for the EC2 instance of your choice when you  activate the TensorFlow virtual environment for the first time.For developers looking to scale their TensorFlow training to multiple GPUs, the Deep Learning AMIs come with the Horovod distributed training framework.
+ The framework is fully optimized to efficiently use distributed
+training cluster topologies composed of Amazon EC2 P3 instances. Horovod
+ is an open source distributed training framework based on the Message
+Passing Interface (MPI) model. This is a popular standard for passing
+messages and managing communication between nodes in a high-performance
+distributed computing environment. Training a ResNet-50 model using
+TensorFlow 1.13 and Horovod in the Deep Learning AMI results in 27%
+faster throughput than stock TensorFlow 1.13 on 8 nodes.They also announced the support of Chainer 5.3.0. The Chainer define-by-run approach allows developers to modify computational graphs on the fly during training. This provides greater flexibility in implementing dynamic neural networks like recurrent neural networks (RNNs) used for natural language processing (NLP) tasks such as sequence-to-sequence translation and question answering systems. Chainer comes fully-configured to take advantage of CuPy with CUDA 9 and cuDNN 7 drivers for accelerating computations on Volta GPUs powering Amazon EC2 P3 instances.Read more >

@@ -1,0 +1,3 @@
+Get to know Rense de Boer, a technical art director from Sweden, who is not only pushing the envelope of photo-real CGI environments, but he’s doing it all in a real-time engine!
+Over the last few years de Bower has been focused on advancing real-time graphics by expanding beyond current workflows, and experimenting with cutting-edge hardware and software — he’s continuously evolving his pipeline as new techniques becoming available.
+The image below is not a picture or a multi-hour 3D render, it’s a screenshot from Unreal Engine.

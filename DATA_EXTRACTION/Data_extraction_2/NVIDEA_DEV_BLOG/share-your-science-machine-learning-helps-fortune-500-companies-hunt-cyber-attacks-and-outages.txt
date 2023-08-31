@@ -1,0 +1,7 @@
+Leo Meyerovich, CEO of Graphistry Inc., shares how GPUs and machine learning are protecting the largest companies and organizations in the world by visually alerting them of attacks and big outages.
+Using NVIDIA GPUs and CUDA, the graph analysis cloud platform is able to help the company’s response and hunting team sift through 100M+ alerts a day.
+“We’ve built one of the world’s fastest clustering algorithms and some of our customers might have had to wait hours to see the result of their data – with our tool, you can get answers in seconds,” said Meyerovich.
+
+Share your GPU-accelerated science with us at http://nvda.ly/Vpjxr and with the world on #ShareYourScience.
+Watch more scientists and researchers share how accelerated computing is benefiting their work at http://nvda.ly/X7WpH
+ 

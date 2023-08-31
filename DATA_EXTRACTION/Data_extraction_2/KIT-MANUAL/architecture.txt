@@ -1,0 +1,85 @@
+Architecture
+Kit is a platform for building applications and experiences. They may or may not have much in common. Some of these may use RTX, omni.ui or other libraries to create rich applications, others may be cut-down windowless services (e.g one to process USD files offline for example). To achieve this goal, Kit aims to be extremely modular: everything is an extension.
+
+Extensions
+An Extension is a uniquely named and versioned package loaded at runtime. It can have any or all of the following properties:
+
+Contain python code.
+Contain shared libraries and/or Carbonite plugins.
+Provide a C++ API.
+Provide a python API.
+Depend on other extensions.
+Be reloadable (can be unloaded, changed and loaded again at runtime).
+
+It is the basic building block of Kit-based Applications like Create. More info in the Extensions part of the guide.
+
+
+Kit Kernel (kit.exe/IApp)
+Is a minimal core required to run an extension. It is an entry point for any Kit-based Application. It includes extension manager and basic interface. It is the core which holds everything together.
+
+
+omni.kit.app (omni::kit::IApp)
+omni.kit.app is the basic interface that can be used by any extension, and provides a minimal set of Carbonite plugins to load and set up extensions. It is the main front part of Kit Kernel.
+C++: omni::kit::IApp
+python: omni.kit.app
+It contains:
+
+Carbonite framework startup
+Extension manager
+Event system
+Update loop
+Settings
+Python context / runtime (edited)
+
+It can run from either a Kit executable (kit.exe / kit) or from python.
+
+
+Bundled Extensions
+The Kit SDK comes with a lot of included extensions. Even more extensions are developed outside of Kit SDK and delivered using Extension Registry.
+
+Note
+Try kit.exe --list-exts and then enable one of them, e.g. kit.exe --enable omni.usd
+
+
+
+Different Modes Example
+
+CLI utility
+
+            graph RL
+    usd[omni.kit.usd] -.- app(omni.kit.app)
+    con[omni.kit.connection] -.- app
+    user[user.tool] --> usd
+    usd --> con
+    user --> con
+    user -.- app
+        
+Note
+Arrows are extension dependencies.
+
+
+User writes an extension user.tool, which depends only on omni.kit.usd and omni.kit.app.
+User runs Kit kit.exe --enable user.tool
+
+Notice that only one extension is specified. omni.kit.app will automatically figure out which extensions are required by resolving dependencies and will load and start them up in the correct order.
+user.tool can for instance parse command-line args, do some processing and then exit.
+
+
+GUI CLI utility
+
+            graph RL
+    ren[omni.kit.rendering] --> win[omni.kit.window]
+    ui[omni.kit.ui] --> ren
+    user[user.tool] --> usd
+    usd[omni.kit.usd] --> con[omni.kit.connection]
+    user --> con
+    userui[user.tool.ui] --> ui
+    userui --> user
+    user -.- app(omni.kit.app)
+    userui -.- app
+    con -.- app
+    ren -.- app
+    usd -.- app
+    win -.- app
+
+        The dependency on the UI unrolls the whole tree of required extensions.

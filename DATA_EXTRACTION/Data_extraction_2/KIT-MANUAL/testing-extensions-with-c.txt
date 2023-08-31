@@ -1,0 +1,239 @@
+Testing Extensions with C++
+For information on testing extensions with Python, look here
+
+Doctest
+omni.kit.test has a doctest library as a runner for C++ tests.
+Further, refer to Carbonite’s Testing.md to learn about using the Doctest testing system.
+List of doctest command line arguments
+You can also use –help on the command line for test.unit:
+test.unit.exe --help
+
+
+Although Omniverse adds additional options, there is also an online reference for Doctest command-line options.
+
+
+Set up testable libraries
+To write C++ tests, you first must have created a shared library with tests to be loaded:
+project_ext_tests(ext, "omni.appwindow.tests")
+    add_files("impl", "tests.cpp")
+
+
+tests.cpp/AppWindowTests.cpp:
+#include <carb/BindingsUtils.h>
+#include <doctest/doctest.h>
+
+CARB_BINDINGS("omni.appwindow.tests")
+
+TEST_SUITE("some test suite") {
+    TEST_CASE("test case success") {
+        CHECK(5 == 5);
+    }
+}
+
+
+Next specify in the test section to load this library:
+[[test]]
+cppTests.libraries = [
+    "bin/${lib_prefix}omni.appwindow.tests${lib_ext}",
+]
+
+
+Run tests the same way with _build\windows-x86_64\release\tests-[extension_name].bat. omni.kit.test this:
+
+loads the library
+tests will be registered automatically in doctest
+runs doctest
+
+In this setup C++ and python tests will run in the same process. A separate [[test]] entry can be created to run separate processes.
+To run only subset of tests -f option can be used:
+> _build\windows-x86_64\release\tests-omni.appwindow.bat -f foo
+All arguments in the tested process after -- are passed to doctest. But to pass to the tested process, -- must be used. So to pass arguments to doctest, -- must be specified twice, like so:
+> _build\windows-x86_64\release\tests-omni.appwindow.bat -- -- -tc=*foo* -s
+When using the test.unit.exe workflow instead, check below.
+
+
+Running a single test case
+In order to run a single test case, use the -tc flag (short for –test-case) with wildcard filters:
+_build\windows-x86_64\release\tests-omni.appwindow.bat -- -- -tc="*[rtx]*"
+
+
+Commas can be used to add multiple filters:
+_build\windows-x86_64\release\tests-omni.appwindow.bat -- -- -tc="*[rtx]*,*[graphics]*"
+
+
+
+
+Unit Tests
+Some tests are written using an older approach. Carbonite is used directly without kit and all the required plugins are manually loaded. To run those tests use:
+> _build\windows-x86_64\release\test.unit.exe
+
+
+Image comparison with a golden image
+Some graphics tests allow you to compare visual tests with a golden image. This can be done by creating an instance of ImageComparison class.
+Each ImageComparison descriptor requires a unique GUID, and must be accompanied with the equivalent string version in C++ source as a comment for easy lookup.
+Defining a test case:
+ImageComparisonDesc desc =
+{
+    { 0x2ae3d60e, 0xbc3b, 0x48b6, { 0xa8, 0x67, 0xe0, 0xa0, 0x7c, 0xaa, 0x9e, 0xd0 } }, // 2AE3D60E-BC3B-48B6-A867-E0A07CAA9ED0
+    "Depth-stencil-16bit",
+    ComparisonMetric::eAbsoluteError,
+    kBackBufferWidth,
+    kBackBufferHeight
+};
+
+// Create Image comparison
+imageComparison = new ImageComparison();
+
+// register the test case (only once)
+status = imageComparison->registerTestCase(&desc);
+REQUIRE(status);
+
+
+
+Regression testing of an executable with a golden image:
+
+This is supported by any executable that uses carb.renderer (e.g. omnivserse-kit or rtx.example), in which it can capture and dump a frame.
+NVF is not yet supported.
+
+// 1- run an executable that supports CaptureFrame
+std::string execPath;
+std::string cmdLine;
+ImageComparison::makeCaptureFrameCmdLine(500,             // Captures frame number 500
+                                         &desc,           // ImageComparisonDesc desc
+                                         "kit", // Executable's name
+                                         execPath,        // Returns the executable path needed for executeCommand()
+                                         cmdLine);        // Returns command line arguments needed for executeCommand()
+
+// 2- Append any command line arguments you need to cmdLine with proper spaces
+cmdLine += " --/rtx/debugView='normal'";
+
+// 3- Run the application with a limited time-out
+status = executeCommand(execPath, cmdLine, kExecuteTimeoutMs);
+REQUIRE(status);
+
+// 4- compare the golden image with the dumped output of the captured frame (located at $Grapehene$/outputs)
+float result = 0.0f;
+CHECK(m_captureFrame->compareResult(&desc, result) == ImageComparisonResult::eSuccess);
+CHECK(result <= Approx(kMaxMeanSqrError)); // With ComparisonMetric::eMeanErrorSquared
+
+
+
+
+Regression testing of a rendering test using comparison of backbuffer with a golden image:
+// 1- Create an instance of CaptureFrame and initialize it
+captureFrame = new CaptureFrame(m_gEnv->graphics, m_gEnv->device);
+captureFrame->initializeCaptureFrame(RenderOpTest::kBackBufferWidth, RenderOpTest::kBackBufferHeight);
+
+// 2- Render something
+
+// 3- copy BackBuffer to CaptureFrame
+captureFrame->copyBackBufferToHostBuffer(commandList, backBufferTexture);
+
+// 4- Submit commands and wait to finish
+
+// 5- compare the golden image with the BackBuffer (or dump it into the disk $Grapehene$/outputs)
+float result = 0.0f;
+CHECK(imageComparison->compareResult(&desc, captureFrame->readBufferData(true), captureFrame->getBufferSize(), result) == ImageComparisonResult::eSuccess);
+CHECK(result == Approx(0.0f));
+
+
+
+compareResult() also allows you to dump the BackBuffer into outputs folder on the disk. This can be done using the following option of test.unit executable:
+
+test.unit.exe --carb-golden -tc="*[graphics]*,*[visual]*"
+
+
+
+The following command allows executables to dump only the golden images of the test that fail our acceptable threshold:
+
+test.unit.exe --carb-golden-failure -tc="*[graphics]*,*[visual]*"
+
+
+
+
+How to update and upload a new golden image
+
+Run the test in release mode.
+
+// Example: regression testing of OmniverseKit executable
+test.unit.exe -tc="*[omniverse-kit][rtx]*"
+
+// Example: regression testing of visual rendering tests
+test.unit.exe --carb-golden -tc="*[graphics]*,*[visual]*"
+
+// Example: regression testing of visual rendering tests that fail our acceptable threshold
+test.unit.exe --carb-golden-failure -tc="*[graphics]*,*[visual]*"
+
+
+
+Verify and view the golden image that is added to outputs folder in Omniverse kit’s repo. It must be exactly what you expect to see.
+Name of the golden image is GUID of the test.
+Copy the golden image from outputs folder to data\golden. This is a folder for git lfs data.
+Open a merge request with git-lfs data changes.
+
+
+
+Troubleshooting
+
+All unit tests crash on textures or shaders:
+
+You must have git lfs installed and initialize it.
+Check files in data folder, and open them in a text editor. You should not see any URL or hash as content.
+Install the latest driver (refer to readme.md)
+
+
+executeCommand() fails:
+
+A possible crash or assert in release mode.
+A crash or hang during exit.
+Time-out reached. Note that any assert dialog box in release mode may cause time-out.
+
+
+compareResult() fails:
+
+Rendering is broken, or a regression is introduced beyond the threshold.
+
+
+outputs folder is empty for tests with a tag of [executable]:
+
+A regression caused the app to fail.
+
+
+
+
+
+How to use asset folder for storing data
+
+Perform the following command to delete the existing _build\asset.override folder. That folder must be gone before proceeding further.
+
+.\assets.bat clean
+
+
+
+Stage assets. It copies data from assets to assets.override.
+
+.\assets.bat stage
+
+
+
+Modify any data under asset.override. Do NOT modify assets folder.
+Upload and publish a new asset package:
+
+.\assets.bat publish
+
+
+
+Rebuild to download the new assets and run the the test to verify:
+
+.\build.bat --rebuild
+
+
+
+Open a merge request with new assets.packman.xml changes.
+
+
+
+
+Skipping Vulkan or Direct3D 12 graphics tests
+In order to skip running a specific backend for graphical tests, use --carb-no-vulkan or --carb-no-d3d12.
+test.unit.exe --carb-no-vulkan"

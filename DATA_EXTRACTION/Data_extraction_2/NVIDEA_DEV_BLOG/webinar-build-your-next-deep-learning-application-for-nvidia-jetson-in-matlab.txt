@@ -1,0 +1,5 @@
+Learn how you can use MATLAB to build your computer vision and deep learning applications and deploy them on NVIDIA Jetson.
+MATLAB auto-generates portable CUDA code that leverages CUDA libraries like cuBLAS and cuDNN from the MATLAB algorithm, which is then cross-compiled and deployed to Jetson.
+The generated code is highly optimized and benchmarks will be presented that show that deep learning inference performance of the auto-generated CUDA code is ~2.5x faster for MXNet, ~5x faster for Caffe2 and ~7x faster for TensorFlow.
+Date & Time: Wednesday, Oct 4, 2017 from 10:00am – 11:00am PT
+By attending this webinar, you’ll learn how toRegister now > 

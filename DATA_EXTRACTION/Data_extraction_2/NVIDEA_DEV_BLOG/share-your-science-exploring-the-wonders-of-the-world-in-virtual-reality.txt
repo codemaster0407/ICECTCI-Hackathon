@@ -1,0 +1,6 @@
+Dominic Eskofier, co-founder of realities.io shares how they are using GPUs for their photogrammetric virtual reality app, Realities on Steam. The app transports users to some of the most mesmerizing places around the world – like ancient Mayan temples in Guatemala – with the push of a button.
+Using CUDA with NVIDIA GeForce GTX 980 Ti and Quadro M5500 GPUs, the team of developers is able to reconstruct a 3D scene from multiple angled photos and then puts them in virtual reality to create a realistic depth experience.
+
+Share your GPU-accelerated science with us at http://nvda.ly/Vpjxr and with the world on #ShareYourScience.
+Watch more scientists and researchers share how accelerated computing is benefiting their work at http://nvda.ly/X7WpH
+ 

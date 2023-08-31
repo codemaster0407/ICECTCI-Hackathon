@@ -1,0 +1,131 @@
+Profiling
+Kit-based applications come bundled with a profiler interface to instrument your code, for both C++ and Python. Multiple profiler backend implementations are supported:
+
+NVTX
+ChromeTrace
+Tracy
+
+
+Easy Start
+
+Enable the omni.kit.profiler.window extension.
+Press F5 to start profiling, then press F5 again to stop profiling and get a trace opened in Tracy.
+
+Press F8 to open the profiler window, where you can perform additional operations such as enabling the Python profiler, browsing traces, etc.
+All traces are saved into one folder (can be found in the Browse section of the profiler window). They can be viewed with either Tracy or Chrome (by navigating to chrome://tracing).
+
+Note
+Both F5 and F8 have an entry in the top menu.
+
+
+
+Profiling Backends
+
+Chrome Trace
+Run the Kit-based application using the following settings to produce a trace file named mytrace.gz in the directory where the executable is located:
+kit.exe [your_configuration] \
+    --/app/profilerBackend="cpu" \
+    --/app/profileFromStart=1 \
+    --/plugins/carb.profiler-cpu.plugin/saveProfile=1 \
+    --/plugins/carb.profiler-cpu.plugin/compressProfile=1 \
+    --/plugins/carb.profiler-cpu.plugin/filePath="mytrace.gz"
+
+
+Then, using the Google Chrome browser, navigate to chrome://tracing to open a trace file and explore areas of interest.
+
+
+Tracy
+
+On Demand
+
+Enable the omni.kit.profiler.tracy extension.
+Select Profiling->Tracy->Launch and Connect from the menu.
+
+Note: The omni.kit.profiler.tracy extension contains the currently supported version of Tracy (v0.9.1), which can also be downloaded from GitHub.
+
+
+From Startup
+Run the Kit-based application using the following settings:
+kit.exe [your_configuration] \
+    --/app/profilerBackend="tracy" \
+    --/app/profileFromStart=true
+
+
+Run Tracy and click the “Connect” button to start capturing profiling events.
+You can also convert a chrome trace profile to Tracy format using import-chrome.exe tool it provides. There is a helper tool to do that in repo_kit_tools, it downloads Tracy from packman and opens any of those 3 formats:
+repo tracetools tracy mytrace.gz
+repo tracetools tracy mytrace.json
+repo tracetools tracy mytrace.tracy
+
+
+
+
+
+Multiplexer
+You can enable multiple profiler backends at the same time.
+Run the Kit-based application using the following settings:
+kit.exe [your_configuration] \
+    --/app/profilerBackend=[cpu,tracy] \
+    {other_settings_specific_to_either}
+
+
+The multiplexer profiler will automatically detect any IProfiler implementations that are loaded afterwards, for example as part of an extension.
+If the --/app/profilerBackend setting is empty, the multiplexer profiler will be used as the default, along with the cpu profiler behind it.
+
+
+
+Instrumenting Code
+To instrument C++ code, use the macros from the Carbonite Profiler, e.g.:
+#include <carb/profiler/Profile.h>
+
+constexpr const uint64_t kProfilerMask = 1;
+
+void myfunc()
+{
+    CARB_PROFILE_ZONE(kProfilerMask, "My C++ function");
+
+    // Do hard work here.
+    // [...]
+}
+
+
+For Python code, use the Carbonite Profiler bindings:
+import carb.profiler
+
+# Using the decorator version:
+
+@carb.profiler.profile
+def foo():
+    pass
+
+
+# Using explicit begin/end statements:
+
+def my_func():
+    carb.profiler.begin(1, "My Python function")
+
+    # Do hard work here.
+    # [...]
+
+    carb.profiler.end(1)
+
+
+
+
+Automatic Python Profiler: omni.kit.profile_python
+Python offers a sys.setprofile() method to profile all function calls. Kit-based applications come with an extension that hooks into it automatically and reports all events to carb.profiler. Since this profiling method has an impact on the runtime performance of the application, it is disabled by default.
+kit.exe [your_configuration] \
+    [profiler_backend_configuration] \
+    --enable omni.kit.profile_python
+
+
+
+
+Profiling Startup Time
+Kit includes a handy shell script to profile app startup time: profile_startup.bat.
+It runs an app with profiling enabled, quits, and opens the trace in Tracy. Pass the path to the app kit file and other arguments to it. E.g.:
+profile_startup.bat path/to/omni.app.full.kit --/foo/bar=123
+
+
+To enable python profiling pass --enable omni.kit.profile_python:
+profile_startup.bat path/to/omni.app.full.kit --enable omni.kit.profile_python

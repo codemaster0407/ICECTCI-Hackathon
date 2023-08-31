@@ -1,0 +1,7 @@
+Chiyuan Zhang, PhD student at MIT talks about his joint project with Shell using GPUs and deep learning to automatically detect subsurface faults from seismic traces for oil and gas exploration.
+Using a Tesla K80 GPU, CUDA, cuBLAS and the cuDNN-accelerated Mocha.jl deep learning framework, the researchers were able to speed-up up their experiments nearly 40% over their CPU-only solution.
+
+To learn more, watch Chiyuan’s presentation at the 2016 GPU Technology Conference.
+Share your GPU-accelerated science with us at http://nvda.ly/Vpjxr and with the world on #ShareYourScience.
+Watch more scientists and researchers share how accelerated computing is benefiting their work at http://nvda.ly/X7WpH
+ 

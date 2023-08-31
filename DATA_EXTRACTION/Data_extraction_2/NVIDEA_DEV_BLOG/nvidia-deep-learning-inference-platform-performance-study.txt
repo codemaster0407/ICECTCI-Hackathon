@@ -1,0 +1,3 @@
+The NVIDIA deep learning platform spans from the data center to the network’s edge. A new paper describes how the platform delivers giant leaps in performance and efficiency, resulting in dramatic cost savings in the data center and power savings at the edge.
+High-level deep learning workflow showing training, then followed by inference.
+GPUs have proven to be incredibly effective at solving some of the most complex problems in deep learning, and while the NVIDIA deep learning platform is the standard industry solution for training, its inferencing capability is not as widely understood. Some of the world’s leading enterprises from the data center to the edge have built their inferencing solution on NVIDIA GPUs. Some examples include:

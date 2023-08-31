@@ -1,0 +1,7 @@
+A research team led by University of Wyoming developed a deep learning-based system to identify species in the Serengeti National Park in Tanzania that could make it easier for ecologists to track animals in the wild.
+Camera traps automatically take pictures of passing animals when triggered by heat and motion which produce millions of images and extracting knowledge from these camera-trap images is traditionally done by humans. According to their research paper, it currently takes two to three months for a group of thousands of people to manually label each 6-month batch of images.
+When lead researcher Jeff Clune at the University of Wyoming in Laramie heard about the project, he knew it was an ideal opportunity to leverage deep learning.
+Using a variety of GPUs including the NVIDIA DGX AI supercomputer and CUDA, cuDNN and NCCL with the Torch deep learning framework, the researchers trained their deep convolutional neural network to recognize 48 species in 3.2 million images taken from the national park’s hidden camera-traps. They were able to train their neural networks to automatically identify the variety of animals with over 92% accuracy.
+A sample camera-trap image from the Snapshot Serengeti dataset.
+“This is very exciting,” says Chris Carbone at the Zoological Society of London. Automatic species recognition could help us learn more about the distribution of species and get a better idea of the impact humans are having on them, he says.
+Read more >

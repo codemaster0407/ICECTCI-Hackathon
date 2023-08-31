@@ -1,0 +1,5 @@
+Have you ever looked at your shopping list and tried to optimize your trip based on things like distance to store, price, and number of items you can buy at each store? The quest for a smarter shopping cart is never-ending, and the complexity of finding even a sub-optimal solution to this problem can quickly get out of hand. 
+This is especially true of online shopping, which expands the set of fulfillment possibilities from local to national scale. Ideally, you could shop online for all items from your list and the website would do all the work to find you the most savings.
+That is exactly what Jet.com does for you! Jet.com is an e-commerce company (acquired by Walmart in 2016) known for its innovative pricing engine that finds an optimal cart and the most savings for the customer in real time.
+In a new NVIDIA Developer Blog post, Jet’s Aaron Brewbaker discusses how Jet tackles the fulfillment optimization problem using GPUs with F#, Azure and microservices. Jet implemented solutions in F# via AleaGPU, a natural choice for coding CUDA solutions in .NET.
+Read more >

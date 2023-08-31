@@ -1,0 +1,6 @@
+The popular handmade-goods site Etsy acquired Blackbird Technologies, a startup using GPUs to develop superior search relevance and recommendation technology.
+Using CUDA, TITAN X GPUs and the Theano deep learning framework with cuDNN to train their models, Blackbird’s technology combines image and text recognition to power a range of search capabilities, including personalized search, ranking, spelling correction and predictive typeahead, to deliver a personalized shopping experience.
+“Buyers come to Etsy.com for items they can’t find anywhere else and our goal is to help them discover exactly what they want among our 40 million unique listings. Leveraging Blackbird’s technology, we believe we can enhance the buyer experience by making search quicker and easier and by surfacing even more relevant, tailored product recommendations,” said Chad Dickerson, Etsy, Inc. CEO and Chair. “Our team has already made substantial enhancements to the search & discovery process on Etsy, especially through features like Exploratory Search, and we are excited for Blackbird’s world-class team and technology to accelerate our progress in this key area.”
+
+Etsy plans to use Blackbird’s technology in areas beyond search that will help strengthen their markets and seller services platform.
+ 

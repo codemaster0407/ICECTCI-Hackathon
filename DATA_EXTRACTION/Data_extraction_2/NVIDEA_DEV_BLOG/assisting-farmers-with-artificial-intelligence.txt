@@ -1,0 +1,5 @@
+With our planet getting warmer and warmer, and carbon dioxide levels steadily creeping up, companies are using deep learning to help cope with the effects that climate change is having on their crops.   
+An article on MIT Technology Review highlights PEAT, a German company using CUDA, TITAN X GPUs and the cuDNN-accelerated Caffe deep learning framework to provide farmers with a plant disease and diagnostics management tool. Farmers are able to take a picture of their affected plants, upload it to PEAT’s “Plantix” mobile app and get treatment recommendations within seconds. The database currently contains information on 52 crops worldwide and the ability to detect 160 plant diseases, pests and nutrient deficiencies with 95% accuracy.
+
+As mobile phones are now ubiquitous throughout the developing world, this solution provides the last-mile connectivity that farmers need to deal with the impact of a changing climate.
+Read more >>

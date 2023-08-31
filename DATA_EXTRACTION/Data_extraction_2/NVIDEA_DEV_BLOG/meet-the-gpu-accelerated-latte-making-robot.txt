@@ -1,0 +1,6 @@
+Researchers in the Robot Learning Lab at Cornell University developed a robot that can prepare a cup of latte without ever having seen the machine before – the robot does this by visually observing the machine and by reading online instruction manuals, similar to how humans learn.
+The team used CUDA and TITAN X GPUs to train their deep learning models and then also uses the GPU during testing where the robot is trying to infer which human manipulation motion is best suited for the object it has never seen before.
+“We use a deep learning neural network that can tell the robot which action in a database is the closest to the one it has to perform,” said researcher Jaeyong Sung. The researchers turned to the Amazon Mechanical Turk crowdsourcing service to collect a large library of actions — they invited hundreds of visitors to guide a robot through the motions to perform various tasks described in a set of printed instructions. To make crowdsourcing possible, the researchers created a web interface that lets the user guide an imaginary robot arm, almost like playing a video game.
+
+You can help teach the robot by visiting the student’s website.
+Read more >

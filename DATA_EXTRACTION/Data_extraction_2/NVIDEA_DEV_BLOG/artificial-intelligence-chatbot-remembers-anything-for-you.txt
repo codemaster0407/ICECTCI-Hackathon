@@ -1,0 +1,6 @@
+A new bot called Wonder will remember anything you want, and then return the information you need via a text message.
+Once you enter your phone number on the Wonder website, the bot will send you a text explaining how it works – and then you just reply back with the information you want it to store.
+Using CUDA and GPUs in the Amazon cloud to train the deep learning models, the bot is able to understand the texts coming in and remember the things you’re wondering.  When you’re trying to remember something later, you ask Wonder a question, like “When’s the next company meeting?,” What’s my wife’s favorite Starbuck’s order?” or anything else you previously told the bot to remember.
+
+What started as a side project for University of Arizona student Jordan Singer and grad Shivkanth Bagavathy, the two believe there’s potential for turning the bot into a business. They are now working on bringing the Wonder to other platforms, including Messenger, Slack or for use on devices like Amazon Echo.
+Read more >>

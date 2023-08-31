@@ -1,0 +1,5 @@
+Developers from Orange Labs in France developed a deep learning system that can quickly make young faces look older, and older faces look younger. A number of techniques already exist, but they are expensive and time consuming.
+Using CUDA, Tesla K40 GPUs and cuDNN for the deep learning work, they trained their neural network on 5,000 faces from each age group (0-18, 19- 29, 30-39, 40-49, 50-59, and 60+ years old) taken from the Internet Movie Database and from Wikipedia and then labeled with the person’s age — this helped the system learn the characteristic signature of faces in each age group. A second neural network, called the face discriminator, looks at the synthetically aged face to see whether the original identity can still be picked out. If it can’t, the image is rejected, which they call the process in their paper, Age Conditional Generative Adversarial Network.
+
+Grigory Antipov of Orange Labs mentioned the technique could be used in applications such as helping identify people who have been missing for many years.
+Read more >

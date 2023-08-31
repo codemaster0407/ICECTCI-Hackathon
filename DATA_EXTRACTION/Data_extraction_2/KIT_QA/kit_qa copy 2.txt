@@ -1,0 +1,629 @@
+{
+"question1": "What is Kit?",
+"answer1": "Kit is a platform for building applications and experiences. They may or may not have much in common. Some of these may use RTX, omni.ui, or other libraries to create rich applications, while others may be cut-down windowless services."
+
+"question2": "What is the main goal of Kit?",
+"answer2": "The main goal of Kit is to be extremely modular, where everything is an extension."
+
+"question3": "What is an Extension in Kit?",
+"answer3": "An Extension is a uniquely named and versioned package loaded at runtime. It can contain python code, shared libraries, and/or Carbonite plugins. It provides a C++ API and a python API. Extensions can depend on other extensions and can be reloadable, meaning they can be unloaded, changed, and loaded again at runtime."
+
+"question4": "How does an Extension contribute to Kit-based Applications?",
+"answer4": "An Extension is the basic building block of Kit-based Applications like Create, as it provides the necessary functionality and features to enhance the applications."
+
+"question5": "What is the Kit Kernel (kit.exe/IApp)?",
+"answer5": "The Kit Kernel, also known as kit.exe/IApp, is a minimal core required to run an extension. It acts as an entry point for any Kit-based Application and includes the extension manager and basic interface, serving as the core that holds everything together."
+
+"question6": "What does the Kit Kernel include?",
+"answer6": "The Kit Kernel includes the extension manager and a basic interface that allows extensions to interact with the core functionalities of the Kit-based Application."
+
+"question7": "What does omni.kit.app (omni::kit::IApp) contain?",
+"answer7": "omni.kit.app is a basic interface that can be used by any extension. It provides a minimal set of Carbonite plugins to load and set up extensions. It contains Carbonite framework startup, the extension manager, event system, update loop, settings, and a Python context/runtime."
+
+"question8": "What are the programming language options to interact with omni.kit.app?",
+"answer8": "omni.kit.app can be used with C++ using omni::kit::IApp or with Python using omni.kit.app."
+
+"question9": "What are Bundled Extensions in the Kit SDK?",
+"answer9": "Bundled Extensions are included extensions that come with the Kit SDK. They provide additional functionalities for the Kit platform."
+
+"question10": "Where can other extensions be found?",
+"answer10": "Other extensions can be developed outside of the Kit SDK and delivered using the Extension Registry."
+
+
+"question11": "What are Different Modes Example?",
+"answer11": "Different Modes Example shows different scenarios of using Kit-based Applications with various extensions and dependencies."
+
+"question12": "What are the different dependencies shown in the GUI CLI utility mode?",
+"answer12": "In the GUI CLI utility mode, the dependencies include omni.kit.rendering, omni.kit.window, omni.kit.ui, omni.kit.usd, omni.kit.connection, and user.tool.ui."
+
+
+"question13": "What is a Kit file?",
+"answer13": "A Kit file (ends in .kit) defines an Omniverse App. It behaves as a single-file extension and can be published, downloaded, versioned, and have dependencies."
+
+"question14": "How do you build an Omniverse App using a Kit file?",
+"answer14": "Building an Omniverse App is as simple as listing the extensions it should contain (extension dependencies) and the default settings to apply in the Kit file."
+
+
+"question15": "What is an example of a simple app in Kit?",
+"answer15": "An example of a very simple app in Kit is the 'repl.kit' file, which includes a dependency and a setting applied to the 'omni.kit.console' extension."
+
+"question16": "What will the Kit executable do when passed the 'repl.kit' file?",
+"answer16": "When you pass the 'repl.kit' file to the Kit executable using the command 'kit.exe repl.kit', it will enable a few extensions (including dependencies) to run a simple REPL."
+
+
+"question17": "What are the conceptual differences between specifying dependencies for an extension and an app?",
+"answer17": "For extensions, dependencies are specified broadly to describe compatibility with other extensions. An extension can be used in various apps with different extensions included. For an app, all versions of dependencies must be locked in the final package to guarantee reproducible builds for end users and developers."
+
+"question18": "How does Kit resolve extension versions when running an app?",
+"answer18": "When running an app, Kit will first resolve all extension versions, either locally or using the registry system, and then enable the latest compatible versions. Subsequent runs of the app may result in different versions being enabled if newer versions have been published."
+
+
+"question19": "What is the purpose of the repo tool 'repo_precache_exts'?",
+"answer19": "The 'repo_precache_exts' tool is used to lock the versions of all extensions required by an app and also download/precache them. It is run as the final step of the build process to package the extensions together with the app for deployment."
+
+"question20": "What happens when the 'repo_precache_exts' tool is run with the '-u' or '--update' flag?",
+"answer20": "When the 'repo_precache_exts' tool is run with the '-u' or '--update' flag, it removes the generated part of the kit file, cleans the cache path, and then reruns the extension precaching process to update the version lock."
+
+
+"question21": "What are the version specification recommendations for apps in Kit?",
+"answer21": "The general advice is to write the dependencies required-versions for apps the same way as for extensions, in an open-ended form. For example, you can specify dependencies without a specific version or lock them to a major version while allowing minor updates."
+
+"question22": "What happens when an extension is specified as exact in the version lock?",
+"answer22": "Extensions specified as exact in the version lock are not automatically updated by the version lock process. This allows you to manually lock the version for a specific platform or purpose."
+
+"question23": "How is an app deployed in Omniverse Launcher?",
+"answer23": "An app in Omniverse Launcher is composed of one or more Kit files, precached extensions, and the Kit SDK. It can be run by anyone who has access to the Kit file and can be shared as a file for easy distribution."
+
+"question24": "What is the goal for deploying apps in Omniverse Launcher?",
+"answer24": "The goal is to have a single Kit file that defines an Omniverse App of any complexity, which can be published, versioned, and easily shared with others, simplifying the deployment process."
+
+"question25": "What is exts.deps.generated.kit?",
+"answer25": "exts.deps.generated.kit is an app that contains all extensions from the repository as dependencies. It is used to lock all versions of their dependencies and precache them before building."
+
+"question26": "How is the exts.deps.generated.kit file regenerated?",
+"answer26": "The exts.deps.generated.kit file is regenerated if any extension is added, removed, or if any extension version is updated in the repository."
+
+
+"question27": "What is a Kit file?",
+"answer27": "A Kit file (ends in .kit) defines an Omniverse App. It behaves as a single-file extension and can be published, downloaded, versioned, and have dependencies."
+
+"question28": "How do you build an Omniverse App using a Kit file?",
+"answer28": "Building an Omniverse App is as simple as listing the extensions it should contain (extension dependencies) and the default settings to apply in the Kit file."
+
+
+"question29": "What is an example of a simple app in Kit?",
+"answer29": "An example of a very simple app in Kit is the 'repl.kit' file, which includes a dependency and a setting applied to the 'omni.kit.console' extension."
+
+"question30": "What will the Kit executable do when passed the 'repl.kit' file?",
+"answer30": "When you pass the 'repl.kit' file to the Kit executable using the command 'kit.exe repl.kit', it will enable a few extensions (including dependencies) to run a simple REPL."
+
+"question31": "What are the conceptual differences between specifying dependencies for an extension and an app?",
+"answer31": "For extensions, dependencies are specified broadly to describe compatibility with other extensions. An extension can be used in various apps with different extensions included. For an app, all versions of dependencies must be locked in the final package to guarantee reproducible builds for end users and developers."
+
+"question32": "How does Kit resolve extension versions when running an app?",
+"answer32": "When running an app, Kit will first resolve all extension versions, either locally or using the registry system, and then enable the latest compatible versions. Subsequent runs of the app may result in different versions being enabled if newer versions have been published."
+
+
+"question33": "What is the purpose of the repo tool 'repo_precache_exts'?",
+"answer33": "The 'repo_precache_exts' tool is used to lock the versions of all extensions required by an app and also download/precache them. It is run as the final step of the build process to package the extensions together with the app for deployment."
+
+
+"question34": "What happens when the 'repo_precache_exts' tool is run with the '-u' or '--update' flag?",
+"answer34": "When the 'repo_precache_exts' tool is run with the '-u' or '--update' flag, it removes the generated part of the kit file, cleans the cache path, and then reruns the extension precaching process to update the version lock."
+
+
+"question34": "What are the version specification recommendations for apps in Kit?",
+"answer34": "The general advice is to write the dependencies required-versions for apps the same way as for extensions, in an open-ended form. For example, you can specify dependencies without a specific version or lock them to a major version while allowing minor updates."
+
+
+"question35": "What happens when an extension is specified as exact in the version lock?",
+"answer35": "Extensions specified as exact in the version lock are not automatically updated by the version lock process. This allows you to manually lock the version for a specific platform or purpose."
+
+
+"question36": "How is an app deployed in Omniverse Launcher?",
+"answer36": "An app in Omniverse Launcher is composed of one or more Kit files, precached extensions, and the Kit SDK. It can be run by anyone who has access to the Kit file and can be shared as a file for easy distribution."
+
+"question37": "What is the goal for deploying apps in Omniverse Launcher?",
+"answer37": "The goal is to have a single Kit file that defines an Omniverse App of any complexity, which can be published, versioned, and easily shared with others, simplifying the deployment process."
+
+
+"question39": "What is exts.deps.generated.kit?",
+"answer39": "exts.deps.generated.kit is an app that contains all extensions from the repository as dependencies. It is used to lock all versions of their dependencies and precache them before building."
+
+"question40": "How is the exts.deps.generated.kit file regenerated?",
+"answer40": "The exts.deps.generated.kit file is regenerated if any extension is added, removed, or if any extension version is updated in the repository."
+
+
+"question41": "What is the purpose of the Kit configuration system?",
+"answer41": "The Kit configuration system is based on Carbonite settings and provides a runtime representation of configuration formats like json, toml, and xml. It is a nested dictionary of values used to configure various aspects of Kit-based applications."
+
+"question42": "How do you start Kit without loading any app file?",
+"answer42": "To start Kit without loading any app file, you can run 'kit.exe' without any arguments. It will start Kit and exit without enabling any extensions or applying any configuration, except for the built-in config: kit-core.json."
+
+
+"question43": "What is the purpose of the '--/app/printConfig=true' flag?",
+"answer43": "The '--/app/printConfig=true' flag is used to print all settings in the Kit configuration. It allows users to see the complete configuration, including any settings applied from the command line or configuration files."
+
+"question44": "What is the use of the '-v' and '-vv' flags when starting Kit?",
+"answer44": "The '-v' flag is used to enable info logging, and '-vv' is used to enable verbose logging. These flags provide different levels of logging information in the console, making it easier to debug and troubleshoot the startup routine."
+
+
+"question45": "How can you enable extensions when starting Kit?",
+"answer45": "You can enable extensions when starting Kit by using the '--enable' flag followed by the name of the extension. For example, 'kit.exe --enable omni.kit.window.script_editor' will enable the 'omni.kit.window.script_editor' extension."
+
+"question46": "How can you add more folders to search for extensions?",
+"answer46": "You can add more folders to search for extensions using the '--ext-folder' flag followed by the path to the folder containing the extensions. For example, 'kit.exe --enable omni.kit.window.script_editor --ext-folder ./exts --enable foo.bar' will enable the specified extensions and search for additional extensions in the './exts' folder."
+
+
+"question47": "What is a Kit file and how is it used?",
+"answer47": "A Kit file is the recommended way to configure applications in Kit. It is a single-file extension, similar to an extension.toml file, that defines settings for an application. It can be named, versioned, and even published to the registry like any other extension."
+
+"question48": "How can you define dependencies for a Kit file?",
+"answer48": "Dependencies for a Kit file are defined in the '[dependencies]' section using the format 'extension_name = {}'. For example, '[dependencies]\n"omni.kit.window.script_editor" = {}' defines a dependency on the 'omni.kit.window.script_editor' extension."
+
+
+"question49": "What are the different places to put system-wide configuration files to override settings?",
+"answer49": "System-wide configuration files to override settings can be placed in various locations, including '${shared_documents}/user.toml', '${app_documents}/user.toml', '<app .kit file>\<0 or more levels above>\deps\user.toml', '<app .kit file>\<0 or more levels above>\deps\[app_name]\user.toml', '${shared_program_data}/kit.config.toml', and '${app_program_data}/kit.config.toml'."
+
+"question50": "How do you use the special '++' key to append values to arrays?",
+"answer50": "The '++' key is used to append values to arrays instead of overriding them. For example, to add additional extension folders to the '/app/exts/folders' setting, you can use: '[app.exts]\nfolders."++" = ["c:/temp"]'. This adds the 'c:/temp' folder to the list of extension folders."
+
+
+"question51": "How can you run Kit in portable mode?",
+"answer51": "To run Kit in portable mode, you can use the '--portable' flag. Optionally, you can specify the location of the portable root using the '--portable-root [path]' flag. This mode is useful for developers and allows the use of a specific folder as the root for data, cache, logs, etc."
+
+"question52": "How can you change settings using the command line?",
+"answer52": "You can change settings using the command line by adding the '--/' prefix followed by the path to the setting and the new value. For example, to change the value of 'ignoreUnsavedOnExit' to true, you can use the command 'kit.exe --/app/file/ignoreUnsavedOnExit=true'."
+
+
+"question53": "What is the purpose of the '/app/enableStdoutOutput' setting?",
+"answer53": "The '/app/enableStdoutOutput' setting is used to enable or disable kernel standard output in Kit. When enabled, it allows extension standard output to be displayed when the extension starts."
+
+"question54": "What is the purpose of the '/app/settings/persistent' setting?",
+"answer54": "The '/app/settings/persistent' setting enables saving persistent settings (user.config.json) between sessions. It automatically saves changed persistent settings in the '/persistent' namespace each frame, allowing them to persist across app restarts."
+
+
+"question55": "What is the purpose of the Kit configuration system?",
+"answer55": "The Kit configuration system is based on Carbonite settings and provides a runtime representation of configuration formats like json, toml, and xml. It is a nested dictionary of values used to configure various aspects of Kit-based applications."
+
+"question56": "How do you start Kit without loading any app file?",
+"answer56": "To start Kit without loading any app file, you can run 'kit.exe' without any arguments. It will start Kit and exit without enabling any extensions or applying any configuration, except for the built-in config: kit-core.json."
+
+
+"question57": "What is the purpose of the '--/app/printConfig=true' flag?",
+"answer57": "The '--/app/printConfig=true' flag is used to print all settings in the Kit configuration. It allows users to see the complete configuration, including any settings applied from the command line or configuration files."
+
+"question58": "What is the use of the '-v' and '-vv' flags when starting Kit?",
+"answer58": "The '-v' flag is used to enable info logging, and '-vv' is used to enable verbose logging. These flags provide different levels of logging information in the console, making it easier to debug and troubleshoot the startup routine."
+
+
+"question59": "How can you enable extensions when starting Kit?",
+"answer59": "You can enable extensions when starting Kit by using the '--enable' flag followed by the name of the extension. For example, 'kit.exe --enable omni.kit.window.script_editor' will enable the 'omni.kit.window.script_editor' extension."
+
+"question60": "How can you add more folders to search for extensions?",
+"answer60": "You can add more folders to search for extensions using the '--ext-folder' flag followed by the path to the folder containing the extensions. For example, 'kit.exe --enable omni.kit.window.script_editor --ext-folder ./exts --enable foo.bar' will enable the specified extensions and search for additional extensions in the './exts' folder."
+
+
+"question61": "What is a Kit file and how is it used?",
+"answer61": "A Kit file is the recommended way to configure applications in Kit. It is a single-file extension, similar to an extension.toml file, that defines settings for an application. It can be named, versioned, and even published to the registry like any other extension."
+
+"question62": "How can you define dependencies for a Kit file?",
+"answer62": "Dependencies for a Kit file are defined in the '[dependencies]' section using the format 'extension_name = {}'. For example, '[dependencies]\n"omni.kit.window.script_editor" = {}' defines a dependency on the 'omni.kit.window.script_editor' extension."
+
+
+"question63": "What are the different places to put system-wide configuration files to override settings?",
+"answer63": "System-wide configuration files to override settings can be placed in various locations, including '${shared_documents}/user.toml', '${app_documents}/user.toml', '<app .kit file>\<0 or more levels above>\deps\user.toml', '<app .kit file>\<0 or more levels above>\deps\[app_name]\user.toml', '${shared_program_data}/kit.config.toml', and '${app_program_data}/kit.config.toml'."
+
+"question64": "How do you use the special '++' key to append values to arrays?",
+"answer64": "The '++' key is used to append values to arrays instead of overriding them. For example, to add additional extension folders to the '/app/exts/folders' setting, you can use: '[app.exts]\nfolders."++" = ["c:/temp"]'. This adds the 'c:/temp' folder to the list of extension folders."
+
+
+"question65": "How can you run Kit in portable mode?",
+"answer65": "To run Kit in portable mode, you can use the '--portable' flag. Optionally, you can specify the location of the portable root using the '--portable-root [path]' flag. This mode is useful for developers and allows the use of a specific folder as the root for data, cache, logs, etc."
+
+"question66": "How can you change settings using the command line?",
+"answer66": "You can change settings using the command line by adding the '--/' prefix followed by the path to the setting and the new value. For example, to change the value of 'ignoreUnsavedOnExit' to true, you can use the command 'kit.exe --/app/file/ignoreUnsavedOnExit=true'."
+
+
+
+"question67": "What is the purpose of the '/app/enableStdoutOutput' setting?",
+"answer67": "The '/app/enableStdoutOutput' setting is used to enable or disable kernel standard output in Kit. When enabled, it allows extension standard output to be displayed when the extension starts."
+
+"question68": "What is the purpose of the '/app/settings/persistent' setting?",
+"answer68": "The '/app/settings/persistent' setting enables saving persistent settings (user.config.json) between sessions. It automatically saves changed persistent settings in the '/persistent' namespace each frame, allowing them to persist across app restarts."
+
+
+"question69": "What is the purpose of the '/app/hangDetector/timeout' setting?",
+"answer69": "The '/app/hangDetector/timeout' setting is used to specify the hang detector timeout in seconds. If the hang detector is enabled and an extension takes longer than the specified timeout to execute, it triggers a hang detection."
+
+"question70": "How can you set a numeric value using the command line?",
+"answer70": "To set a numeric value using the command line, you can simply add the '--/path/to/setting=value' flag, where 'value' is the desired numeric value. For example, 'kit.exe --/some/number=7' will set the 'some/number' setting to 7."
+
+
+"question71": "What is the purpose of the '/app/quitAfter' setting?",
+"answer71": "The '/app/quitAfter' setting is used to automatically quit the app after a specified number of frames. If the value is positive, the app will quit after the specified number of frames have been rendered."
+
+"question72": "How can you specify a boolean value using the command line?",
+"answer72": "To specify a boolean value using the command line, you can use either 'true' or 'false' strings. For example, 'kit.exe --/some/path/to/parameter=false' or 'kit.exe --/some/path/to/parameter=true' will set the 'some/path/to/parameter' setting to false or true, respectively."
+
+"question73": "What is the purpose of the '/app/fastShutdown' setting?",
+"answer73": "The '/app/fastShutdown' setting, when enabled, allows the app to perform a fast shutdown instead of the full extension shutdown flow. Only subscribers to the IApp shutdown event will handle the shutdown, and the app will terminate quickly."
+
+"question74": "What is the purpose of the '/app/python/logSysStdOutput' setting?",
+"answer74": "The '/app/python/logSysStdOutput' setting intercepts and logs all Python standard output in the Carb logger at the info level. This allows users to monitor and log Python standard output messages in the Kit application."
+
+
+"question75": "What are the two ways to modify behavior in the system?",
+"answer75": "The two ways to modify behavior in the system are via the designated API function call and by changing the corresponding setting."
+
+"question76": "What is one way to reconcile the use of API function calls and settings?",
+"answer76": "One way to reconcile the use of API function calls and settings is to ensure that API functions only change settings, and the core logic tracks settings changes and reacts to them."
+
+
+"question77": "What is the purpose of the settings subsystem?",
+"answer77": "The settings subsystem provides a simple to use interface to Kit's various subsystems, allowing automation, enumeration, serialization, and more. It is accessible from both C++ and Python bindings."
+
+"question78": "What is the relationship between the settings subsystem and carb.dictionary?",
+"answer78": "The settings subsystem uses carb.dictionary under the hood to work with dictionary data structures. It effectively acts as a singleton dictionary with a specialized API to streamline access."
+
+
+"question79": "Why is it recommended to set default values for settings?",
+"answer79": "Setting default values for settings ensures that there is always a value available when accessing a setting. It helps avoid errors when reading settings with no value."
+
+"question80": "How can you efficiently monitor settings changes?",
+"answer80": "To efficiently monitor settings changes, it is recommended to use notifications instead of directly polling for settings. Subscribing to notifications helps avoid unnecessary access to the settings backend when the value didn't change."
+
+
+"question81": "What is the purpose of the '/app/rendering/enabled' setting?",
+"answer81": "The '/app/rendering/enabled' setting is intended to be easily tweakable, serializable, and human-readable. It allows enabling or disabling rendering functionality in the application."
+
+"question82": "What is the recommended approach for reacting to settings changes?",
+"answer82": "Ideally, settings should be monitored for changes, and plugins/extensions should react to the changes accordingly. If exceptions arise where the behavior won't be affected, users should be informed about the setting changes."
+
+
+"question83": "How can the API and settings be reconciled?",
+"answer83": "One way to reconcile the API and settings is by ensuring that API functions only modify corresponding settings. The core logic should track settings changes and react to them, avoiding direct changes to the core logic value when a corresponding setting value is present."
+
+"question84": "Why is it important to avoid direct changes to the core logic value?",
+"answer84": "Avoiding direct changes to the core logic value when a corresponding setting value is present ensures that the value stored in the core logic and the corresponding setting value are always in sync, preventing inconsistencies."
+
+"question85": "What is the purpose of the carb.settings namespace in Python?",
+"answer85": "The carb.settings namespace in Python provides a simple to use interface to Kit's Settings subsystem. It allows easy access to settings from both C++ and scripting bindings like Python."
+
+"question86": "How does the carb.dictionary subsystem relate to the Settings subsystem?",
+"answer86": "The carb.dictionary subsystem is used under the hood by the Settings subsystem. It effectively acts as a singleton dictionary with a specialized API to streamline access to settings."
+
+"question87": "Why is it important to set default values for settings?",
+"answer87": "Setting default values for settings ensures that there is always a valid value available when accessing a setting. It helps prevent errors when reading settings without a value."
+
+"question88": "How can you efficiently monitor changes in settings?",
+"answer88": "To efficiently monitor changes in settings, it is recommended to use notifications instead of polling for settings. Subscribing to notifications helps avoid unnecessary access to the settings backend when the value remains unchanged."
+
+"question89": "What is the purpose of the '/app/rendering/enabled' setting?",
+"answer89": "The '/app/rendering/enabled' setting is intended to be easily tweakable, serializable, and human-readable. It allows users to enable or disable rendering functionality in the application."
+
+"question90": "What is the recommended approach for reacting to settings changes?",
+"answer90": "The recommended approach for reacting to settings changes is to monitor settings for changes and have plugins/extensions react accordingly. If a change won't affect behavior, users should still be informed about the setting changes."
+
+"question91": "How can the API and settings be effectively reconciled?",
+"answer91": "One effective way to reconcile the API and settings is to ensure that API functions only modify corresponding settings. The core logic should track settings changes and respond to them, avoiding direct changes to the core logic value when a corresponding setting value is present."
+
+"question92": "Why is it important to avoid direct changes to the core logic value?",
+"answer92": "Avoiding direct changes to the core logic value when a corresponding setting value is present ensures that the value stored in the core logic and the corresponding setting value are always in sync, preventing inconsistencies."
+
+
+"question93": "How can the API documentation be built for the repo?",
+"answer93": "To build the API documentation, you can run 'repo.{sh|bat} docs'. To automatically open the resulting docs in the browser, add the '-o' flag. You can also use the '--project' flag to specify a specific project to generate the docs for."
+
+"question94": "What is the purpose of the carb.settings namespace in Python?",
+"answer94": "The carb.settings namespace in Python provides a simple to use interface to Kit's Settings subsystem. It allows easy access to settings from both C++ and scripting bindings like Python."
+
+"question95": "How can you efficiently monitor changes in settings?",
+"answer95": "To efficiently monitor changes in settings, it is recommended to use notifications instead of polling for settings. Subscribing to notifications helps avoid unnecessary access to the settings backend when the value remains unchanged."
+
+"question96": "What is the purpose of the '/app/rendering/enabled' setting?",
+"answer96": "The '/app/rendering/enabled' setting is intended to be easily tweakable, serializable, and human-readable. It allows users to enable or disable rendering functionality in the application."
+
+"question97": "How can the API and settings be effectively reconciled?",
+"answer97": "One effective way to reconcile the API and settings is to ensure that API functions only modify corresponding settings. The core logic should track settings changes and respond to them, avoiding direct changes to the core logic value when a corresponding setting value is present."
+
+"question98": "Why is it important to avoid direct changes to the core logic value?",
+"answer98": "Avoiding direct changes to the core logic value when a corresponding setting value is present ensures that the value stored in the core logic and the corresponding setting value are always in sync, preventing inconsistencies."
+
+"question99": "What is the best way to document Python API?",
+"answer99": "The best way to document Python API is to use Python Docstring format (Google Python Style Docstring). This involves providing one-liner descriptions, more detailed behavior explanations, Args and Returns sections, all while utilizing Python type hints."
+
+"question100": "What approach should be taken for documenting C++ code that is exposed to Python using pybind11?",
+"answer100": "For documenting C++ code exposed to Python via pybind11, the same Google Python Style Docstring format should be used. The pybind11 library automatically generates type information based on C++ types, and py::arg objects must be used to properly name arguments in the function signature."
+
+"question101": "How can Sphinx warnings be dealt with during the documentation process?",
+"answer101": "To address Sphinx warnings, it is crucial to fix issues with MyST-parser warnings, docstring syntax, and C++ docstring problems. Properly managing __all__ in Python modules helps control which members are inspected and documented. Also, ensuring consistent indentation and whitespace in docstrings is essential."
+
+"question102": "What are some common sources of docstring syntax warnings?",
+"answer102": "Common sources of docstring syntax warnings include indentation or whitespace mismatches in docstrings, improper usage or lack of newlines where required, and usage of asterisks or backticks in C++ docstrings."
+
+"question103": "How can API extensions be added to the automatic-introspection documentation system?",
+"answer103": "To add API extensions to the automatic-introspection documentation system, you need to opt-in the extension to the new system. This involves adding the extension to the list of extensions, providing an Overview.md file in the appropriate folder, and adding markdown files to the extension.toml configuration file."
+
+"question104": "Why is it important to properly manage __all__ in Python modules?",
+"answer104": "Managing __all__ in Python modules helps control which objects are imported when using 'from module import *' syntax. This improves documentation generation speed, prevents unwanted autosummary stubs, optimizes import-time, unclutters imported namespaces, and reduces duplicate object Sphinx warnings."
+
+"question105": "What is the purpose of the 'deps' section in the extension.toml configuration file?",
+"answer105": "The 'deps' section in the extension.toml file specifies extension dependencies and links or Sphinx ref-targets to existing projects. It allows the documentation system to resolve type references and generate proper links to other objects that are part of the documentation."
+
+"question106": "How are asterisks and backticks handled in C++ docstrings?",
+"answer106": "In C++ docstrings, asterisks and backticks are automatically escaped at docstring-parse time, ensuring that they are properly displayed in the documentation and do not cause any formatting issues."
+
+"question107": "What version of Python does the Kit come with?",
+"answer107": "Regular CPython 3.7 is used with no modifications."
+
+"question108": "What does Kit do before starting any extension?",
+"answer108": "Kit initializes the Python interpreter before any extension is started."
+
+"question109": "How can extensions add their own folders to sys.path?",
+"answer109": "Extensions can add their own folders (or subfolders) to the sys.path using [[python.module]] definitions."
+
+"question110": "What entry point into Python code do extensions get?",
+"answer110": "By subclassing as IExt, extensions get an entry point into Python code."
+
+"question111": "What is the recommended method to debug most issues related to Python integration?",
+"answer111": "Examining sys.path at runtime is the most common way to debug most issues."
+
+"question112": "How can you use a system-level Python installation instead of the embedded Python?",
+"answer112": "Override PYTHONHOME, e.g.: --/plugins/carb.scripting-python.plugin/pythonHome=\"C:\\Users\\bob\\AppData\\Local\\Programs\\Python\\Python310\"."
+
+
+"question113": "How can you use other Python packages like numpy or Pillow?",
+"answer113": "You can use the omni.kit.piparchive extension that comes bundled with Kit or add them to the search path (sys.path)."
+
+
+"question114": "What is the purpose of the omni.kit.pipapi extension?",
+"answer114": "The omni.kit.pipapi extension allows installation of modules from the pip package manager at runtime."
+
+
+"question115": "How can you package Python modules into extensions?",
+"answer115": "Any Python module, including packages from pip, can be packaged into any extension at build-time."
+
+
+"question116": "Why do some native Python modules not work in Kit?",
+"answer116": "Native Python modules might not work in Kit due to issues with finding other libraries or conflicts with already loaded libraries."
+
+
+"question117": "What plugin covers event streams?",
+"answer117": "The carb.events plugin covers event streams."
+
+  "question118": "Which interface is used to create IEventStream objects?",
+  "answer118": "The singleton IEvents interface is used to create IEventStream objects."
+
+  "question119": "What happens when an event is pushed into an event stream?",
+  "answer119": "The immediate callback is triggered, and the event is stored in the internal event queue."
+
+  "question120": "What are the two types of callbacks that event consumers can subscribe to?",
+  "answer120": "Event consumers can subscribe to immediate (push) and deferred (pop) callbacks."
+
+  "question121": "How can callbacks be bound to context?",
+  "answer121": "Callbacks are wrapped into IEventListener class that allows for context binding to the subscription."
+
+  "question122": "What does the IEvent contain?",
+  "answer122": "IEvent contains event type, sender id, and custom payload, which is stored as carb.dictionary item."
+
+  "question123": "What is the recommended way of using event streams?",
+  "answer123": "The recommended way is through the deferred callbacks mechanisms, unless using immediate callbacks is absolutely necessary."
+
+  "question124": "What can be used to narrow/decrease the number of callback invocations?",
+  "answer124": "Event types can be used to narrow/decrease the number of callback invocations."
+
+  "question125": "What are the important design choices for event streams?",
+  "answer125": "Either multiple event streams with fairly limited numbers of event types served by each or one single event stream serving many different event types."
+
+  "question126": "What is the use of transient subscriptions?",
+  "answer126": "Transient subscriptions are used to implement deferred-action triggered by some event without subscribing on startup and checking the action queue on each callback trigger."
+
+  "question127": "How can you execute your code only on Nth event using transient subscriptions?",
+  "answer127": "The transient subscription can include a simple counter, so you execute your code only on Nth event, not necessarily on the next one."
+
+  "question128": "What is the purpose of the carb::events::IEvents Carbonite interface?",
+  "answer128": "The carb::events::IEvents Carbonite interface is used to provide a means to move data around using the generalized interface in a thread-safe manner and synchronize the logic."
+
+  "question129": "How are event consumers able to subscribe to callbacks?",
+  "answer129": "Subscription functions create the ISubscription class, which usually unsubscribes automatically upon destruction."
+
+  "question130": "What are some important recommendations for using the events subsystem?",
+  "answer130": "The events subsystem is flexible, and there are several recommendations intended to help with frequent use-cases and provide clarifications on specific parts of the events logic."
+
+  "question131": "What is the carb.events plugin's goal?",
+  "answer131": "The goal of the carb.events plugin is to provide a means to move data around using the generalized interface in a thread-safe manner and also act as a way to synchronize the logic."
+
+  "question132": "What happens when events are popped from the event queue?",
+  "answer132": "When events are popped from the queue one by one or all at once (pump), deferred callbacks are triggered."
+
+
+
+
+"question133": "What is the purpose of this guide?",
+  "answer133": "This guide helps you get started creating new extensions for Kit based apps and sharing them with others."
+
+  "question134": "Where was this guide written and tested?",
+  "answer134": "While this guide can be followed from any Kit based app with a UI, it was written for and tested in Create."
+
+  "question135": "Where can I find more comprehensive documentation on extensions?",
+  "answer135": "For more comprehensive documentation on what an extension is and how it works, refer to the :doc:Extensions (Advanced) <extensions_advanced>."
+
+  "question136": "What is the recommended developer environment for extension creation?",
+  "answer136": "Visual Studio Code is recommended as the main developer environment for the best experience."
+
+  "question137": "How can I open the Extension Manager UI?",
+  "answer137": "To open the Extension Manager UI, go to Window -> Extensions."
+
+  "question138": "What should I do to create a new extension project?",
+  "answer138": "To create a new extension project, press the “Plus” button on the top left, select an empty folder to create a project in, and pick an extension name."
+
+  "question139": "What is good practice while naming an extension?",
+  "answer139": "It is good practice to match the extension name with a python module that the extension will contain."
+
+  "question140": "What happens when I create a new extension project?",
+  "answer140": "The selected folder will be prepopulated with a new extension, exts subfolder will be automatically added to extension search paths, app subfolder will be linked (symlink) to the location of your Kit based app, and the folder gets opened in Visual Studio Code, configured, and ready for development."
+
+  "question141": "What does the “Gear” icon in the UI window do?",
+  "answer141": "The “Gear” icon opens the extension preferences, where you can see and edit extension search paths."
+
+  "question142": "What can I find in the README.md file of the created folder?",
+  "answer142": "The README.md file provides more information on the content of the created folder."
+
+  "question143": "How can I observe changes in the new extension after making modifications?",
+  "answer143": "Try changing some python files in the new extension and observe changes immediately after saving. You can create new extensions by cloning an existing one and renaming it."
+
+  "question144": "Can I find the newly created extension in the list of extensions?",
+  "answer144": "Yes, you should be able to find the newly created extension in the list of extensions immediately."
+
+  "question145": "What does the omni.kit.app subsystem define?",
+  "answer145": "The omni.kit.app subsystem defines the minimal set of functionality that Kit Core provides, including loop runner entry point, extension manager, scripting support, general message bus, shutdown sequence management, and hang detector."
+
+  "question146": "What are the initial wires an extension gets from the external extension point?",
+  "answer146": "From the external extension point of view, the only wires that an extension gets initially are just the startup and shutdown functions."
+
+  "question147": "What is the role of the loop runner in an application?",
+  "answer147": "The loop runner drives the application loop, pushing update events into corresponding update event streams and pumping the event streams, allowing modular bits and pieces to tick."
+
+  "question148": "What is the default implementation of the loop runner?",
+  "answer148": "The default loop runner is close to the straightforward implementation outlined in the pseudocode, with small additions of rate limiter logic and other minor pieces of maintenance logic."
+
+  "question149": "What does the extension manager control?",
+  "answer149": "The extension manager controls the extensions execution flow, maintains the extension registry, and handles other related tasks."
+
+  "question150": "How can Python scripting be set up and managed?",
+  "answer150": "The Kit Core app sets up Python scripting environment required to support Python extensions and execute custom Python scripts and code snippets. The IAppScripting interface provides a simple interface to this scripting environment, which can be used to execute files and strings, manage script search folders, and subscribe to the event stream that broadcasts scripting events."
+
+  "question151": "What is the purpose of the general message bus?",
+  "answer151": "The general message bus is an event stream that can be used by anyone to send and listen to events. It is useful in cases where event stream ownership is inconvenient or when app-wide events are established that can be used by many consumers across all the extensions."
+
+  "question152": "How can an event type be derived from a string hash for the message bus?",
+  "answer152": "An event type can be derived from a string hash using functions like carb.events.type_from_string."
+
+  "question153": "How does the application handle shutdown requests?",
+  "answer153": "The application receives shutdown requests via the post-quit queries. Prior to the real shutdown initiation, the post query event will be injected into the shutdown event stream, and consumers subscribed to the event stream will have a chance to request a shutdown request cancellation. If the shutdown is not cancelled, another event will be injected into the shutdown event stream, indicating that the real shutdown is about to start."
+
+  "question154": "What does the app core incorporate to detect hangs?",
+  "answer154": "The app core incorporates a simple hang detector that receives periodic nudges, and if there are no nudges for some defined amount of time, it will notify the user that a hang is detected and can crash the application if the user chooses."
+
+  "question155": "Why is the hang detector helpful?",
+  "answer155": "The hang detector helps generate crash dumps, allowing developers to understand what happened and what the call stack was at the time of the hang."
+
+  "question156": "What are the settings that can be tweaked for the hang detector?",
+  "answer156": "The timeout, if it is enabled, and other things can be tweaked via the settings."
+
+  "question157": "What are some important design choices for event streams?",
+  "answer157": "Either multiple event streams with fairly limited numbers of event types served by each or one single event stream serving many different event types."
+
+  "question158": "How can you execute your code only on Nth event using transient subscriptions?",
+  "answer158": "The transient subscription can include a simple counter, so you execute your code only on Nth event, not necessarily on the next one."
+
+  "question159": "What is the purpose of the carb::events::IEvents Carbonite interface?",
+  "answer159": "The carb::events::IEvents Carbonite interface is used to provide a means to move data around using the generalized interface in a thread-safe manner and synchronize the logic."
+
+  "question160": "How are event consumers able to subscribe to callbacks?",
+  "answer160": "Subscription functions create the ISubscription class, which usually unsubscribes automatically upon destruction."
+
+  "question161": "What are some important recommendations for using the events subsystem?",
+  "answer161": "The events subsystem is flexible, and there are several recommendations intended to help with frequent use-cases and provide clarifications on specific parts of the events logic."
+
+  "question162": "What is the carb.events plugin's goal?",
+  "answer162": "The goal of the carb.events plugin is to provide a means to move data around using the generalized interface in a thread-safe manner and also act as a way to synchronize the logic."
+
+  "question163": "What happens when events are popped from the event queue?",
+  "answer163": "When events are popped from the queue one by one or all at once (pump), deferred callbacks are triggered."
+
+  "question164": "What does the omni.kit.app subsystem define?",
+  "answer164": "The omni.kit.app subsystem defines the minimal set of functionality that Kit Core provides, including loop runner entry point, extension manager, scripting support, general message bus, shutdown sequence management, and hang detector."
+
+  "question165": "What are the initial wires an extension gets from the external extension point?",
+  "answer165": "From the external extension point of view, the only wires that an extension gets initially are just the startup and shutdown functions."
+
+  "question166": "What is the role of the loop runner in an application?",
+  "answer166": "The loop runner drives the application loop, pushing update events into corresponding update event streams and pumping the event streams, allowing modular bits and pieces to tick."
+
+  "question167": "What is the purpose of Omniverse Kit?",
+  "answer167": "Omniverse Kit is the SDK for building Omniverse applications like Create and View. It brings together major components such as USD/Hydra, Omniverse, Carbonite, Omniverse RTX Renderer, Scripting, and a UI Toolkit (omni.ui)."
+
+  "question168": "What can developers use Omniverse Kit for?",
+  "answer168": "Developers can use Omniverse Kit to build their own Omniverse applications or extend and modify existing ones using any combination of its major components."
+
+  "question169": "What is USD/Hydra?",
+  "answer169": "USD is the primary Scene Description used by Kit, both for in-memory/authoring/runtime use and as the serialization format. Hydra allows USD to stream its content to any Renderer with a Hydra Scene Delegate."
+
+  "question170": "How can USD be accessed in an extension?",
+  "answer170": "USD can be accessed directly via an external shared library or from Python using USD’s own Python bindings."
+
+  "question171": "What is Omni.USD?",
+  "answer171": "Omni.USD is an API written in C++ that sits on top of USD, Kit’s core, and the OmniClient library. It provides application-related services such as Events/Listeners, Selection handling, access to the Omniverse USD Audio subsystem, and more."
+
+  "question172": "What does the Omniverse Client Library do?",
+  "answer172": "The Omniverse Client Library is used by Omniverse clients like Kit to communicate with Omniverse servers and local filesystems when loading and saving assets."
+
+  "question173": "What functionality does the Carbonite SDK provide?",
+  "answer173": "The Carbonite SDK provides core functionality for all Omniverse apps, including plugin management, input handling, file access, persistent settings management, audio support, asset loading and management, thread and task management, image loading, localization, synchronization, and basic windowing."
+
+  "question174": "How are Carbonite Plugins implemented?",
+  "answer174": "Carbonite Plugins are shared libraries with C-style interfaces, and most of them have Python bindings accessible from Python."
+
+  "question175": "What is the role of the Omniverse RTX Renderer?",
+  "answer175": "The Omniverse RTX Renderer uses Pixar’s Hydra to interface between USD and RTX, supporting multiple custom Scene delegates, Hydra Engines (GL, Vulkan, DX12), and providing a Viewport with Gizmos and other controls rendering asynchronously at high frame rates."
+
+  "question176": "How can Python scripting be used in Kit based apps?",
+  "answer176": "Python scripting can be used at app startup time by passing cmd arguments, using the Console window, or using the Script Editor Window. It allows access to plugins exposed via Python bindings, USD Python API, Kit Python-only modules, and C++ Carbonite plugins."
+
+  "question177": "What is the purpose of Kit Extensions?",
+  "answer177": "Kit Extensions are versioned packages with a runtime enabled/disabled state that build on top of scripting and Carbonite Plugins. They are crucial building blocks for extending Kit functionality and can depend on other extensions."
+
+  "question178": "What is omni.ui?",
+  "answer178": "Omni.ui is the UI framework built on top of Dear Imgui, written in C++ but exposes only a Python API."
+
+  "question179": "What components does Omniverse Kit bring together?",
+  "answer179": "Omniverse Kit brings together USD/Hydra, Omniverse (via Omniverse client library), Carbonite, Omniverse RTX Renderer, Scripting, and a UI Toolkit (omni.ui)."
+
+  "question180": "How can developers use Omniverse Kit to build their applications?",
+  "answer180": "Developers can use any combination of major components like USD/Hydra, Omniverse, Carbonite, Omniverse RTX Renderer, Scripting, and omni.ui to build their own Omniverse applications."
+
+  "question181": "What is the primary Scene Description used by Kit?",
+  "answer181": "USD is the primary Scene Description used by Kit, serving both in-memory/authoring/runtime use and as the serialization format."
+
+  "question182": "What are some of the services provided by Omni.USD?",
+  "answer182": "Omni.USD provides services like Events/Listeners, Selection handling, access to the Omniverse USD Audio subsystem, access to the Omniverse Client Library, and handling of USD Layer."
+
+  "question183": "What is the purpose of the Omniverse Client Library?",
+  "answer183": "The Omniverse Client Library is used for communication between Omniverse clients and Omniverse servers, as well as with local filesystems when loading and saving assets."
+
+  "question184": "What features does the Carbonite SDK provide for Omniverse apps?",
+  "answer184": "The Carbonite SDK provides features such as plugin management, input handling, file access, persistent settings management, audio support, asset loading and management, thread and task management, image loading, localization, synchronization, and basic windowing, all with a single platform independent API."
+
+  "question185": "How can Carbonite Plugins be accessed from Python?",
+  "answer185": "Most Carbonite Plugins have Python bindings, accessible from Python to write your own plugins and make them directly usable from Python."
+
+  "question186": "What role does the Omniverse RTX Renderer play?",
+  "answer186": "The Omniverse RTX Renderer uses Pixar’s Hydra to interface between USD and RTX, supporting multiple custom Scene delegates, Hydra Engines (GL, Vulkan, DX12), providing a Viewport with Gizmos and other controls, and rendering asynchronously at high frame rates."
+
+  "question187": "What are the ways to run Python scripts in Kit based apps?",
+  "answer187": "Python scripts can be run at app startup time by passing cmd arguments, using the Console window, or using the Script Editor Window to access plugins, USD Python API, Kit Python-only modules, and C++ Carbonite plugins."
+
+  "question188": "How do Kit Extensions build on top of scripting and Carbonite Plugins?",
+  "answer188": "Kit Extensions are versioned packages with a runtime enabled/disabled state, providing the highest-level and most crucial building blocks to extend Kit functionality, and can depend on other extensions."
+
+  "question189": "What is the purpose of omni.ui?",
+  "answer189": "Omni.ui is the UI framework built on top of Dear Imgui, written in C++, but it exposes only a Python API for usage."
+
+  "question190": "What are the main functionalities provided by the Carbonite SDK?",
+  "answer190": "The Carbonite SDK provides core functionalities for Omniverse apps, including plugin management, input handling, file access, persistent settings management, audio support, asset loading and management, thread and task management, image loading, localization, synchronization, and basic windowing."
+
+
+
+}
+
+
+
+
+
+
+
+
+
+

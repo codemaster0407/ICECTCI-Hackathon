@@ -1,0 +1,37 @@
+Logging
+For logging Carbonite is used.
+By default info level logging is written to a file. Path to log file is written to stdout among the first lines when Kit starts.
+At runtime path to a log file can be found in setting: /log/file or using ${logs} token.
+
+Python Logging
+Python standard logging is redirected to Carbonite logger and it is recommended to use it instead.
+
+
+Code Examples
+
+Logging with python
+# Logging/Log
+
+# Carbonite logger is used both for python and C++:
+import carb
+carb.log_info("123")
+carb.log_warn("456")
+carb.log_error("789")
+
+# For python it is recommended to use std python logging, which also redirected to Carbonite
+# It also captures file path and loc
+import logging
+logger = logging.getLogger(__name__)
+logger.info("123")
+logger.warning("456")
+logger.error("789")
+
+
+
+
+Logging with C++
+#include <carb/logging/Log.h>
+
+CARB_LOG_INFO("123")
+CARB_LOG_WARN("456")
+CARB_LOG_ERROR("789")

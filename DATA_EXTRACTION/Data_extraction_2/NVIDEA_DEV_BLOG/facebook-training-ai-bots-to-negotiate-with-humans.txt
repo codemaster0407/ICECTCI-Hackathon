@@ -1,0 +1,7 @@
+Researchers at Facebook Artificial Intelligence Research (FAIR) published a paper introducing AI-based dialog agents that can negotiate and compromise. 
+In a new blog post, Facebook explains how existing chatbots can hold short conversations and perform simple tasks such as booking a restaurant – but building machines that can hold meaningful conversations with people is challenging because it requires a bot to combine its understanding of the conversation with its knowledge of the world, and then produce a new sentence that helps it achieve its goals.
+To help build their training set, the team created an interface with multi-issue bargaining scenarios and crowdsourced humans on Amazon Mechanical Turk to negotiate in natural language to divide a random set of objects
+
+Using CUDA and NVIDIA GPUs, they trained their recurrent neural network by teaching it to imitate people’s actions. The models were trained end-to-end from the language and decisions that humans made, meaning that the approach can easily be adapted to other tasks. Reinforcement learning was then used to reward the model when it achieved a good outcome which prevents the AI bot from developing its own language.
+In their experiments, majority of the people didn’t know they were talking to a bot and FAIR’s best reinforcement learning negotiation agent matched the performance of human negotiators – achieving better deals about as often as worse deals.
+Read more >

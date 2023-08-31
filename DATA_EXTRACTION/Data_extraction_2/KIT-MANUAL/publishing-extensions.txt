@@ -1,0 +1,34 @@
+Publishing Extensions
+Extensions are published to the registry to be used by downstream apps and extensions.
+Kit documentation: Publishing covers how to do it manually with the command line or UI. However, we suggest automating that process in CI.
+Extensions are published using the repo publish_exts tool that comes with Kit. The [repo_publish_exts] section of repo.toml lists which extensions to publish. E.g.:
+[repo_publish_exts]
+# Extensions to publish, include and exclude among those discovered by kit. Wildcards are supported.
+exts.include = [
+    "omni.foo.bar",
+]
+exts.exclude = []
+
+
+Typically, CI scripts are setup to run repo publish_exts -c release (and debug) on every green commit to master, after builds and tests pass. That publishes any new extension version. For versions that were already published, nothing happens. So the version number needs to be incremented for publishing to have any effect.
+You can test publishing locally with a “dry” run using -n flag:
+repo publish_exts -c release -n
+
+
+It is important to remember that some extensions (typically C++, native) have a separate package per platform, so we need to run publishing separately on each platform and publish for each configuration (debug and release). This is especially important to satisfy all required dependencies for downstream consumers.
+
+Publish Verification
+The extension system verifies extensions before publishing. It checks basic things like the extension icon being present, that the changelog is correct, that a name and description field are present, etc. Those checks are recommended, but not required. You can control them with a setting for repo_publish_exts:
+[repo_publish_exts]
+publish_verification = false
+
+
+To only run the verification step, without publishing, use the --verify flag:
+repo publish_exts -c release --verify
+
+
+It is recommended to run the verification step as part of build, to catch issues early.
+
+
+Other Publish Tool Settings
+As with any repo tool, to find other available settings for the publish tool, look into its repo_tools.toml file. Since it comes with Kit, this file is a part of the kit-sdk package and can be found at: _build/$platform/$config/kit/dev/repo_tools.toml

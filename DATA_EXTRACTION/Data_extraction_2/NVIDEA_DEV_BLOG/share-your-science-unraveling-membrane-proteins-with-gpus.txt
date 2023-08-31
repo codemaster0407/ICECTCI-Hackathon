@@ -1,0 +1,6 @@
+Erik Lindahl, Professor of Biophysics at Stockholm University, talks about using the GPU-accelerated GROMACS application to simulate protein dynamics. This approach helps researchers learn how to design better drugs, combat alcoholism and understand how certain diseases occur.
+Lindahl mentions they started using CUDA in their work nearly five years ago and now 90% of their computational resources are GPUs. “It’s everything we do.”
+
+Learn more about the GROMACS molecular simulation toolkit at GROMACS.org.
+Share your GPU-accelerated science with us at http://nvda.ly/Vpjxr
+Watch more scientists and researchers share how accelerated computing is #thepathforward: Watch Now

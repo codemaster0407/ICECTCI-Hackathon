@@ -1,0 +1,7 @@
+Yamaha Motor just announced they selected the NVIDIA Jetson AGX Xavier platform as the development system to power their upcoming lineup of autonomous machines in agriculture, logistics, marine products, and last mile-transportation. NVIDIA Founder and CEO Jensen Huang made the announcement at GTC Japan in Tokyo.
+“At Yamaha we want our products to move people, not just physically but by giving them a more positive state of mind,” said Hiroaki Fujita, chief general manager of Advanced Technology Center and Solution Business Operations at Yamaha. “By standardizing our autonomous machine development platform on Jetson Xavier, all of our products can be more intelligent.”
+Yamaha will develop Jetson AGX Xavier-powered unmanned ground vehicles and drones to efficiently spray farmland, visualize crop growth and transport harvested crops to storage areas.
+
+According to the Japanese Ministry of Agriculture, the workforce in the country has declined by more than 30 percent from 2010. Automating processes with smart machinery is critically important, particularly in the agricultural sector, where the average worker is about 67 years old.
+The company expects to begin testing these devices next year, with the goal of a public launch in 2020.
+Read more>

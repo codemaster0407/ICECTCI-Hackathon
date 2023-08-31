@@ -1,0 +1,9 @@
+Experience real people on any virtual reality headset.
+Joel Pitt, a machine learning researcher at 8i, shares how the startup is using NVIDIA GPUs and CUDA to put real volumetric video of humans in virtual reality environments.
+8i’s technology allows creators to bring real people into volumetric virtual experiences by transforming HD video from multiple cameras into a fully volumetric recording of a human that viewers can walk around in virtual reality, augmented reality, and web.
+Pitt mentions they are currently looking to leverage deep learning and cuDNN to improve the real-time reconstruction quality, such as the coloring and depth estimation to help make the most realistic humans as possible.
+
+To learn more about volumetric video, watch an interview with 8i CEO Linc Gasking about their documentary #100Humans that was unveiled at the Sundance Film Festival early this year.
+Share your GPU-accelerated science with us at http://nvda.ly/Vpjxr and with the world on #ShareYourScience.
+Watch more scientists and researchers share how accelerated computing is benefiting their work at http://nvda.ly/X7WpH
+ 

@@ -1,0 +1,35 @@
+USD Schema Extensions
+USD libraries are part of omni.usd.libs extension and are loaded as one of the first extensions to ensure that USD dlls are available to other extensions.
+USD schemas itself are each an individual extension that can be a part of any repository. USD schema extensions are loaded after omni.usd.libs and ideally before omni.usd.
+Example of a schema extension config.toml file:
+[core]
+reloadable = false
+# Load at the start, load all schemas with order -100 (with order -1000 the USD libs are loaded)
+order = -100
+
+[package]
+category = "Simulation"
+keywords = ["physics", "usd"]
+
+# pxr modules to load
+[[python.module]]
+name = "pxr.UsdPhysics"
+
+# python loader module
+[[python.module]]
+name = "usd.physics.schema"
+
+# pxr libraries to be preloaded
+[[native.library]]
+path = "bin/${lib_prefix}usdPhysics${lib_ext}"
+
+
+Schema extensions contain pxr::Schema, its plugin registry and config.toml definition file. Additionally it contains a loading module omni/schema/_schema_name that does have python init.py file containing the plugin registry code.
+Example:
+import os
+from pxr import Plug
+
+pluginsRoot = os.path.join(os.path.dirname(__file__), '../../../plugins')
+physicsSchemaPath = pluginsRoot + '/UsdPhysics/resources'
+
+Plug.Registry().RegisterPlugins(physicsSchemaPath)

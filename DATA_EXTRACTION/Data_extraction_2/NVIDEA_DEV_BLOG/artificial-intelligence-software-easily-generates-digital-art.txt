@@ -1,0 +1,6 @@
+Researchers from Adobe and University of California, Berkeley developed software that automatically generates images inspired by the color and shape of the digital brushstroke.
+The software uses deep neural networks to learn the features of landscapes and architecture, like the appearance of grass or blue skies. Drawing a dark-colored, upside-down V triggers the AI to conjure a mountain or church steeple, where its seen the shape and color before. A blue line above that becomes a sky with various hues of blue, and a green line below becomes textured grass.
+Using CUDA, TITAN X GPU and the cuDNN version of the Theano deep learning framework, the researchers trained their models on more than 275,000 images of churches and landscapes. The software decides on the fine details, making the process more collaborative than traditional art. For more details of the research, read their paper that was accepted by the 2016 European Conference on Computer Vision.
+
+The same deep neural networks is also able to generate new kinds of shoes and handbags, using a reference image as a template. In one example, the researchers were able to change the design of a shoe by drawing a different style and color on top of it.
+Read more > 

@@ -1,0 +1,6 @@
+NVIDIA just announced the NVIDIA GPU Cloud (NGC) — a GPU-accelerated cloud platform that makes it easy to get started with the top deep learning frameworks on-premises or on Amazon Web Services.
+The cloud-based service is available immediately to users of the just-announced Amazon Elastic Compute Cloud (Amazon EC2) P3 instances featuring NVIDIA Tesla V100 GPUs. NVIDIA plans to expand support to other cloud platforms soon.
+“The NVIDIA GPU Cloud democratizes AI for a rapidly expanding global base of users,” said Jim McHugh, vice president and general manager of Enterprise Systems at NVIDIA. “NGC frees developers from the complexity of integration, allowing them to move quickly to create sophisticated neural networks that deliver the transformative powers of AI.”
+After signing up for an NGC account, developers can download a containerized software stack that integrates and optimizes a wide range of deep learning frameworks, NVIDIA libraries and CUDA runtime versions — which are kept up to date and run seamlessly in the cloud or on NVIDIA DGX systems.
+
+Key benefits of the NGC container registry include:Learn more >

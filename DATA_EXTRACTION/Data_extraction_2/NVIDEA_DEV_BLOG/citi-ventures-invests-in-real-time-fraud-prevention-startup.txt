@@ -1,0 +1,6 @@
+Citi Ventures made a strategic investment in Feedzai which uses deep learning to provide real-time fraud prevention in ecommerce and banking.
+Using CUDA, GTX 1080 GPUs and cuDNN with TensorFlow to train their deep learning models, Feedzai’s platform is able to scan large amounts of data to recognize evolving threats and then alerts customers in real-time to protect against fraud.
+“AI algorithms can be extremely valuable in complex areas like fraud detection, where data can be analyzed at a level and speed that a person may not have the capacity to match,” said Ramneek Gupta, managing director and co-head of investing at Citi Ventures. “Humans also provide needed oversight to provide the right inputs to direct AI, and ensure these programs perform in a way that benefits and protects the customer.”
+Screenshot of Feedzai’s ecommerce fraud prevention software
+In regards to why artificial intelligence is hot right now, Gupta said, “Computing technologies have evolved rapidly and provide advanced analytical capabilities that are more accessible than they were in the past. The cost of storage and powerful computing has also gone down, making it easier and more affordable to access the data needed to develop more powerful AI algorithms.”
+Read more >

@@ -1,0 +1,7 @@
+Devin White, Senior Researcher at Oak Ridge National Laboratory shares how they are using GPUs to improve the geolocation accuracy of imagery collected by a satellite, manned aircraft, or an unmanned aerial system.
+Using Tesla K80 GPUs and CUDA, the researchers in the Geographic Information Science and Technology Group at ORNL developed a sensor-agnostic, plugin-based framework to support photogrammetric and computer vision processing tasks like image registration and orthorectification.
+
+Read about Devin’s work in more detail on his recent GPU Computing Spotlight interview on Parallel Forall.
+Share your GPU-accelerated science with us at http://nvda.ly/Vpjxr and with the world on #ShareYourScience.
+Watch more scientists and researchers share how accelerated computing is benefiting their work at http://nvda.ly/X7WpH
+ 

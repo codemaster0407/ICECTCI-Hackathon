@@ -1,0 +1,5 @@
+NVIDIA has released the DeepStream Software Development Kit (SDK) 2.0 for Tesla GPUs, which is a key part of the NVIDIA Metropolis platform. The technology enables developers to design and deploy scalable AI applications for intelligent video analytics (IVA).
+DeepStream SDK 2.0 includes TensorRT and CUDA to incorporate the latest AI techniques and accelerate video analytics workloads. DeepStream 2.0 gives developers tools such as:
+This release also includes reference plugins, applications, pre-trained neural networks and a reference framework.
+Rather than designing an end-to-end solution from scratch, DeepStream comes with plug-ins, sample applications, and pre-trained deep learning model examples. This makes it the most effective way to develop and deploy advanced AI for complex video analytics.
+Download DeepStream SDK 2.0 today >

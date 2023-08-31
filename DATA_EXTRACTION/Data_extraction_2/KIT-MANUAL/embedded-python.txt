@@ -1,0 +1,110 @@
+Embedded Python
+Kit comes with embedded Python. Regular CPython 3.7 is used with no modifications.
+Kit initializes the Python interpreter before any extension is started. Each extension can then add their own folders (or subfolders) to the sys.path (using [[python.module]] definitions). By subclassing as IExt, extensions get an entry point into Python code. They can then execute any code, import other extensions, use any API they provide. More info: Extensions.
+For most applications this is all you need to know about Python in Kit. Examining sys.path at runtime is the most common way to debug most issues. This doc provides more advanced details on Python integration.
+
+Hello Python
+Run > kit.exe --exec your_script.py to run your script using Kit Python.
+
+
+Using system Python
+When the Python interpreter is initialized, system-defined environment variables (like PYTHONHOME, PYTHONPATH) are ignored. Instead, the following setting is used for python home:
+
+/plugins/carb.scripting-python.plugin/pythonHome instead of PYTHONHOME
+
+
+Note
+You can find default values for this setting in kit-core.json file.
+
+To use a system-level Python installation, override PYTHONHOME, e.g.: --/plugins/carb.scripting-python.plugin/pythonHome="C:\Users\bob\AppData\Local\Programs\Python\Python310".
+Changing PYTHONHOME won’t change the loaded Python library. This is platform specific, but for instance on Windows, Kit is linked with python.dll and loads the one that is in the package using standard dll search rules. However, the standard library, site-packages, and everything else will be used from the specified python path.
+
+
+Add extra search paths
+To add search paths (to sys.path), the /app/python/extraPaths setting can be used. For example:
+> kit.exe --/app/python/extraPaths/0="C:/temp"
+or in a kit file:
+[settings]
+app.python.extraPaths = ["C:/temp"]
+
+
+To summarize, those are all the methods to extend sys.path:
+
+Create new extension with [python.module] definitions (recommended).
+Explicitly in python code: sys.path.append(...)
+The /app/python/extraPaths setting.
+
+
+
+Other Python Configuration Tweaks
+Most python configuration variables can be changed using following settings:
+
+
+config variable
+python flag documentation
+
+
+
+/plugins/carb.scripting-python.plugin/Py_VerboseFlag
+Py_VerboseFlag
+
+/plugins/carb.scripting-python.plugin/Py_QuietFlag
+Py_QuietFlag
+
+/plugins/carb.scripting-python.plugin/Py_NoSiteFlag
+Py_NoSiteFlag
+
+/plugins/carb.scripting-python.plugin/Py_IgnoreEnvironmentFlag
+Py_IgnoreEnvironmentFlag
+
+/plugins/carb.scripting-python.plugin/Py_NoUserSiteDirectory
+Py_NoUserSiteDirectory
+
+/plugins/carb.scripting-python.plugin/Py_UnbufferedStdioFlag
+Py_UnbufferedStdioFlag
+
+/plugins/carb.scripting-python.plugin/Py_IsolatedFlag
+Py_IsolatedFlag
+
+
+
+
+
+Using numpy, Pillow etc.
+Kit comes with omni.kit.pip_archive extension which has few popular Python modules bundled into it. Have a look inside of it on filesystem.
+After this extension is started you can freely do import numpy. Declare a dependency on this extension in your extension, or enable it by any other means to use any of them.
+E.g.: run > kit.exe --enable omni.kit.pip_archive --exec use_numpy.py to run your script that can import and use numpy.
+
+
+Using Anaconda environment
+As a starting point change PYTHONHOME setting described above to point to Anaconda environment: --/plugins/carb.scripting-python.plugin/pythonHome="C:/Users/bob/anaconda3/envs/py37". It is known to work for some packages and fail for others, on a case by case basis.
+
+
+Using other packages from pip
+For most Python packages (installed with any package manager or locally developed) it is enough to add them to the search path (sys.path). That makes them discoverable by the python import system. Any of the methods described above can be used for that.
+Alternatively, Kit has the omni.kit.pipapi extension to install modules from the pip package manager at runtime. It will check if the package is not available, and will try to pip install it and cache it. Example of usage: omni.kit.pipapi.install("some_package"). After that call, import the installed package.
+Enabling the omni.kit.pipapi extension will allow specification of pip dependencies by extensions loaded after it. Refer to omni.kit.pipapi doc.
+At build-time, any Python module can be packaged into any extension, including packages from pip. That can be done using other Python installations or kit Python. This is the recommended way, so that when an extension is downloaded and installed, it is ready to use. There is also no requirement for connectivity to public registries, and no runtime cost during installation.
+
+
+Why do some native Python modules not work in Kit?
+It is common for something that works out of the box as-installed from pip or Anaconda not to work in Kit. Or vice versa, the Kit Python module doesn’t load outside of Kit.
+For pure Python modules (only *.py files), finding the root cause might be a matter of following import errors. However, when it involves loading native Python modules (*.pyd files on Windows and *.so files on Linux), errors are often not really helpful.
+Native Python modules are just regular OS shared libraries, with a special C API that Python looks for. They also are often implicitly linked with other libraries. When loaded, they might not be able to find other libraries, or be in conflict with already loaded libraries. Those issues can be debugged as any other library loading issue, specific to the OS. Some examples are:
+
+Exploring PATH/LD_LIBRARY_PATH env vars.
+Exploring libraries that are already loaded by the process.
+Using tools like Dependency Walker.
+Trying to isolate the issue, by loading in a simpler or more similar environment.
+
+Kit doesn’t do anything special in this regard, and can be treated as just another instance of Python, with a potentially different set of loaded modules.
+
+
+Running Kit from Python
+Normally the kit.exe process starts and loads an embedded Python library. Kit provides Python bindings to its core runtime components. This allows you to start Python, and then start Kit from that Python.
+It is an experimental feature, and not used often. An example can be found within the Kit package: example.pythonapp.bat.
+Differences from running normally:
+
+A different Python library file is used (different python.dll).
+There may be some GIL implications, because the call stack is different.
+Allows explicit control over the update loop.

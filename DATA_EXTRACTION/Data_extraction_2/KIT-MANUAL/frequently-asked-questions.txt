@@ -1,0 +1,27 @@
+Frequently Asked Questions
+
+Where can I find the core Kit config file?
+It is kit-core.json located close to the Kit executable.
+
+
+Can I debug python extensions and scripts?
+Yes! Use VS Code for that.
+
+Run Kit, open Window/Extensions Manager, find and enable the omni.kit.debug.vscode extension. You can now see the window called VS Code Link which shows you the status of the debugger connection.
+Run VS Code with the Python extension installed. Open the Kit project folder with it.
+Kit already has a proper .vscode/launch.json in the project. So select the Debugger tab in VS Code, select Python: Attach and press the Start Debugging button.
+The status should now change to Connected in the Kit VS Code Link window.
+Hit the Break button in this window, it shows an example of using the omni.kit.commands.execute("DebugBreak") command to break. You can debug your python code and add breakpoints.
+
+
+Note
+Unfortunately folder linked scripts are not properly recognized in this setup, so you must add your breakpoints in the real source files, which can be found under the _build folder.
+
+
+Note
+For non-UI configurations just use the omni.kit.debug.python extension instead. Look into its extension.toml for settings.
+
+
+
+Random failures when loading omni.usd ?
+You can debug how USD loads its plugins with the environment variable TF_DEBUG. If you set TF_DEBUG=PLUG_INFO_SEARCH, it will print out all of the plugInfo.json files it finds. If you set TF_DEBUG=PLUG_REGISTRATION, it will print out all of the plugins it tries to register. Setting TF_DEBUG=PLUG_LOAD can also be useful, as it prints the plugins loaded. Kit mutes USD output by default. To unmute it, you need to set "/omni.kit.plugin/usdMuteDiagnosticMessage" to false.

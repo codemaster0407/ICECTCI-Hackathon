@@ -1,0 +1,5 @@
+Julia is a high-level programming language for mathematical computing that is as easy to use as Python, but as fast as C. The language has been created with performance in mind, and combines careful language design with a sophisticated LLVM-based compiler.
+Julia is already well regarded for programming multi-core CPUs and large parallel computing systems, but recent developments make the language suited for GPU computing as well. The performance possibilities of GPUs can be democratized by providing more high-level tools that are easy to use by a large community of applied mathematicians and machine learning programmers.
+Programming GPUs using libraries and Julia packages at different abstraction levels.
+In a new NVIDIA Developer Blog post by Tim Besard, a contributor to the Julia project from the University of Ghent, demonstrates native GPU programming with a Julia package that enhances the Julia compiler with native PTX code generation capabilities: CUDAnative.jl.
+Read more >

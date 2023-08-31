@@ -1,0 +1,6 @@
+Phil Maechling, a computer scientist at USC’s Southern California Earthquake Center shares how they are using the Tesla GPU-accelerated Titan and Blue Waters supercomputers with CUDA to analyze the impact of earthquakes and why and when they occur.
+“Instead of waiting for earthquakes to happen, we do physics-based simulations of “scenario” earthquakes,” said Maechling. “We use the results to inform scientists, government agencies and general public.”
+The City of Los Angeles used their “ShakeOut Scenario” earthquake simulation to understand how a 7.8 magnitude earthquake would impact the environment, how many potential injuries there would be and to determine what the economic losses would be. With this information, city officials then made changes to their seismic hazard program and introduced new rules and recommendations.
+
+Share your GPU-accelerated science with us at http://nvda.ws/2cpa2d4 and with the world on #ShareYourScience.
+Watch more scientists and researchers share how accelerated computing is benefiting their work at http://nvda.ws/2dbscA7

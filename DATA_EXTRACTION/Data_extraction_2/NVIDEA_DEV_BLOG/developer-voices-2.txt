@@ -1,0 +1,4 @@
+We love seeing all of the NVIDIA GPU-related tweets – here’s some that we came across this week:
+https://twitter.com/esc___/status/857334279570944001Newest NVIDIA Jetson TX2 that my team is working on for Watson Use cases at the edge of Network. pic.twitter.com/BhcVK5iKAy— Mac Devine (@mac_devine) April 27, 2017$30K compute monster! World's first liquid cooled @nvidia #Tesla K80 build. pic.twitter.com/mjtLjbm48Q— MAINGEAR (@maingear) April 21, 2017
+https://twitter.com/DoctaCloak/status/857458039640739841#deeplearning is similar to 3D gaming – if you don't have a high-end GPU it is not that fun— Mantas Janulionis (@esp_mantas) April 23, 2017When your #deeplearning models ask for more #Nvidia #TitanX #Pascalarchitecture #ConscientAI #staytuned pic.twitter.com/dghnLVjUkA— CD Athuraliya (@cdathuraliya) April 22, 2017
+On Twitter? Follow @GPUComputing and @mention us so we’re able to keep track of what you’re up to.

@@ -1,0 +1,5 @@
+The Twilight actress made her directorial debut in a short film Come Swim, shown yesterday at the Sundance Film Festival and features the use of the popular neural “style transfer” technique to build its story.
+The project, co-authored with an Adobe research engineer, is a great case study on the ability to use style transfer in a production. Using CUDA, GPUs on the Amazon cloud and the cuDNN-accelerated Caffe deep learning framework, they redrew key scenes in Come Swim in the style of the impressionistic painting that inspired the film.
+Usage of Neural Style Transfer in Come Swim; left: content image, middle: style image, right: upsampled result.
+As mentioned in the paper, GPUs played a key role in the work since they provided the computing power necessary to achieve the quality needed for the images in a reasonable amount of time.
+Read more >

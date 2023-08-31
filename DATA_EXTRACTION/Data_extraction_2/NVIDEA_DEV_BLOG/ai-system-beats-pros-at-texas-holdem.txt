@@ -1,0 +1,7 @@
+A team of researchers from University of Alberta, Charles University in Prague and Czech Technical University developed an AI system called DeepStack that defeated professional poker players, making it the first computer program to beat professional players in heads-up no-limit Texas hold’em poker.
+“Poker has been a longstanding challenge problem in artificial intelligence,” says Michael Bowling, professor in the University of Alberta’s Faculty of Science and principal investigator on the study. “It is the quintessential game of imperfect information in the sense that the players don’t have the same information or share the same perspective while they’re playing.”
+Using GTX 1080 GPUs and CUDA with the Torch deep learning framework, “we train our system to learn the value of situations,” says Bowling. “Each situation itself is a mini poker game. Instead of solving one big poker game, it solves millions of these little poker games, each one helping the system to refine its intuition of how the game of poker works. And this intuition is the fuel behind how DeepStack plays the full game.”
+Despite the complexity of Texas Hold’em, the system takes action at human speed — with an average of only three seconds of “thinking” time — and runs on a single GTX 1080 GPU.
+Co-authors of DeepStack
+To test the system, the researchers recruited thirty-three professional poker players from 17 countries and each played a 3,000-hand match over three weeks. DeepStack beat each of the 11 players who finished their match.
+Read more >

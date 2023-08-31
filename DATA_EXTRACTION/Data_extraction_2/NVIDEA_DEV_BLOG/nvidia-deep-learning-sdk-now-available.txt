@@ -1,0 +1,4 @@
+The NVIDIA Deep Learning SDK brings high-performance GPU acceleration to widely used deep learning frameworks such as Caffe, TensorFlow, Theano, and Torch. The powerful suite of tools and libraries are for data scientists to design and deploy deep learning applications.
+Following the Beta release a few months ago, the production release is now available with:cuDNN 4 Speedup vs. CPU-only for batch = 1AlexNet + Caffe, Fwd Pass Convolutional LayersGeForce TITAN X, Core i7-4930 on Ubuntu 14.04 LTS
+Download now >>
+ 

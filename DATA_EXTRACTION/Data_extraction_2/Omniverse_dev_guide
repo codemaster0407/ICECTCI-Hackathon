@@ -1,0 +1,401 @@
+Extensions
+
+Extensions are the most common development path in Omniverse. They are the building blocks of Applications and Services. Virtually all user interface elements in an Omniverse App, such as Omniverse USD Composer or Omniverse USD Presenter, are created using Extensions. Examples include the Content Browser, the Viewport and the Stage. Extensions often create their own UI and are persistent in an App as long as they are set to load in the Extension Manager.
+
+➤ Start Coding Extensions
+
+Services
+
+Services allow software development in which large applications are built from modular components using distributed computing across processes and or networks. The modules use a common API that may be implemented on any number of given platforms
+
+➤ Start Developing Services
+
+Connectors
+
+An Omniverse Connector is middleware software that enables integration and communication between the Omniverse platform and other software applications, allowing users to import/export or sync 3D data between different tools and workflows. Connectors have varying degrees of functionality.
+Click here for a Full List of Existing Connectors
+
+➤ Start Developing Connectors
+
+Apps
+
+An Omniverse App is built upon a specific set of Extensions to provide a desired functionality. An App gives the user a customized experience by implementing the UI’s of its Extensions with a custom layout. You can quickly and easily create customized applications comprised of any number of Extensions developed by you, the Omniverse Community or NVIDIA. An App can be as simple as a 3D viewer or as complex as an AI suite. This modular approach to building Apps makes it easy to create a customized workflow or a global scale cloud application
+
+➤ Start Building Apps
+
+OmniGraph
+
+OmniGraph is Omniverse’s visual scripting engine. With its graphical user interface, you can create logic graphs in which data flows from one node to another, and those nodes operate on the data. With hundreds of OmniGraph nodes at your disposal, you can automate behaviors in Omniverse from simple prim transformations to complex, event-based animations–all without writing a single line of code.
+Go to the OmniGraph Node Library for a complete list of Omnigraph Nodes.
+
+➤ Start Developing with OmniGraph
+
+-*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*-
+
+»
+Extend Omniverse
+
+
+
+Extend Omniverse
+
+With Extensions you can build reusable components and tools. They are the building blocks of Omniverse and they add features to the Omniverse platform. Each extension is written in Python or C++ using Omniverse Kit SDK. Developers have a lot of flexibility when coding an Extension, which can be as simple as a tool for assigning materials to models or as complex as an entire visual scripting system like OmniGraph.
+Extensions do not operate on their own, instead they live inside of an Omniverse Kit Application. When a developer builds an Application, they do so by packaging extensions together.
+
+Why create an Extension?
+Consider creating an extension when you need a reusable component or tool. The scope of an Extension can be something as simple as randomizing object positions or as complicated as a viewport renderer. Think of an extension as a plugin.
+
+
+Learn to Develop Extensions
+
+Documentation
+Read our getting started guide and tutorials.
+
+Getting started with Extensions
+List of Extension tutorials
+
+
+
+Deep Learning Institute
+Take one of our courses from the Deep Learning Institute, NVIDIA’s interactive learning platform.
+
+Build Beautiful, Custom UI for 3D Tools on NVIDIA Omniverse
+Develop, Customize, and Publish in Omniverse With Extensions
+How to Build Custom 3D Scene Manipulator Tools on NVIDIA Omniverse
+
+
+
+Video Tutorials
+Watch our getting started tutorials.
+
+6 Crucial Tips For New NVIDIA Omniverse Developers
+How to Build an Omniverse Extension in Less Than 10 Minutes
+
+
+
+Example Extensions
+Browse through an extensive list of Extension examples and templates, created by NVIDIA and the Omniverse community.
+
+API Connection Extension Sample
+Asset provider Search Sample on Github
+Omniverse Kit Python Extension Template
+List of community made Extensions
+Omniverse Kit C++ Extension Template
+
+-*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*
+
+
+Build Apps
+
+
+
+Build Apps
+
+With Omniverse, you can build custom 3D Applications to suit you or your organization’s needs. They do not necessarily require any code and are built by packaging a set of Extensions together. NVIDIA develops and maintains a suite of custom Omniverse Applications to show what is possible.
+On a technical level, an Omniverse App is essentially a configuration .kit file that tells the Kit executable (Kit.exe) to load a specific set of Extensions. Your App is launched using a .bat file that passes your App .kit file to the Kit executable.
+
+Why Create an App?
+Consider creating an App when you require specialized 3D software with a customized layout and functionality to streamline your workflow to your needs. For example, your organization might have a need to manage an automotive factory, complete with inventory capabilities, digital twin functionality and AI powered search features. This and much more is possible by creating a custom App. You can choose from existing Extensions and create new ones to develop new functionality.
+
+
+Learn to Develop Apps
+
+Video Tutorials
+Watch our tutorials on creating custom Kit Applications.
+
+Primer: Build an App with the Kit App Template
+Advanced: Create an Omniverse App Using the Kit App Template
+
+
+
+Documentation
+Read a guide to learning the anatomy of an Omniverse App and details for setting up the .kit configuration file.
+
+Building an App
+
+
+
+Additional Resources
+Watch an overview of custom Kit App development.
+
+Overview: Develop Custom tools and Apps in Omniverse
+
+
+-*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*-
+
+Developing USD
+Universal Scene Description (USD) is an open and extensible industry standard 3D format used for composing, simulating, and collaborating within 3D worlds. It was originally invented by Pixar Animation Studios. Developers working in Omniverse has the ability to build on top of USD in Applications and Extensions.
+
+Learn to Develop USD
+
+Documentation
+
+Developer Quick Start
+Advanced USD Dev
+
+
+
+USD Python Snippets
+Example Python code to automate USD.
+
+USD Python Snippets
+
+
+
+Python Scripting Components
+Attach a Python script to a USD prim.
+
+extensions:Python Scripting Component
+
+
+
+USD APIs
+
+Python USD API
+Pxr API
+
+
+
+Develop USD Schemas
+Schemas provide a formal USD specification by defining prim Types and Attributes. You can extend USD by creating new schema classes to support your data models and workflows.
+
+Create USD Schemas
+
+
+
+Command History Extension
+This tool will show you how USD Kit commands can be issued in Python. It shows a history of commands that were used to make the user’s changes to the stage.
+
+Command History Tool
+-*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*-
+
+Develop Services
+
+Omniverse comes with a built-in services framework based on Omniverse Kit and its extensions. Its aim is to provide the tooling required to easily and quickly build services, that can leverage the power of any of the Kit Extensions. The services framework enables developers to deploy services:
+
+within a Kit instance
+distributed local on a machine
+across servers and virtual machines
+to the cloud and Kubernetes
+
+Visit Omniverse Services Overview to learn more.
+
+Why Develop a Service?
+Consider developing a service when you want to scale your custom Omniverse Application or Extension and offload computations to, or retrieve data from, a local network machine, server or virtual environment.
+
+
+Learn to Develop Services
+
+Basic and advanced Services
+Learn to use the omni.services extensions and Omniverse Kit’s --exec command-line option to get started with services. This guide also provides an advanced Services example.
+
+Getting Started with Services
+
+
+
+Facilities
+Facilities in Omniverse help with the management of potentially stateful objects. They can be easily injected into microservices without the Service implementation becoming stateful.
+
+Introduction to Facilities
+
+
+
+Transports
+Transports allow different protocols and communication channels to be used with the Omniverse microservices stack.
+
+Introduction to Transports
+-*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*-
+
+Build Connectors
+
+
+Build Connectors
+
+An Omniverse Connector is middleware with which Omniverse and other software applications communicate with each other. They enable the import/export 3D assets, data, and models between different tools and workflows. It’s important to note that this means using USD as the “go between” format to convert 3D data.
+
+Why Develop a Connector?
+Consider developing a connector if you want to connect a third-party Application to Omniverse. This allows the importing, exporting and synchronizing 3D data to and from Omniverse via the USD format. For example, you can create a 3D model in Maya and then send it to an Omniverse Application like Omniverse USD Composer to render it using our photo-realitic RTX or Path Tracing renderers.
+
+
+Learn to Develop Connectors
+
+Documentation
+Build your own Connector by following our samples that use Pixar USD and Omniverse Client Library APIs.
+
+Connect Sample
+
+
+
+Video Tutorials
+Learn how to connect with the Omniverse platform by syncing data to it via USD. Establish a live sync session and get a USD 101 overview to get you started.
+
+Making a Connector for Omniverse
+
+
+
+Additional Resources
+Watch an overview of the Omniverse platform and Connectors.
+
+Omniverse Connectors overview
+
+-*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*-
+
+Omniverse Glossary of Terms
+
+
+Omniverse Glossary of Terms
+
+Action GraphAn Action Graph is an OmniGraph that triggers actions in response to a particular event.
+
+Auto-authoring modeA mode of USD authoring where the USD authoring layer is automated. The edits made to a given prim will be automatically applied to the USD layer they originated in. This removes the need for the user to manually set an USD authoring layer.
+
+AxisOne of the reference lines of a coordinate system typically referred to as X, Y and Z.
+
+BasisCurvesCurve primitives based on the UsdGeomBasisCurves API. These curves have a basis property, which defines how to interpolate the vertices of cubic curves. basis options include bezier, bspline, and catmullRom.
+
+Compute Graph“Compute graph” is a synonym for OmniGraph, an engine for programmatically manipulating scenes with a graph-based visual scripting interface.
+
+CacheNucleus Cache is a simple service that can be used both on users’ workstations as well as within infrastructure to optimize data transfers
+between Nucleus and it’s Clients (Apps, Connectors, and others).
+
+CheckpointImmutable historical file versions. Checkpoints are used for version control and allow you to look at and restore the stage to a previous state.
+
+CreateNVIDIA Omniverse™ Create is an Omniverse app for world-building that allows users to assemble, light, simulate and render large scale scenes. It is built using NVIDIA Omniverse™ Kit. The Scene Description and in-memory model is based on Pixar’s USD. Omniverse Create takes advantage of the advanced workflows of USD like Layers, Variants, Instancing and much more.
+
+Default authoring modeA mode of USD authoring where a user must manually choose the USD authoring layer.
+
+EmitterAsset inside a USD scene that is used to configure the properties of a particle effect, such as emission rate and color.
+
+EndpointsEndpoints are the path/location under which the API is exposed. Omniverse Kit does not impose a type of API so users are able to build fully REST based APIs or Interactive, RPC etc. ones. The specification for the API is generated and uses OpenAPI. It can be thought of as the path section of a URL.
+
+ExtensionAn extension is a uniquely named and versioned package loaded at runtime. Extensions are are powerful plugins that can be used to extend the functionality of existing apps such as Create, View and Machinima
+
+FacilitiesBy default services are stateless, this is something that is critical for services to be distributed and scalable. However, certain objects like DB connections, configuration, task queues are generally stateful and for speed, efficiency can be reused. To do this, facilities are added. They are registered with routers on startup and can be injected into the services that need them. This also allows componentization making it possible to change how services are running depending on the environment they are running in by simply changing out one facility for another. For example a configuration facility can be a simple python dictionary during unit tests or a more advanced configuration file for production use. All that would need to change is the facility that gets registered with the router.
+
+Ground TruthOmniverse Isaac Sim can be used to generate ground truth data that is very similar to real-life analogs.
+Refer to Replicator for more details.
+
+Isaac SimA robotics simulation toolkit for NVIDIA Omniverse™.
+Refer to our Isaac Sim overview for details.
+
+InstanceA light-weight and less manipulable copy of a prim.
+
+JoinThe act of a user being added to a named session.
+
+KitThe toolkit and framework for building custom apps in Omniverse.
+
+LayerA component of the collaborative nature of USD. Each layer in USD signifies a user’s “opinion” on assets inside a stage. Layers can override other layers.
+
+LeaveThe act of a user exiting a named session.
+
+Live LayerA specialized file which holds the collaboration edits of a Live Session. These have an extension of .live. They are generally placed automatically in the USD Session Layer of a stage.
+
+Live SessionA named activity where multi users in multiple Omniverse connected applications and/or connectors can collaborate on a file together.
+
+Live Session EndThe act of ending a named session. This communicates to all users that the session is ending and all users must stop working.
+
+Live Session StartThe act of joining or creating a new named session.
+
+Live SyncLive Sync mode enables real-time “live” editing of shared files on a Nucleus Server. The Live Sync button is on the top-right corner of the Workspace.
+
+MaterialMaterials are assets that are assigned to a 3D model. They describe how an object looks and responds to lighting. In Omniverse, most materials are based on physically based rendering, which means they support properties like Albedo, Roughness, Metallic, Transparency and others.
+
+MDLAn open-source material definition language developed by NVIDIA
+
+MergeThe act of combining single or multiple source Layers into target layer(s). Most common usage is to merge a stronger layer to a single target layer beneath it.
+
+MeshA mesh is a subdividable primitive that consists of points, edges, and faces that define its shape. In USD, a mesh is encoded in a UseGeomMesh class.
+
+Multi-user collaborationOmniverse is built on USD, a collaborative technology that allows 3D artists to build together. Collaboration is at the heart of all Omniverse apps and users are able to collaborate on USD scenes in real-time.
+
+NitA nit is a unit of measure of light intensity, equal to one candela per square meter.
+
+NucleusOmniverse Nucleus offers a set of fundamental services that allow a variety of client applications, renderers, and microservices to share and modify representations of virtual worlds.
+Nucleus operates under a publish/subscribe model. Subject to access controls, Omniverse clients can publish modifications to digital assets and virtual worlds to the Nucleus Database (DB) or subscribe to their changes.
+Changes are transmitted in real-time between connected applications. Digital assets can include geometry, lights, materials, textures and other data that describe virtual worlds and their evolution through time.
+This allows a variety of Omniverse-enabled client applications ( Apps, Connectors, and others) to share and modify authoritative representations of virtual worlds.
+
+OmniGraphAn engine for programmatically manipulating scenes with a graph-based visual scripting interface.
+
+OwnerThis is the leader of a given Live Session. The user who creates the session is the owner by default.
+
+PanelA panel is a user interface (UI) element within Omniverse Applications that contains other UI elements. You can often dock a panel into a position within a window, and you typically access panels with tabs.
+Here’s an example of the Stage panel in Omniverse USD Composer:
+
+
+ParticipantsUsers that have joined a Live Session
+
+Particles EditorExtension that is used to manage the nodes of a particle effect
+
+PayloadA payload is a USD layer operation that you use to point from one prim to another, like a reference. The key difference between payloads and references is that payloads are not always consumed when a stage is built. Payloads are weaker than references, and if you decide not to load them, they’ll will be recorded, but not consumed.
+
+Push GraphA Push Graph is an OmniGraph that evaluates every node on every frame. It is convenient to use, but inefficient.
+
+PrimShort for “primitive”, the prim is the fundamental unit in Omniverse. Anything imported or created in a USD scene is a prim. This includes, cameras, sounds, lights, meshes, and more. Primitives are technically containers of metadata, properties, and other prims. Read more about USD prims in the official documentation.
+
+ReferenceA reference is a USD layer operation that you use to point from one prim to another. In doing so, you can compose a scene description, called a namespace, from smaller components. Within the namespace, referenced prims have their own, unique names. When you load a scene, referenced USD files are opened only once, even if they are used multiple times in the namespace. Finally, when a stage is built, references are always consumed. This is a key distinction between references and payloads.
+
+RenderAlso termed image synthesis is the process of generating a photorealistic or non-photorealistic image from a 2D or 3D model by means of a computer program.
+
+ReplicatorReplicator is a Synthetic Data Generation tool for creating parameterizable offline datasets in Omniverse Isaac Sim.
+
+RoutersRouters, although not required, allow the grouping and management of multiple endpoints. This becomes increasingly important and useful as services grow. It simplifies the organization and management of services creating a logical object under which endpoints are combined. They also allow the registration of facility type objects.
+Routers are available from:
+
+omni.services.core.routers
+
+
+ShapeA Shape is a geometric primitive that maps to one of USD’s five “intrinsic” UsdGeomGprim classes:
+
+
+UsdGeomCapsule
+UsdGeomCone
+UsdGeomCube
+UsdGeomCylinder
+UsdGeomSphere
+
+
+Shapes are not meshes, in that they are not defined by a collection of points, edges, and faces. Instead, they are defined by their shape and volume.
+Pixar describes their use cases for these prims in their UsdGeomGprim schema documentation.
+
+Session LayerA USD feature for in memory and temporary USD layers. These do not persist or save with the main USD stage. The Live Layers generally exist here.
+
+Services coreomni.services.core is, as it name indicates, the extension that sits at the core of the services framework.
+It uses several different components to form a framework. When services are ready they are registered with this extension that will make sure they are mounted within the application and accessible via a transport.
+This is available from:
+
+
+omni.services.core.main
+
+
+
+StageThe Omniverse Stage panel allows you to see all the assets in your current USD Scene. The Stage is the USD abstraction for a scenegraph derived from a root USD file, and all of the referenced/layered files it composes. Listed in a hierarchical (parent/child) order the Stage offers convenient access and is typically used to navigate large scenes.
+
+Synthetic Data GenerationOmniverse Isaac Sim supports Synthetic Data Generations workflows.
+Refer to Replicator for more details.
+
+TabA user interface element that you use to reveal and organize panels.
+
+
+TransportsThe core of the services framework is transport agnostic. This means that by just enabling omni.services.core and registering services they could only be used by an in memory transport.
+To make these services accessible from outside of Omniverse Kit or between Omniverse Kit instances different transports can be used. Transports can be mixed and matched and the only limitation would be the port the transports would be listening on.
+Transports, bundled with Omniverse Kit, are found underneath omni.services.transports but additional transports can be added. They would need to inherit from omni.services.transport.server.base.BaseTransport. It will need to implement a way to translate the incoming requests so it can be passed to omni.services.core.
+
+USDUniversal Scene Description (USD) is the fundamental representation for assets in Omniverse.
+
+WindowA window is a user interface container that presents an entire application.
+
+
+XFormThe Transform (Xform) is the fundamental element of all objects in Omniverse, the Location.
+
+Note
+An XForm can also be created, in this case it is the simplest of all prims and acts as a locator.
+
+
+Y-UpThe axis of orientation of a given scene/prim. Y-Up refers to the Positive Y Axis is pointing up. This orientation setting is generally set by the application of the scene/prims origination.
+
+Z-UpA reference to the axis of orientation of a given scene/prim. Z-Up refers to the Positive Z Axis is pointing up. This orientation setting is generally set by the application of the scene/prims origination.
+
+
+-*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*-
+

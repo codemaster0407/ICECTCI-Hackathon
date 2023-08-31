@@ -1,0 +1,7 @@
+At GTC Japan in Tokyo,  NVIDIA Founder and CEO Jensen Huang announced that leading Japanese companies FANUC, Komatsu, Musashi Seimitsu, and Kawada Technologies will adopt Jetson AGX Xavier in their next generation autonomous machines.
+“Japan is driving the world of robotics in numerous industries — from factory automation to construction to manufacturing,” said Deepu Talla, vice president and general manager of Autonomous Machines at NVIDIA. “The country’s most important companies in this space are adopting Jetson AGX Xavier to usher in a new era of robotics.”
+Capable of up to 32 TOPs (trillion operations per second), Jetson AGX Xavier delivers the processing capability of a powerful workstation yet fits in the palm of your hand. With multiple operating modes at 10W, 15W and 30W, Jetson AGX Xavier has greater than 10x the energy efficiency of its predecessor.
+Jetson AGX Xavier also supports a full software stack for developing and deploying AI applications through the NVIDIA JetPack SDK, which includes the latest versions of CUDA, cuDNN, and TensorRT.
+
+The NVIDIA Jetson AGX Xavier Developer Kit is available now for $2,499. Members of the NVIDIA Developer Program are eligible to receive their first kit at a special price of $1,299.
+Learn more >

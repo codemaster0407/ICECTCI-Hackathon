@@ -1,0 +1,6 @@
+Flood risk assessment is important in minimizing damages and economic losses caused by flood events.
+A team of researchers from Vienna University of Technology and visual computing firm VRVis, are using GPUs to run fast simulations of large-scale scenarios, including river flooding, storm-water events and underground flows.
+The researcher’s primary interest is in decision-making systems, where they evaluate many different scenarios and select the solution with the best outcome, which is usually very computationally expensive. Therefore, simulation runs need to be as fast as possible to reduce the overall time required to find the best solutions.
+Uncertainty-aware prediction of mobile flood protection wall overtopping in Cologne. (a) Input hydrographs forming an ensemble of 10 different scenarios with varying peak levels. (b, c) Visualization of ensemble results. Buildings are colored according to the expected damage. The terrain is colored according to the average water depth.
+In their real-world test case, the researchers used CUDA and a  GTX TITAN GPU to simulate the overtopping of mobile flood protection walls in Cologne, Germany. The overtopping happens when the water in the Rhine River raises above 11.9 meters.
+Read the research paper >> 

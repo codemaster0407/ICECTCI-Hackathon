@@ -1,0 +1,7 @@
+A startup from California is using GPUs and big data to predict what homes are likely to buy solar panels.
+PowerScout is using GPUs on the Amazon cloud and cuDNN to train their deep learning models on a mix of data from commercial databases and LIDAR to detect solar panels from satellite images, and to also detect the presence of trees near homes that could cast shade onto roofs.
+The tools the startup developed can also help estimate how much energy could be harvested from a home’s rooftop without needing to take measurements in person with a decent degree of accuracy. From the information, they can target direct mail and online marketing to the most promising customers and quickly give them online estimates. Then, those who are interested in rooftop solar can choose a financing plan and get connected to a local installation partner to have it installed.
+The map shows how much solar radiation that neighborhood is receiving. It takes into account the height of the buildings, vegetation, and other objects that could cast shade on an area. The red pixels receive the most sunlight and the blue pixels receive the least.
+The company says “predictive analytics can shave a huge portion off the price tag of solar because it eliminates the cost of finding homeowners who want clean energy.”
+PowerScout’s recent round of funding was provided by a mix of private and public sources including the U.S. Department of Energy, which awarded a total of $2.5 million in grants via its well-known SunShot Initiative.
+Read more > 

@@ -1,0 +1,7 @@
+Researchers from University of California, Berkeley developed an interactive deep learning-based app that makes it easy to accurately colorize a black and white image in minutes. 
+Building on the researcher’s previous work of a convolutional neural network automatically adding color to black and white photos, their new app uses the same process, but with the addition of user-guided clues and hints to produce more realistic results.
+Using CUDA, a TITAN X GPU and cuDNN with the Caffe deep learning framework, they trained their models on 1.3 million color photos that were made grayscale “synthetically” (by removing the color components).
+The app first takes its best attempt to automatically colorize the source image and then creates a small palette of suggested colors. The user is then able to refine the colorization by adding color markers to the source image.
+
+If you want to try it yourself, the researchers published the ‘Interactive Deep Colorization’ code on GitHub. They have also published a variety of historical grayscale photographs that have been colorized with their app and they look incredibly realistic.
+Read more >

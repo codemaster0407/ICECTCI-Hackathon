@@ -1,0 +1,3 @@
+Numba is a Python compiler from Anaconda that can compile Python code for execution on CUDA-capable GPUs or multicore CPUs. Numba allows automatic just-in-time (JIT) compilation of Python functions, which can provide orders of magnitude speedup for Python and Numpy data processing. Numba also provides CUDA Python, an API for writing CUDA kernels in the Python language.
+A new NVIDIA Developer Blog post by Anaconda’s Stanley Seibert presents seven less well-known features of Numba that make it even more useful – such as:You can write distributed GPU-accelerated applications in Python by combining Numba with Dask
+Read more >

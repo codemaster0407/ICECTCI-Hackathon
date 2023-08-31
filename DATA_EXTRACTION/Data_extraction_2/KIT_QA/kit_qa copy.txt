@@ -1,0 +1,176 @@
+{
+"question1": "What is the purpose of the carb.settings namespace in Python?",
+"answer1": "The carb.settings namespace in Python provides a simple to use interface to Kit's Settings subsystem. It allows easy access to settings from both C++ and scripting bindings like Python."
+
+"question2": "How does the carb.dictionary subsystem relate to the Settings subsystem?",
+"answer2": "The carb.dictionary subsystem is used under the hood by the Settings subsystem. It effectively acts as a singleton dictionary with a specialized API to streamline access to settings."
+
+"question3": "Why is it important to set default values for settings?",
+"answer3": "Setting default values for settings ensures that there is always a valid value available when accessing a setting. It helps prevent errors when reading settings without a value."
+
+"question4": "How can you efficiently monitor changes in settings?",
+"answer4": "To efficiently monitor changes in settings, it is recommended to use notifications instead of polling for settings. Subscribing to notifications helps avoid unnecessary access to the settings backend when the value remains unchanged."
+
+"question5": "What is the purpose of the '/app/rendering/enabled' setting?",
+"answer5": "The '/app/rendering/enabled' setting is intended to be easily tweakable, serializable, and human-readable. It allows users to enable or disable rendering functionality in the application."
+
+"question6": "What is the recommended approach for reacting to settings changes?",
+"answer6": "The recommended approach for reacting to settings changes is to monitor settings for changes and have plugins/extensions react accordingly. If a change won't affect behavior, users should still be informed about the setting changes."
+
+"question7": "How can the API and settings be effectively reconciled?",
+"answer7": "One effective way to reconcile the API and settings is to ensure that API functions only modify corresponding settings. The core logic should track settings changes and respond to them, avoiding direct changes to the core logic value when a corresponding setting value is present."
+
+"question8": "Why is it important to avoid direct changes to the core logic value?",
+"answer8": "Avoiding direct changes to the core logic value when a corresponding setting value is present ensures that the value stored in the core logic and the corresponding setting value are always in sync, preventing inconsistencies."
+}
+
+
+{
+  "question1": "How can the API documentation be built for the repo?",
+  "answer1": "To build the API documentation, you can run 'repo.{sh|bat} docs'. To automatically open the resulting docs in the browser, add the '-o' flag. You can also use the '--project' flag to specify a specific project to generate the docs for."
+
+  "question2": "What is the purpose of the carb.settings namespace in Python?",
+  "answer2": "The carb.settings namespace in Python provides a simple to use interface to Kit's Settings subsystem. It allows easy access to settings from both C++ and scripting bindings like Python."
+
+  "question3": "How can you efficiently monitor changes in settings?",
+  "answer3": "To efficiently monitor changes in settings, it is recommended to use notifications instead of polling for settings. Subscribing to notifications helps avoid unnecessary access to the settings backend when the value remains unchanged."
+
+  "question4": "What is the purpose of the '/app/rendering/enabled' setting?",
+  "answer4": "The '/app/rendering/enabled' setting is intended to be easily tweakable, serializable, and human-readable. It allows users to enable or disable rendering functionality in the application."
+
+  "question5": "How can the API and settings be effectively reconciled?",
+  "answer5": "One effective way to reconcile the API and settings is to ensure that API functions only modify corresponding settings. The core logic should track settings changes and respond to them, avoiding direct changes to the core logic value when a corresponding setting value is present."
+
+  "question6": "Why is it important to avoid direct changes to the core logic value?",
+  "answer6": "Avoiding direct changes to the core logic value when a corresponding setting value is present ensures that the value stored in the core logic and the corresponding setting value are always in sync, preventing inconsistencies."
+
+  "question7": "What is the best way to document Python API?",
+  "answer7": "The best way to document Python API is to use Python Docstring format (Google Python Style Docstring). This involves providing one-liner descriptions, more detailed behavior explanations, Args and Returns sections, all while utilizing Python type hints."
+
+  "question8": "What approach should be taken for documenting C++ code that is exposed to Python using pybind11?",
+  "answer8": "For documenting C++ code exposed to Python via pybind11, the same Google Python Style Docstring format should be used. The pybind11 library automatically generates type information based on C++ types, and py::arg objects must be used to properly name arguments in the function signature."
+
+  "question9": "How can Sphinx warnings be dealt with during the documentation process?",
+  "answer9": "To address Sphinx warnings, it is crucial to fix issues with MyST-parser warnings, docstring syntax, and C++ docstring problems. Properly managing __all__ in Python modules helps control which members are inspected and documented. Also, ensuring consistent indentation and whitespace in docstrings is essential."
+
+  "question10": "What are some common sources of docstring syntax warnings?",
+  "answer10": "Common sources of docstring syntax warnings include indentation or whitespace mismatches in docstrings, improper usage or lack of newlines where required, and usage of asterisks or backticks in C++ docstrings."
+
+  "question11": "How can API extensions be added to the automatic-introspection documentation system?",
+  "answer11": "To add API extensions to the automatic-introspection documentation system, you need to opt-in the extension to the new system. This involves adding the extension to the list of extensions, providing an Overview.md file in the appropriate folder, and adding markdown files to the extension.toml configuration file."
+
+  "question12": "Why is it important to properly manage __all__ in Python modules?",
+  "answer12": "Managing __all__ in Python modules helps control which objects are imported when using 'from module import *' syntax. This improves documentation generation speed, prevents unwanted autosummary stubs, optimizes import-time, unclutters imported namespaces, and reduces duplicate object Sphinx warnings."
+
+  "question13": "What is the purpose of the 'deps' section in the extension.toml configuration file?",
+  "answer13": "The 'deps' section in the extension.toml file specifies extension dependencies and links or Sphinx ref-targets to existing projects. It allows the documentation system to resolve type references and generate proper links to other objects that are part of the documentation."
+
+  "question14": "How are asterisks and backticks handled in C++ docstrings?",
+  "answer14": "In C++ docstrings, asterisks and backticks are automatically escaped at docstring-parse time, ensuring that they are properly displayed in the documentation and do not cause any formatting issues."
+}
+
+
+
+
+{
+  "question1": "What version of Python does the Kit come with?",
+  "answer1": "Regular CPython 3.7 is used with no modifications."
+
+  "question2": "What does Kit do before starting any extension?",
+  "answer2": "Kit initializes the Python interpreter before any extension is started."
+
+  "question3": "How can extensions add their own folders to sys.path?",
+  "answer3": "Extensions can add their own folders (or subfolders) to the sys.path using [[python.module]] definitions."
+
+  "question4": "What entry point into Python code do extensions get?",
+  "answer4": "By subclassing as IExt, extensions get an entry point into Python code."
+
+  "question5": "What is the recommended method to debug most issues related to Python integration?",
+  "answer5": "Examining sys.path at runtime is the most common way to debug most issues."
+
+  "question6": "How can you use a system-level Python installation instead of the embedded Python?",
+  "answer6": "Override PYTHONHOME, e.g.: --/plugins/carb.scripting-python.plugin/pythonHome=\"C:\\Users\\bob\\AppData\\Local\\Programs\\Python\\Python310\"."
+
+
+  "question7": "How can you use other Python packages like numpy or Pillow?",
+  "answer7": "You can use the omni.kit.piparchive extension that comes bundled with Kit or add them to the search path (sys.path)."
+
+
+  "question8": "What is the purpose of the omni.kit.pipapi extension?",
+  "answer8": "The omni.kit.pipapi extension allows installation of modules from the pip package manager at runtime."
+
+
+  "question9": "How can you package Python modules into extensions?",
+  "answer9": "Any Python module, including packages from pip, can be packaged into any extension at build-time."
+
+
+  "question10": "Why do some native Python modules not work in Kit?",
+  "answer10": "Native Python modules might not work in Kit due to issues with finding other libraries or conflicts with already loaded libraries."
+}
+
+
+
+{
+    "question117": "What plugin covers event streams?",
+    "answer117": "The carb.events plugin covers event streams."
+ 
+    "question118": "Which interface is used to create IEventStream objects?",
+    "answer118": "The singleton IEvents interface is used to create IEventStream objects."
+
+  "Q119": {
+    "question": "What happens when an event is pushed into an event stream?",
+    "answer": "The immediate callback is triggered, and the event is stored in the internal event queue."
+  },
+  "Q120": {
+    "question": "What are the two types of callbacks that event consumers can subscribe to?",
+    "answer": "Event consumers can subscribe to immediate (push) and deferred (pop) callbacks."
+  },
+  "Q121": {
+    "question": "How can callbacks be bound to context?",
+    "answer": "Callbacks are wrapped into IEventListener class that allows for context binding to the subscription."
+  },
+  "Q122": {
+    "question": "What does the IEvent contain?",
+    "answer": "IEvent contains event type, sender id, and custom payload, which is stored as carb.dictionary item."
+  },
+  "Q123": {
+    "question": "What is the recommended way of using event streams?",
+    "answer": "The recommended way is through the deferred callbacks mechanisms, unless using immediate callbacks is absolutely necessary."
+  },
+  "Q124": {
+    "question": "What can be used to narrow/decrease the number of callback invocations?",
+    "answer": "Event types can be used to narrow/decrease the number of callback invocations."
+  },
+  "Q125": {
+    "question": "What are the important design choices for event streams?",
+    "answer": "Either multiple event streams with fairly limited numbers of event types served by each or one single event stream serving many different event types."
+  },
+  "Q126": {
+    "question": "What is the use of transient subscriptions?",
+    "answer": "Transient subscriptions are used to implement deferred-action triggered by some event without subscribing on startup and checking the action queue on each callback trigger."
+  },
+  "Q127": {
+    "question": "How can you execute your code only on Nth event using transient subscriptions?",
+    "answer": "The transient subscription can include a simple counter, so you execute your code only on Nth event, not necessarily on the next one."
+  },
+  "Q128": {
+    "question": "What is the purpose of the carb::events::IEvents Carbonite interface?",
+    "answer": "The carb::events::IEvents Carbonite interface is used to provide a means to move data around using the generalized interface in a thread-safe manner and synchronize the logic."
+  },
+  "Q129": {
+    "question": "How are event consumers able to subscribe to callbacks?",
+    "answer": "Subscription functions create the ISubscription class, which usually unsubscribes automatically upon destruction."
+  },
+  "Q130": {
+    "question": "What are some important recommendations for using the events subsystem?",
+    "answer": "The events subsystem is flexible, and there are several recommendations intended to help with frequent use-cases and provide clarifications on specific parts of the events logic."
+  }
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,6 @@
+As part of the GlaS@MICCAI2015 colon gland segmentation challenge, a team of researchers introduced a machine learning-based algorithm to segment glands in tissue of benign and malignant colorectal cancer.
+The variability of glandular structures in biological tissue poses a challenge to automated analysis of histopathology slides. It has become a key requirement to  quantitative morphology assessment and supporting cancer grading.
+Qualitative segmentation results on images: Segmentation (blue outline) and ground truth (green outline), false negative pixels are cyan, and false positive pixels are yellow
+Using GPUs, CUDA, and Pylearn2 — a machine learning library built on top of Theano — the team trained their two deep convolution neural networks on a set of 125,000 images and achieved a classification accuracy of 98% and 94%, making use of the inherent capability of the system to distinguish between benign and malignant tissue.
+In related news, the NVIDIA Foundation recently awarded $200,000 to a team of researchers from the University of Toronto for their GPU-accelerated cancer research by developing a “genetic interpretation engine” – a deep learning method for identifying cancer-causing mutations.
+Read the research paper >> 

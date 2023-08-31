@@ -1,0 +1,6 @@
+A researcher from Carnegie Mellon University developed S.A.R.A. (Socially Aware Robot Assistant) that not only comprehends what you say, but also understands facial expressions and head movements.
+Using CUDA, GTX 1080 GPUs and cuDNN with TensorFlow to train the deep learning models, S.A.R.A. will reply differently if she detects a smile than someone frowning and offering a response that doesn’t comply with social norms.
+“She looks at your behavior and her behavior,” says Justine Cassell, director of human-computer interaction at Carnegie Mellon University and director of the project, “and calculates on the basis of the intersection of that behavior. Which no one has ever done before.”
+S.A.R.A. looks at the information you disclose, if you’re smiling, and whether what you’re saying goes along with or against social norms, to determine her response to you.
+The S.A.R.A. project consists of three elements never before used, says Cassell: conversational strategy classifiers, a rapport estimator, and a social reasoner. “The conversational strategy classifiers are five separate recognizers that can classify any one of five conversational strategies with over 80 percent accuracy.”
+Read more >

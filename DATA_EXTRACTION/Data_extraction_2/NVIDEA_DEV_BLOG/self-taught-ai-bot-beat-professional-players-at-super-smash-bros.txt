@@ -1,0 +1,8 @@
+Students from MIT and New York University developed an AI bot that ended up teaching itself in two weeks to beat professional gamers during the Genesis 4 Super Smash Bros tournament last month.
+The AI, nicknamed Phillip, was originally trained with CUDA, Tesla K20/TITAN X GPUs and the TensorFlow deep learning framework – but the creator Vlad Firoiu couldn’t train it to be as strong as the in-game bot. So instead, he had the bot play itself over and over again, learning which techniques worked the best, called reinforcement learning.
+“I just sort of forgot about it for a week,” said Firoiu, who coauthored the paper with William F. Whitney. “A week later I looked at it and I was just like, ‘Oh my gosh.’ I tried playing it and I couldn’t beat it.”
+Watch Phillip take on the pros below:
+
+The bot almost learns to make its own flow chart. Based on its past playing experiences, it learns that certain combinations of moves are more effective, through thousands of games of trial and error. However, its preferred move combinations are strange, and almost inhuman to pros who watch. Also, the typical human has a response time of about 200 milliseconds, about six times slower than the bot’s 33 ms typical reaction.
+Of the ten professionals that went head-to-head against the AI at the tournament, each one was killed more than they could kill the bot.
+Read more >

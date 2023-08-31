@@ -1,0 +1,63 @@
+Getting Started with Extensions
+This guide will help you get started creating new extensions for Kit based apps and sharing them with other people.
+While this guide can be followed from any Kit based app with a UI, it was written for and tested in Create.
+
+Note
+For more comprehensive documentation on what an extension is and how it works, refer to :doc:Extensions (Advanced) <extensions_advanced>.
+
+
+Note
+We recommend installing and using Visual Studio Code as the main developer environment for the best experience.
+
+
+1. Open Extension Manager UI: Window -> Extensions
+
+This window shows all found extensions, regardless of whether they are enabled or disabled, local or remote.
+
+
+2. Create New Extension Project: Press “Plus” button on the top left
+
+It will ask you to select an empty folder to create a project in. You can create a new folder right in this dialog with a right-click.
+It will then ask you to pick an extension name. It is good practice to match it with a python module that the extension will contain.
+Save the extension folder to your own convenient location for development work.
+A few things will happen next:
+
+The selected folder will be prepopulated with a new extension.
+exts subfolder will be automatically added to extension search paths.
+app subfolder will be linked (symlink) to the location of your Kit based app.
+The folder gets opened in Visual Studio Code, configured and ready to hack!
+The new extension is enabled and a new UI window pops up:
+
+
+The small “Gear” icon (on the right from the search bar) opens the extension preferences. There you can see and edit extension search paths. Notice your extension added at the end.
+Have a look at the README.md file of created folder for more information on its content.
+Try changing some python files in the new extension and observe changes immediately after saving. You can create new extensions by just cloning an existing one and renaming. You should be able to find it in the list of extensions immediately.
+
+
+3. Push to git
+When you are ready to share it with the world, push it to some public git repository host, for instance: GitHub
+A link to your extension might look like: git://github.com/[user]/[your_repo].git?branch=main&dir=exts.
+Notice that exts is repo subfolder with extensions. More information can be found in: Git URL as Extension Search Paths.
+The repository link can be added right into the extension search paths in UI:
+
+To get new changes pulled in from the repository, click on the little sync button.
+
+Note
+Git must already be installed (git command available in the shell) for this feature to work.
+
+
+
+More Advanced Things To Try
+
+Explore kit.exe
+From Visual Studio Code terminal in a newly created project you have easy access to Kit executable.
+Try a few commands in the terminal:
+
+app\kit\kit.exe -h to get started
+app\kit\kit.exe --ext-folder exts --enable company.hello.world to only start newly added extension. It has one dependency which will automatically start few more extensions.
+app\kit\omni.app.mini.bat to run another Kit based app. More developer oriented, minimalistic and fast to start.
+
+
+
+Explore other extensions
+Kit comes with a lot of bundled extensions. Look inside app/kit/exts, app/kit/extscore and app/exts. Most of them are written in python. All of the source to these extensions is available and can serve as an excellent reference to learn from.

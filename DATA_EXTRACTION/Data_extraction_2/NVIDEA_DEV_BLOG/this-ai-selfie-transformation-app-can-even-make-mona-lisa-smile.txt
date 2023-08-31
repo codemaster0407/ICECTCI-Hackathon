@@ -1,0 +1,7 @@
+A new mobile app called FaceApp uses neural networks to edit your selfie via photo-realistic filters – letting you add a smile, swap genders, and can take years off your age. 
+
+Developed and self-funded by a small group out of Russia in eight months, the app uses CUDA, TITAN X Pascal GPUs, Tesla K80s and the cuDNN-accelerated TensorFlow deep learning framework to train their deep generative convolutional neural networks. The app then sends the selfies to the cloud (Microsoft Azure’s Tesla K80 GPU instance) to transform them.
+In regards to how FaceApp is different from the viral style transfer app Prisma, “Prisma changes the style of a photo, but doesn’t modify the content,” said Yaroslav Goncharov, founder and CEO of the app. “FaceApp changes the content (by adding a smile), but keeps the style (so the picture stays photorealistic).”
+
+The app is now available as a free download for iOS and Android.
+Download now >

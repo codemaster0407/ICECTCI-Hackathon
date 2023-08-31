@@ -1,0 +1,6 @@
+Problem: During application development you may find yourself looking at a crash report with an attached crash dump – unfortunately there’s no guarantee you’ll have the same driver installed on your local system as is used in the dump (typically this happens when crash dumps come from QA or end users who are using a different driver), and so you may find yourself unable to accurately resolve the call-stack contained within the dump – a necessary component in figuring out what the bug actually is (and therefore fixing it).
+Solution: Point your debugger at our driver symbol server. This is typically done in Visual Studio using the symbol settings menu.
+Our driver symbol server can serve you NVIDIA driver binaries from any driver release within the previous 3 years (at the time of writing this article), and includes all the binaries we distribute in our release driver package — so whether you’re developing for DirectX 11, DirectX 12, OpenGL, Vulkan or CUDA and more, you should be covered!
+Please note, we are only hosting the driver binaries, no PDBs will be distributed on this server.
+You can find it here > 
+*NB. You can always manually resolve the stack with some accuracy in some circumstances — outlined in the fantastic article on the Windows x64 ABI.

@@ -1,0 +1,7 @@
+ETH Zurich scientists leveraged deep learning to automatically stich together millions of public images and video into a three-dimensional, living model of the city of Zurich. 
+The platform called “VarCity” combines a variety of different image sources: aerial photographs, 360-degree panoramic images taken from vehicles, photos published by tourists on social networks and video material from YouTube and public webcams.
+“The more images and videos the platform can evaluate, the more precise the model becomes,” says Kenneth Vanhoey, a postdoc in the group led by Luc Van Gool, a Professor at ETH Zurich’s Computer Vision Lab. “The aim of our project was to develop the algorithms for such 3D city models, assuming that the volume of available images and videos will also increase dramatically in the years ahead.”
+Using a cluster of GPUs including Tesla K40s with cuDNN to train their deep learning models, the technology recognizes image content such as buildings, windows and doors, streets, bodies of water, people, and cars. Without human assistance, the 3D model “knows”, for example, what pavements are and – by evaluating webcam data – which streets are one-way only.
+
+The researchers are not offering the models themselves as an application, but the technology behind them has many possible applications, including urban design and transportation planning.
+Read more >

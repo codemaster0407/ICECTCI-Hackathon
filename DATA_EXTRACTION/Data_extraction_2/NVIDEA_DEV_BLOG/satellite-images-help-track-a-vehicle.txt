@@ -1,0 +1,7 @@
+Researchers from the Toyota Technological Institute at Chicago (TTIC) and Carnegie Mellon University developed a deep learning-based method that locates a ground vehicle by using satellite imagery as the only prior knowledge of the environment.
+Knowing the exact location of a vehicle is critical for autonomous cars, and currently GPS systems are being used which the researchers claim suffer from limited precision and are sensitive to multipath effects – such as in “urban canyons” formed by tall buildings.
+Using TITAN X GPUs, CUDA, and Keras with the Theano deep learning framework, the researchers multi-view neural network learns to match ground-level images with their corresponding satellite view. For training, they used ground-level images from the KITTI dataset collected from a moving vehicle and paired them with the matching satellite image.
+A visualization of their network architecture that consists of two independent convolutional neural networks (CNNs) that take as input ground-level and satellite images. Each CNN is an adaptation of VGG-16 CNNs in which mid-level conv4-1 features are downsampled and combined with the output of the last max-pooling layer as the high-level features via summation. The resulting outputs are then used as a measure of distance between ground-level and satellite views.
+The next step for the work is to adapt their model so it is able to tolerate more severe appearance variations like seasonal changes.
+ Read more >
+ 

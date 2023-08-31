@@ -1,0 +1,7 @@
+The Tampa Bay Buccaneers unveiled a state-of-the-art experience to provide fans with the ability to virtually sample the new gameday enhancements that will debut beginning with the team’s 2016 season.
+While the new Raymond James Stadium is under construction, current and prospective ticket holders can use a virtual reality headset to experience the new stadium before it opens in September. The realistic preview is also valuable in attracting potential sponsors by helping executives visualize their company’s logo inside the stadium.
+Brian Killingsworth, chief marketing officer of the Buccaneers, said the Bucs are the first professional sports team to integrate video and a “three-dimensional environment with full freedom of motion touring capabilities.”
+An aerial view of what the overhauled Raymond James Stadium will look like for the 2016 season. (Tampa Bay Buccaneers)
+MVP Interactive, a four-year old Philadelphia creative agency, used CUDA and the new GeForce GTX 1080 to develop the experience with Unreal Engine.
+“We’re seeing a massive opportunity to leverage the technology to give a view from the seats from a season-ticket perspective, and of course corporate sponsors are really important to the finances of a particular team. When folks have their first opportunity to experience virtual reality, that alone helps qualify a sales pitch,” MVP Interactive CEO James Giglio said.
+Read more >>

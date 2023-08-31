@@ -1,0 +1,10 @@
+Glaucoma affects more than 2.7 million people in the U.S. and is one of the leading causes of blindness in the world. To study how deep learning can help doctors more efficiently diagnose the disease, researchers from IBM and New York University have developed a deep learning framework that automatically detects the disease with 94 percent accuracy.
+“We detail a new deep learning framework that detects glaucoma directly from raw optical coherence tomographic (OCT) imaging, a method which uses light waves to take cross-section pictures of the retina,” the researchers stated.
+Using NVIDIA Tesla GPUs and the cuDNN-accelerated Keras and TensorFlow deep learning frameworks, the team trained their convolutional neural network on hundreds of OCT images acquired from 624 patients. The team split the dataset into 888 training samples, 112 validation samples, and 110 test samples. Eyes belonging to the same patient were not split among the data sets. The cohort included 217 healthy and 432 glaucoma patients.
+Once trained, the neural network correctly identified glaucoma in 94 percent of the cases.
+“We believe this improved accuracy is a result of eliminating errors in the automated segmentation of structures in images as well as the inclusion of regions of the image that are not currently utilized clinically for this purpose,” said Bravna Antony, a research scientist at IBM.
+
+The team says their five-layer neural network allows the algorithm to run with greater efficiency.  The method also outperformed the previous state-of-the-art framework which achieved 89 percent accuracy on the same task.
+In future work, the team will investigate the potential biomarkers of glaucoma, which could lead to a deeper understanding of the disease.
+The work was recently featured on an IBM blog and the paper was published on ArXiv.
+Read more>

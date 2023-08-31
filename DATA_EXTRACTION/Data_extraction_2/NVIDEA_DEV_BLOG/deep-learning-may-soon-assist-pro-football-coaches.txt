@@ -1,0 +1,6 @@
+An Oregon State University professor is training his GPU-accelerated neural network to understand and coach football.
+“AI will revolutionize sports,” said Alan Fern, lead researcher and computer science professor at Oregon State University.
+Using CUDA, Tesla K80 GPUs, and the cuDNN versions of Caffe and Torch deep learning frameworks, Fern trained his model on video of Oregon State football plays and hundreds of hours of high school football to detect the snap, the difference between kicking, passing and running plays, and whether a team is on offense or defense.
+
+With this knowledge, Fern is hoping the algorithm will allow coaches, analysts, and fans to easily pose queries against libraries of football video for indexing and collecting statistics – such as a head coach being able to see the best matchups between receivers and cornerbacks or to measure the contribution of each player to every play.
+Read more >>

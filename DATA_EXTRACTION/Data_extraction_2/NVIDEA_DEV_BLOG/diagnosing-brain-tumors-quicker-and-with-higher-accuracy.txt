@@ -1,0 +1,7 @@
+Neurosurgeons and pathologists from University of Michigan Medicine developed a new imaging technique that can be used in the operating room to diagnose brain tumors more efficiently.
+Today’s workflow for determining a diagnosis during an operation requires the surgeon wait for 30 to 40 minutes while tissue is sent to a dedicated pathology lab for processing, sectioning, staining, mounting and interpretation. The entire team in the operating room may be idle while waiting for pathology results, says first author Daniel A. Orringer, M.D., assistant professor of neurosurgery at the U-M Medical School.
+Using CUDA, GTX 1080 GPUs and cuDNN with the Theano deep learning framework to train their models, Orringer and his team are able to predict brain tumor subtype with 90 percent accuracy.
+“Our technique may disrupt the intraoperative diagnosis process in a great way, reducing it from a 30-minute process to about 3 minutes,” Orringer says. “Initially, we developed this technology as a means of helping surgeons detect microscopic tumor, but we found the technology was capable of much more than guiding surgery.”
+
+The team plans to next host a large-scale clinical trial to compare conventional methods and their new AI-based technique.
+Read more >

@@ -1,0 +1,7 @@
+Zhili Chen, a 3D Graphics Researcher from Adobe Research, shares how they are using TITAN X GPUs and CUDA to create a real-time painting system that simulates the interactions between brush, paint, and canvas at the bristle level.
+He describes how artists can use the system to draw realistic and vivid digital paintings, by applying the painting techniques they are familiar with, in a virtual environment.
+
+For more details, read Zhili’s research paper ‘Wetbrush: GPU-based 3D Painting Simulation at the Bristle Level’.
+Share your GPU-accelerated science with us at http://nvda.ly/Vpjxr and with the world on #ShareYourScience.
+Watch more scientists and researchers share how accelerated computing is benefiting their work at http://nvda.ly/X7WpH
+ 

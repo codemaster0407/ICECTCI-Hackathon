@@ -1,0 +1,3 @@
+A team of researchers from Seoul National University built a pedestrian-following service robot to drive smart shopping carts and other autonomous helpers. The performance of their initial CPU-only implementation was “not acceptable for a real-time system” so they now use a GPU-accelerated CUDA implementation for a 13x performance boost.
+Mobile robots that track a person have received considerable attention for a number of applications such as transporting loads, and serving customers – but in general, the robots have limited range sensors.Besides the shopping cart, the researchers tested the operating system on a selfie robot (which can also be used as a care robot for seniors) and a transporter robot.
+Read the research paper >> 

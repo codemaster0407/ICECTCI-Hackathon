@@ -1,0 +1,9 @@
+NVIDIA released JetPack 3.1, the production software release for the Jetson TX1/TX2 platforms for AI at the edge. JetPack 3.1 doubles the deep learning inference performance for low latency applications for batch size 1. For the first time, developers will have access to the same unified code base for both TX1 and TX2, including a shared Linux kernel 4.4 codeline, libraries and APIs. This comprehensive package gives developers advanced tools to create tomorrow’s robots and intelligent machines.
+Figure 1: Inference throughput of GoogLeNet and ResNet-50 using Jetson TX2 Max-Q and Max-P power profiles. TensorRT 2.1 provides twice the inference throughput on GoogLeNet and ResNet.
+The Jetson platform has already been deployed across a variety of applications including drones, industrial and delivery robots, human support robots (HSR), high school robotics programs, telepresence, video analytics, and more. Now with the release of JetPack 3.1, large deep learning models can be run with improved performance using the latest tools and libraries. They include:
+JetPack 3.1 is available now and free to download. Developers can start creating today with a variety of design resources available. They include:NVIDIA JetPack 3.1 — Software ComponentsTwo Days to a Demo
+Dive into deep learning with NVIDIA’s guide to building a demo in two days. All the necessary tools are provided, including quick start guides, software samples and pre-trained network models.
+On-Demand Jetson Webinar 
+Listen to NVIDIA’s on-demand Webinar on “Breaking New Frontiers in Robotics and Edge Computing with AI.” It covers the latest tools and techniques to develop autonomous robots and other intelligent machines with NVIDIA Jetson TX2.
+Learn more about what NVIDIA is doing for the future of robotics with the Isaac Initiative, including the NVIDIA Jetson Reference Platforms and Isaac Lab.
+Read our Developer blog for a deeper dive into our latest JetPack 3.1 release >

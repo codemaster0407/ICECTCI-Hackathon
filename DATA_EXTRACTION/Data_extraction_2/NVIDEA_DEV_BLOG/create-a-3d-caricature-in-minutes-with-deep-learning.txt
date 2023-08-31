@@ -1,0 +1,6 @@
+Researchers from The University of Hong Kong developed a deep learning-based sketching system that lets users easily create a 3D face in minutes. 
+The low-cost interactive face modeling system allows the user to draw freehand imprecise 2D lines and then with the help of deep learning, they’re able to further manipulate the expressions of the 3D model.
+According to the researcher’s paper, the key issue in gesture-based 3D face refinement is achieving high accuracy in gesture classification. Using a TITAN X GPU, CUDA and the cuDNN accelerated Caffe deep learning framework, they trained their convolutional neural network on thousands of 3D face models with varying shapes and expressions that were rendered into sketches.
+
+For future work, the researchers plan to take advantage of Generative Adversarial Networks (GANs) to help with the pixel-to-pixel prediction which will be used to create geometric details such as wrinkles.
+Read more >

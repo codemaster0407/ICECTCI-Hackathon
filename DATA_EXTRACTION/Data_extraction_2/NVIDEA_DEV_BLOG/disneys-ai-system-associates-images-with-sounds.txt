@@ -1,0 +1,8 @@
+Disney Research developed a system that can recognize various objects in videos and automatically add related sound effects, such as a glasses clinking or cars driving down the road.
+Using a GeForce GTX 980 Ti GPU and the Caffe deep learning framework, the researchers trained their model to recognize the sound of images by feeding it a collection of videos demonstrating an object making a specific sound. More details in their paper, “Suggesting Sounds for Images from Video Collections”.
+“Videos with audio tracks provide us with a natural way to learn correlations between sounds and images,” said Jean-Charles Bazin, a research associate at Disney Research. “Video cameras equipped with microphones capture synchronized audio and visual information. In principle, every video frame is a possible training example.”
+The tricky part though was for the system to identify which sound is associated with which object.
+“Sounds associated with a video image can be highly ambiguous,” said Markus Gross, vice president for Disney Research. “By figuring out a way to filter out these extraneous sounds, our research team has taken a big step toward an array of new applications for computer vision.”
+
+This project is still in the research phase, but you can imagine the various audio image recognition applications it can be applied to.
+Read more >

@@ -1,0 +1,6 @@
+Not sure which fish you caught? FishVerify uses artificial intelligence to help fishermen instantly identify their catch and learn local fishing regulations related to that specific specie.
+With over 80 years of fishing experience combined, the three founders found themselves still stumped by the mysterious fish they caught in the Florida waters.
+Using CUDA, Tesla GPUs on the Amazon cloud and cuDNN-accelerated Caffe deep learning framework, the team trained their neural network to recognize 150 of the most commonly caught fish in Florida.
+
+Currently in private beta to a select group of South Florida fisherman, the app will be available publicly for iOS users next month.
+Read more >

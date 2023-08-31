@@ -1,0 +1,9 @@
+Australian scientists made a significant discovery hiding behind the world-famous Great Barrier Reef. The discovery was made using cutting-edge surveying technology, which revealed vast fields of doughnut-shaped mounds measuring up to 300 meters across and up to 10 meters deep.
+“We’ve known about these geological structures in the northern Great Barrier Reef since the 1970s and 80s, but never before has the true nature of their shape, size and vast scale been revealed,” said Dr Robin Beauman of James Cook University, who helped lead the research.
+The scientists from James Cook University, Queensland University of Technology, and University of Sydney used LiDAR data collected from the Australian Navy to help reveal this deeper, subtler reef. They then used CUDA and GeForce GTX 1080 GPUs to compile and visualize the huge 3D bathymetry datasets.
+“Having a high-performance GPU has been critical to this ocean mapping research,” says Beauman.
+North-westerly view of the Bligh Reef area off Cape York. Depths are colored red (shallow) to blue (deep), over a depth range of about 50 meters. Bathymetry data from Australian Hydrographic Service.
+The discovery has opened up many other new avenues of research.
+“For instance, what do the 10-20 meter thick sediments of the bioherms tell us about past climate and environmental change on the Great Barrier Reef over this 10,000 year time-scale? And, what is the finer-scale pattern of modern marine life found within and around the bioherms now that we understand their true shape?”
+Next up, the researchers plan to employ autonomous underwater vehicle technologies to unravel the physical, chemical and biological processes of the structures.
+Read more >>

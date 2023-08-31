@@ -1,0 +1,97 @@
+Overview
+
+Omniverse Kit
+Omniverse Kit is the SDK for building Omniverse applications like Create and View. It can also be used to develop your own Omniverse applications.
+It brings together a few major components:
+
+USD/Hydra (see also omni.usd)
+Omniverse (via Omniverse client library)
+Carbonite
+Omniverse RTX Renderer
+Scripting
+A UI Toolkit (omni.ui)
+
+As a developer you can use any combination of those to build your own application or just extend or modify what’s already there.
+
+USD/Hydra
+USD is the primary Scene Description used by Kit, both for in-memory/authoring/runtime use, and as the serialisation format.
+USD can be accessed directly via an external shared library. If your plugin uses USD through C++ it must link to this library. You can also use USD from python using USD’s own python bindings, which cover the whole USD API (but not all of it’s dependencies like Tf, SDF etc). We generated reference documentation for it, see the Modules.
+Hydra allows USD to stream it’s content to any Renderer which has a Hydra Scene Delegate - these include Pixar’s HDStorm (currently shipped with the USD package shipped as part of Kit) as well as the Omniverse RTX Renderer and IRay (both of which ship with Kit)
+
+
+Omni.USD
+Omni.USD (See the omni.usd module for API docs) is an API written in C++ which sits on top of USD, Kit’s core, and the OmniClient library, and provides application-related services such as:
+
+Events/Listeners
+Selection handling
+Access to the Omniverse USD Audio subsystem
+Access to the Omniverse Client Library, and handling of Omniverse Assets/URIs
+USD Layer handling
+A USDContext which provides convenient access to the main USDStage and its layers, as well as various Hydra, Renderer and Viewport related services
+MDL support
+Python bindings to all of the above, using the Python-3 async API in most cases
+
+
+
+Omniverse Client Library
+This is the library that Omniverse clients such as Kit use to communicate with both Omniverse servers and with local filesystems when loading and saving Assets (such as USD, MDL and textures).
+It contains:
+
+a USD AssetResolver for parsing omniverse://  URIs
+some SDF FileFormat plugins to support specialised use cases, including Omniverse’s Live Edit mode
+an API to read/write/copy data/files and filesystem-like queries on Omniverse Nucleus servers
+Support for managing connections with Omniverse servers
+Python bindings to all of the above, using Python-3 async API in most cases
+
+
+
+Carbonite
+The Carbonite SDK provides the core functionality of all Omniverse apps. This is a C++ based SDK that provides features such as:
+
+Plugin management
+Input handling
+File access
+Persistent settings management
+Audio
+Asset loading and management
+Thread and task management
+Image loading
+Localization
+Synchronization
+Basic windowing
+
+All of this is provided with a single platform independent API.
+
+Plugins
+Carbonite Plugins are basically shared libraries with C-style interfaces, which can be dynamically loaded and unloaded. Interfaces are semantically versioned and backward compatibility is supported.
+Most plugin interfaces have python bindings, i.e they are accessible from python. The pybind11 library is used.
+For your own plugins you can also write python bindings and make them directly accessible from python.
+
+
+
+Omniverse RTX Renderer
+As mentioned above, Pixar’s Hydra is used to interface between USD and RTX. This is an area of high architectural complexity, as Kit is required to support a large number of Renderers, multiple custom Scene delegates, multiple Hydra Engines (to support GL, Vulkan, DX12) and a host of other requirements, providing a Viewport inside Kit Applications with Gizmos and other controls, all rendering asynchronously at high frame rates
+
+
+Scripting
+Kit comes with a version of python (currently 3.7) . You can run arbitrary python scripts in Kit based apps which can:
+
+Access all plugins that are exposed via python bindings
+Access the USD python API
+Access Kit python-only modules
+Load and access your C++ Carbonite plugins
+
+Currently there are 3 ways to run scripts:
+
+At app startup time by passing cmd arguments. E.g.: kit.exe --exec "some_script.py"
+Using the Console window
+Using the Script Editor Window
+
+
+
+Kit Extensions
+Building on top of scripting and Carbonite Plugins there is the highest-level and probably most crucial building block: Kit Extensions. You can think of Extensions as versioned packages with a runtime enabled/disabled state. These extensions can depend on other extensions.
+
+
+omni.ui
+Omni.ui, our UI framework, is built on top of Dear Imgui. and written in C++, but exposes only a Python API.

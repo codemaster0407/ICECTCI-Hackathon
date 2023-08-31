@@ -1,0 +1,10 @@
+Can a beer tasting robot do a better job than humans in judging a beer? Researchers in Australia developed a robot that uses machine learning to assess the quality of the beer. 
+“RoboBEER can handle repetitive sampling and does not suffer from fatigue as human panelists do, which helps to obtain more consistent, representative, and repeatable results that will help the industry in achieving their specific quality more efficiently,” the researchers wrote in their research paper. 
+With the robot’s help, the researchers recorded video and sensory information of 12 human beer tasting panelists, as well as 15 parameters about the beer, including foamability, alcohol, carbon dioxide, and the color of the beer.   
+Using GeForce GTX 1080 GPUs, CUDA and the MATLAB machine learning toolbox, the researchers trained their model on biometric information from human panelists, such as heart rate, blood pressure, and face recognition for emotional response, as well as foam and color analysis of the beer, to train their artificial neural network, and analyze the beers.
+
+“The aim of this study was to develop an objective predictive model using machine learning modeling to assess the intensity levels of sensory descriptors in beer, using the physical measurements of color and foam-related parameters,” the researchers said.
+The system proved to be less time-consuming, more cost-effective, and an objective tool to predict sensory descriptors compared to a trained panel, the researchers said. 
+The system has the potential to be implemented in breweries all over the world to help assess the quality of beer samples from every single production batch. 
+The study was recently published in the Journal of Food and Science. 
+Read more >

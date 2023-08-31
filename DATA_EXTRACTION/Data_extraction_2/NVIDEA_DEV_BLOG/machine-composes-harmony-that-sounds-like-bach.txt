@@ -1,0 +1,6 @@
+Researchers from Sony developed a deep learning machine that generated a harmony in the style of Johann Sebastian Bach, one of the great composers of baroque music.
+Using a GTX 980 Ti GPU, CUDA, and cuDNN with the TensorFlow deep learning framework, the researchers trained their neural network on 352 chorale harmonizations composed by Bach and then augmented the dataset by adding all chorale transpositions that lie within a predefined vocal range, to give a data set of 2,503 chorales.
+“After being trained on the chorale harmonizations by Johann Sebastian Bach, our model is capable of generating highly convincing chorales in the style of Bach,” said researchers Gaetan Hadjeres and Francois Pachet at the Sony Computer Science Laboratories in Paris. When they had human experts listen to the harmonies, the compositions fooled them nearly half the time into thinking they were actually written by Bach.
+
+Hadjeres and Pachet mentioned in their research paper that the method is not only applicable to Bach chorales, but embraces a wide range of polyphonic chorale music, from Palestrina to Take 6.
+Read more >

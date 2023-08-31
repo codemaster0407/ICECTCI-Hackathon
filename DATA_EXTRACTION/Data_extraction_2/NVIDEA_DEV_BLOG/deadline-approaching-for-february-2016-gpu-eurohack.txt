@@ -1,0 +1,8 @@
+In partnership with Jülich Supercomputing Center and Oak Ridge National Labs, TU Dresden  is hosting a “EuroHack” GPU Hackathon February 29 to March 4, 2016 at their Germany campus.
+Paired with two GPU mentors each, teams of scientific application developers will set forth on a five-day project to accelerate their code with GPUs. The mentors provide guidance based on extensive experience programming with OpenACC and CUDA at national laboratories, universities and accelerated computing vendors.
+“The goal of the events is for mentors to help the teams prepare their next-generation applications for the next generation of heterogeneous supercomputers and for the teams to help mentors to gain insights on how to improve their tools and methods,” said Wen-mei Hwu, co-principal investigator for Blue Waters supercomputer.
+Teams interested in applying, should read the general information on the Oak Ridge National Labs website, then fill out the Team Application. Participation is free of charge – this is a fantastic opportunity for developers, and mentors who assist them, to work with their peers in an intense week-long format. Prior GPU experience is not required.
+
+The application deadline for the EuroHack has been extended until December 31, 2015.
+Other confirmed 2016 GPU Hackathon events are the UDelHack in May at University of Delaware and the OLCFHack in October at the Knoxville Marriott in Knoxville, Tennessee.
+Read more about the 2016 GPU Hackathons >> 

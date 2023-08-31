@@ -1,0 +1,6 @@
+The team from West Virginia University took home the largest prize awarded in the five-year long NASA Sample Return Robot Challenge.
+This challenge began in 2012 with more than 50 teams and to qualify for the final level, the team’s autonomous robot had to return a single sample in 30 minutes.
+Using CUDA, and a Tesla K40 GPU to train their cuDNN-accelerated Theano deep learning framework, the Cataglyphis rover from West Virginia finished first of the final seven teams, in which they were challenged to autonomously search for and retrieve up to 10 samples without the aid of certain Earth-based technologies. The competition took place in a large park with challenging terrain, and the locations and physical characteristics of the samples were unknown to the teams.
+
+“West Virginia University has shown incredible ingenuity, creativity and team spirit throughout every stage of this challenge,” said Dennis Andrucyk, deputy associate administrator of NASA’s Space Technology Mission Directorate. “They were committed to advancing this technology, and we are proud to say that they have done it. Every team that put a robot on the competition field brought us to this moment. We congratulate West Virginia University, and commend all of the teams for their efforts.”
+Read more > 

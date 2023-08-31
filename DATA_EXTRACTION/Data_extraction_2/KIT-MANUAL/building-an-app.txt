@@ -1,0 +1,153 @@
+Building an App
+A Kit file (ends in .kit) defines an Omniverse App. Kit files behave as a single-file extension. The format is the same as an extension.toml and all runtime behavior is the same. It can be published, downloaded, versioned, and it can have dependencies.
+Building an Omniverse App is as simple as listing the extensions that it should contain (extension dependencies) and the default settings to apply.
+
+Simple App
+Here is an example of a very simple app with a dependency and setting applied: repl.kit:
+[dependencies]
+"omni.kit.console" = {}
+
+[settings]
+exts."omni.kit.console".autoRunREPL = true
+
+
+Pass the repl.kit file to the Kit executable:
+> kit.exe repl.kit
+and it will enable a few extensions (including dependencies) to run a simple REPL.
+
+
+Application Dependencies Management
+There are conceptual differences when specifying dependencies for an extension vs an app, although the syntax is the same:
+
+For extensions, dependencies are specified as broadly as possible. Versions describe compatibility with other extensions. Your extension can be used in many different apps with different extensions included.
+An app is the final leaf on a dependency chain, and is an end-product. All versions of dependencies must be locked in the final package, and in the version control system. That helps to guarantee reproducible builds for end users and developers.
+
+If you pass an app to the Kit executable, it will first resolve all extension versions (either locally or using the registry system), and will then enable the latest compatible versions. Next time you run the app, someone may have published a newer version of some extension and you may get a different result.
+You also don’t often have a clear view of the versions chosen, because one extension brings in other extensions that they depend on, and so on. That builds a tree of N-order dependencies.
+To lock all dependencies we want to write them back to the kit file. You can manually specify each version of each dependency with exact=true and lock all of them, but that would be very tedious to maintain. It would also make upgrading to newer versions very difficult.
+To address this, Kit has a mode where it will write a dependency solution (of all the resolved versions) back to the tail of the kit file it was launched from.
+It will look something like this:
+########################################################################################################################
+# BEGIN GENERATED PART (Remove from 'BEGIN' to 'END' to regenerate)
+########################################################################################################################
+
+# Date:   09/15/21 15:50:53 (UTC)
+# Kit SDK Version: 103.0+master.58543.0643d57a.teamcity
+# Kit SDK dependencies:
+# 	carb.audio-0.1.0
+# 	carb.windowing.plugins-1.0.0
+# ...
+
+# Version lock for all dependencies:
+[settings.app.exts]
+enabled = [
+	"omni.kit.asset_converter-1.1.36",
+	"omni.kit.tool.asset_importer-2.3.12",
+	"omni.kit.widget.timeline_standalone-103.0.7",
+	"omni.kit.window.timeline-103.0.7",
+]
+
+########################################################################################################################
+# END GENERATED PART
+########################################################################################################################
+
+
+On top of that, we have a repo tool: repo_precache_exts. You specify a list of kit files in repo.toml to run Kit in that mode on:
+[repo_precache_exts]
+# Apps to run and precache
+apps = [
+    "${root}/_build/$platform/$config/apps/omni.app.my_app.kit"
+]
+
+
+Besides locking the versions of all extensions, it will also download/precache them. It is then packaged together, and the final app package is deployed into the Launcher.
+Usually, that tool runs as the final step of the build process. To run it explicitly call:
+> repo.bat precache_exts -c release
+By default, extensions are cached into the _build/$platform/$config/extscache folder.
+The version-lock is written at the tail of the kit file and the changed kit file can then be committed to version-control.
+
+Updating Version Lock
+Short version: run: build.bat with -u flag.
+Longer explanation: You can remove the generated part of the kit file and run the build or precache tool. That will write it again. But if you did run it before you already downloaded extensions in _build/$platform/$config/extscache, then those local versions of extensions will still be selected again, because local versions are preferred. Before doing that, this folder needs to be cleared. To automate this process, the precache tool has a -u / --update flag:
+$ repo precache_exts -h
+usage: repo precache_exts [-h] [-c CONFIG] [-v] [-x] [-u]
+
+Tool to precache kit apps. Downloads extensions without running.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -c CONFIG, --config CONFIG
+  -v, --info
+  -x, --clean           Reset version lock and cache: remove generated part
+                        from kit files, clean cache path and exit.
+  -u, --update          Update version lock: remove generated part from kit
+                        files, clean cache path, then run ext precaching.
+
+
+The latest versions of repo_build and repo_kit_tools allow propagation of that flag to build.bat. So run build.bat -h to check if your project has the -u flag available. To use, run:
+build.bat -u -r to build a new release with updated versions.
+
+
+Version Specification Recommendations
+The general advice is to write the dependencies required-versions for apps the same way as for extensions, in an open-ended form, like:
+[dependencies]
+"omni.kit.tool.asset_importer" = {}
+
+
+or say, locking only to a major-version (Semantic Versioning is used):
+[dependencies]
+"omni.kit.tool.asset_importer" = { version = "2.0.0" }
+
+
+Then the automatic version lock will select 2.0.0, 2.0.1, 2.1.0, 2.99.99 for you, but never 3.0.0.
+You can also review the git diff at that point, to see which versions actually changed when the selection process ran.
+
+
+Windows or Linux only dependencies
+Version locks, and all versions, are by default defined as cross-platform. While we build them only on your current platform, we assume that the same app will run on other platforms. If you need to have an extension that is for a single platform only, you can explicitly specify the version in this way:
+[dependencies."filter:platform"."windows-x86_64"]
+"omni.kit.window.section" = { version = "102.1.6", exact = true }
+
+
+Dependencies specified as exact are not written into an automatic version lock. This way, you lock the version manually, and only for the selected platform.
+
+
+Caching extensions disabled by default
+Often an app has extensions that are brought into the Launcher, but disabled by default. Create is an example of that. We still want to lock all the versions, and download them, but we can’t put them into the main app kit file, as it will enable them on startup. The solution is simple: use a separate kit file, which includes the main one. For instance, the Create project has:
+omni.create.kit and omni.create.full.kit. The latter includes the former in its dependencies, but adds extra extensions. Both kit files are passed to the precache tool (specified in repo.toml).
+
+
+
+Deploying an App
+Kit files fully describe how to run an app, and also are interpreted as an extension. This means that it can be versioned and published into the registry like any other extension. Any Kit app can be found in the extension manager. Click Launch, and the app will be run.
+It can also just be shared as a file, and anyone can pass it to kit.exe or associate it with Kit and just use a mouse double-click to open it.
+In practice, we deploy apps into the launcher with both Kit and all of the dependent extensions downloaded ahead of time. So an app in the launcher basically is:
+
+Kit file (1 or more)
+Precached extensions
+Kit SDK
+
+The Kit SDK is already shared between apps using the thin-package feature of Omniverse Launcher (downloaded from packman). In the future, we can get to a point where you only need to publish a single Kit file to define an Omniverse App of any complexity. This goal guides and explains certain decisions described in the guide.
+
+
+Extensions without an App
+Many repositories contain only extensions without publishing an app. However, all their dependencies should be downloaded at build time and version locked.
+You don’t have to create a kit file for them, precache tool will do it by default using generated_app_path = "${root}/source/apps/exts.deps.generated.kit" setting. In this location, a kit file with all extensions will be automatically generated.
+exts.deps.generated.kit - is an app, that contains all extensions from the repo as dependencies. It is used to:
+
+Lock all versions of their dependencies (reproducible builds).
+Precache (download) all dependencies before building.
+
+This file is regenerated if:
+
+Any extension is added or removed from the repo.
+Any extension version is updated
+This file is removed.
+
+To update version lock the same repo build -u flag can be used.
+The same other kit files with version lock, it should be version controlled to produce reproducible builds.
+To disable this feature set a generated app path to empty generated_app_path = "".
+
+
+Other Precache Tool Settings
+As with any repo tool, to find more settings available for the precache tool, look into its repo_tools.toml file. Since it comes with Kit, this file is a part of the kit-sdk package and can be found at: _build/$platform/$config/kit/dev/repo_tools.toml

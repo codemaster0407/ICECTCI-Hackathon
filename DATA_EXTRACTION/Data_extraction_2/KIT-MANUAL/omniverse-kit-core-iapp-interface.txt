@@ -1,0 +1,66 @@
+Omniverse Kit Core IApp interface
+The omni.kit.app subsystem is a Kit core plugin that defines the minimal set of functionality that Kit Core provides, specifically:
+
+Loop runner entry point
+Extension manager
+Scripting support
+General message bus
+Shutdown sequence management
+Hang detector
+
+From the external extension point of view, the only wires that extension gets initially - are just the startup and shutdown functions. In order for the extension to be updated in the Kit environment, the extension is supposed to subscribe to the event stream updates that are served by the Kit application’s loop runner.
+
+Loop runners
+Loop runner is something that drives the application loop, more specifically - pushes update events into corresponding update event streams and pumps the event streams, thus allowing the modular bits and pieces to tick.
+In the simplest scenario, the loop runner is a piece of logic that ensures that core event streams are being pumped periodically. Pseudocode of the simplest loop runner:
+void update()
+{
+    preUpdateEventStream->push(...);
+    preUpdateEventStream->pump();
+
+    updateEventStream->push(...);
+    updateEventStream->pump();
+
+    postUpdateEventStream->push(...);
+    postUpdateEventStream->pump();
+
+    messageBus->pump();
+}
+
+
+This is the most straightforward way to drive the Kit app, and it is possible to implement a custom version of IRunLoopRunner and provide it for the app to use. The default loop runner is close to the straightforward implementation outlined in the pseudocode with the small additions of rate limiter logic and other minor pieces of maintenance logic.
+
+
+Extension manager
+Extension manager controls the extensions execution flow, maintains the extension registry, and does other related things. Extensions subsystem will be detailed separately, as this is the main entry point for all the modular pieces that make up the Kit app. The extension manager interface can be accessed via the Kit Core app interface.
+
+
+Scripting
+The Kit Core app sets up Python scripting environment required to support Python extensions and execute custom Python scripts and code snippets. IAppScripting provides a simple interface to this scripting environment, which can be used to execute files and strings, as well as manage script search folders, and subscribe to the event stream that will broadcast all the scripting events (such as script command events, script output events and script error events, all bucketed into corresponding event types).
+
+
+General message bus
+General message bus is a simple yet powerful concept. This is simply an event stream, which is pumped once a frame after all updates, and anybody can use the bus to send and listen to events. This is useful in cases where event stream ownership is inconvenient, or when app-wide events are established (for example, displaying a popup, or things like that) - which can be used by many consumers across all the extensions. According to the event stream guidelines, it is recommended to derive an event type from a string hash. Simple example of message bus usage:
+import carb.events
+import omni.kit.app
+
+BUS_EVENT_TYPE = carb.events.type_from_string("my_ext.SOME_EVENT")
+
+message_bus = omni.kit.app.get_app().get_message_bus_event_stream()
+
+subscription = message_bus.create_subscription_to_pop_by_type(BUS_EVENT_TYPE, on_change)
+
+# Store subscription somewhere so it doesn't get deleted immediately
+subs.append(subscription)
+
+
+
+
+Shutdown sequence
+The application receives shutdown requests via the post quit queries. Queries will be recorded and the app will proceed as usual, until the shutdown query will be processed at a defined place in the update logic.
+Prior to the real shutdown initiation, the post query event will be injected into the shutdown event stream. Consumers subscribed to the event stream will have a chance to request a shutdown request cancellation. If it will be requested, the shutdown will not happen. This is needed for example to show the dialog popups confirming exit when there is unsaved work pending. If the shutdown wasn’t cancelled - another event will be injected into the shutdown event stream, this time telling it that the real shutdown is about to start.
+However, it is possible to post an uncancellable quit request - as an emergency measure in case the application needs to be shut down without interruptions.
+
+
+Hang detector
+The app core also incorporates a simple hang detector, which is designed to receive periodic nudges, and if there are no nudges for some defined amount of time - it will notify the user that a hang is detected and can crash the application if user chooses. This is helpful because crashes generates crash dumps, allowing developers understand what happened, and what the callstack was at the time of this hang. Things like the timeout, if it is enabled - and other things - can be tweaked via the settings.

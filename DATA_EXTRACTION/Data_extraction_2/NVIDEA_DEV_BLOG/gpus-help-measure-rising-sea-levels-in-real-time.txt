@@ -1,0 +1,7 @@
+Sea levels have traditionally been measured by marks on land – but the problem with this approach is that parts of the earth’s crust move too.
+A group of researchers from Chalmers University of Technology in Sweden are using GPS receivers along the coastline in combination with reflections of GPS signals that bounce off the water’s surface. NVIDIA GPUs then crunch those data signals to compute the water level in real-time.
+Schematics of the data flow for a software-defined radio GNSS-R solution. Direct (RHCP) and reflected (LHCP) signals are received, A/D converted and sent to a host PC, where a Tesla K40 GPU handles signal processing.
+The researchers are using the cuFFT library, alongside NVIDIA Tesla and GeForce GPUs to process the nearly 800 megabits per second of data that come from the reflectometry stream systems.
+“Without the use of GPUs, we would not have been able to process all our signals in real-time,” said Thomas Hobiger, a researcher on the project.
+This work has placed the team among the top five finalists for NVIDIA’s 2016 Global Impact Award which awards a $150,000 grant to researchers doing groundbreaking work that addresses social, humanitarian and environmental problems.
+Read more >>

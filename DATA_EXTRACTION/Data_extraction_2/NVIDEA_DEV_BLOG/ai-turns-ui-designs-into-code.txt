@@ -1,0 +1,7 @@
+Copenhagen-based startup UIzard Technologies trained a neural network to automatically generate code from a graphical user interface screenshot.
+Currently, a UI designer mocks up the interface and then the front-end developer takes the design and translates it into code – but, what if an AI system can do this for you? The company’s slogan is “code less, create more.”
+“Implementing GUI code is time-consuming and prevent developers from dedicating the majority of their time implementing the actual features and logic of the software they are building,” mentioned the founder and CEO Tony Beltramelli in the related research paper. “Moreover, the computer languages used to implement such GUIs are specific to each target platform; thus resulting in tedious and repetitive work when the software being built is expected to run on multiple platforms using native technologies.”
+Using CUDA, Tesla K80 GPU and cuDNN with the TensorFlow deep learning framework, their trained model takes a screen grab of the UI design, assesses the picture— various icons, features, and the layout— and then generates lines of code based on what it sees.
+
+As of now, their able to generate code targeting three different platforms (iOS, Android and web-based technologies) from a single input image with over 77% accuracy, but they say it can drastically improve by training their networks on larger datasets.
+Read more >

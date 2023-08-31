@@ -1,0 +1,7 @@
+Stanford researchers in the Computational Vision and Geometry Lab developed a robot that could soon autonomously move among us with normal human social etiquettes — such as deciding rights of way on the sidewalk.
+Using a Tesla K40 GPU and CUDA to train the machine learning models, the robot is able to understand its surroundings and navigate through streets and hallways with humans, and, over time, learns the unwritten conventions of social behaviors.
+“By learning social conventions, the robot can be part of ecosystems where humans and robots coexist,” said Silvio Savarese, an assistant professor of computer science and director of the Stanford Computational Vision and Geometry Lab.
+
+The researchers estimate these types of robots will become available for only $500 in five to six years.
+“It’s possible to make these robots affordable for on-campus delivery, or for aiding impaired people to navigate in a public space like a train station or for guiding people to find their way through an airport,” Savarese said.
+Read more >

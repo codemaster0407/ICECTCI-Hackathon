@@ -1,0 +1,261 @@
+Linux Troubleshooting
+Instructions for resolving issues when running Omniverse-kit or
+Omniverse-Create on Linux.
+
+Q1) How to install a driver.
+
+Always install .run executable driver files. e.g. downloaded
+from: https://www.nvidia.com/Download/Find.aspx
+Do NOT install PPA drivers. PPA drivers are packaged with
+Linux distribution, and installed with add-apt or
+Software & Updates. These drivers are not easy to uninstall or
+clean up. It requires purging them and cleaning up Vulkan ICD files
+manually.
+Driver installation steps:
+
+Go to TTYs mode (CRL + ALT + F3), or use systemctl
+approach.
+Uninstall all previous drivers:
+sudo nvidia-uninstall
+
+The following clean-up steps are only required if you have leftovers from PPA drivers:
+sudo apt-get remove --purge nvidia-*
+sudo apt autoremove
+sudo apt autoclean
+
+Reboot your machine and then go to TTYs mode from the login
+screen:
+sudo chmod +x NVIDIA-Linux-x86_64-460.67.run
+sudo ./NVIDIA-Linux-x86_64-460.67.run
+
+If the kernel could not be compiled, make sure to download headers
+and image files related to your Linux kernel before the driver
+installation.
+Ignore errors related to missing 32-bit libraries, and build any
+missing library if it required a confirmation.
+
+
+Driver installation over SSH on remote machines:
+
+Stop X, install the driver with NVIDIA driver installer, and
+restart X.
+On Ubuntu 18.04 to stop X, run the following command, then wait a
+bit, and ensure X is not running. e.g.: run ps auxfw and
+verify no X or Window manager process is running.
+sudo systemctl isolate multi-user.target
+
+To restart X, run:
+sudo systemctl isolate graphical.target
+
+
+
+Installing a driver on a system with Teradici already configured
+should work just the same. Installing Teradici however requires
+following their instructions the first time around, before installing
+the NVIDIA driver.
+
+
+
+Q2) Omniverse kit logs only listed one of my GPUs, but nvidia-smi shows multiple GPUs.
+How to support enumeration of multiple GPUs in Vulkan
+
+xserver-xorg-core 1.20.7 or newer is required for multi-GPU
+systems. Otherwise, Vulkan applications cannot see multiple GPUs.
+Ubuntu 20.04 ships with Xorg 1.20.8 by default. Ubuntu 20 is known to work, but not exhaustively tested by Omniverse QA
+Ubuntu 16 is not supported.
+How to update xorg:
+
+Update Ubuntu 18.04.x LTS through software update to the
+latest Ubuntu 18.04.5 LTS.
+Install LTS Enablement Stacks to upgrade xorg:
+https://wiki.ubuntu.com/Kernel/LTSEnablementStack
+
+
+
+
+
+Q3) How to verify a correct Vulkan setup with vulkaninfo or vulkaninfoSDK utility
+
+Download the latest Vulkan SDK tar.gz from
+https://vulkan.lunarg.com/sdk/home and unzip it.
+Do NOT install Vulkan SDK through apt-install, unless you
+know what exact version Omniverse supports and you need validation
+layers for debugging (refer to readme.md). Just simply download
+the zip file.
+Execute the following utility from the unzipped pack.
+bin/vulkaninfo
+
+
+
+It should enumerate all the GPUs. If it failed, your driver or the
+required xorg is not installed properly. Do NOT install
+vulkan-utils or other MESA tools to fix your driver, as they
+might install old incompatible validation layers.
+nvidia-smi GPU table is unrelated to the list of GPUs that Vulkan
+driver reports.
+
+
+
+Q4) I have a single GPU, but I see multiple GPUs of the same type reported in Omniverse kit logs.
+
+You likely have leftover components from other PPA drivers in
+addition to the one you installed from the .run driver packages.
+You can confirm this by checking that vulkaninfo only shows a
+single GPU. These extra ICD files should be cleaned up.
+These extra files will not affect the output of nvidia-smi, as it
+is a Vulkan driver issue.
+Steps to clean up duplicate ICD files:
+
+If you see both of the following folders have some json files,
+such as nvidia_icd.json, then delete the duplicate icd.d
+folder from /usr/share/vulkan/ path.
+"/etc/vulkan/icd.d": Location of ICDs installed from non-Linux-distribution-provided packages
+"/usr/share/vulkan/icd.d": Location of ICDs installed from Linux-distribution-provided packages
+
+
+
+Run vulkaninfo to verify the fix, instead of nvidia-smi.
+
+
+
+
+
+Q5) Startup failure with: VkResult: ERROR_DEVICE_LOST
+A startup device lost is typically a system setup bug. Potential bugs:
+
+A bad driver installation.
+
+Uninstall and re-install it.
+
+
+Driver bugs prior to the 460.67 driver when you have different GPU models. e.g. Turing + Ampere GPUs.
+
+Solution: Install driver 460.67 or higher, which has the bug fix.
+Workaround on older drivers: Remove Non-rtx cards, and re-install the driver after removing any GPU.
+This issue has been known to crash other raytracing applications. However, regular raster vulkan applications won’t be affected.
+If you have multiple GPUs, --/renderer/activeGpu=1 setting cannot change this behavior.
+
+
+Old Shader caches are left in the folder
+
+Delete the contents of folder /home/USERNAME/.cache/ov/Kit/101.0/rendering
+It is known with omniverse-kit SDK packages that are not built
+from the source, or not using the omniverse installer to remove
+the caches.
+
+
+
+
+
+Q6) Startup failure with: GLFW initialization failed
+This is a driver or display issue:
+
+A physical display must be connected to your GPU, unless you are running kit/Create headless with --no-window for streaming. No visual rendering can happen on the X11 window without a display and presentable swapchain.
+Test the display setup with the following command.
+echo $DISPLAY
+If nothing is returned, set the environment.
+Set the display environment as following persistently
+export DISPLAY=:0.0
+Reboot upon completion.
+echo $DISPLAY to verify again after the reboot.
+Re-install the driver if above steps did not help.
+
+
+
+Q7) Startup failure with: Failed to find a graphics and/or presenting queue.
+
+Your GPU is not connected to a physical display. Required, except
+when running Kit/Create headless in --no-windows mode
+Your GPU is connected to a physical display, however, it is not set
+as the default GPU in xorg for Ubuntu’s GUI rendering:
+
+Choose what GPU to use for both Ubuntu UI and Omniverse rendering to present the output to the screen.
+Set its busid as follows and reboot: sudo nvidia-xconfig --busid PCI:103:0:0
+busid is in decimal format, taken from NVIDIA X Server Settings
+Connect the physical display to that GPU and boot up.
+If you have multiple GPUs, --/renderer/activeGpu=1 setting cannot change what GPU to run on. busid must be set in the xorg config, and then activeGpu should be set to the same device if it is not zero.
+NVIDIA Colossus involves a lot more work. Refer to Issac setup.
+
+
+
+
+
+Q8) Startup failure for carb::glinterop with X Error of failed request:  GLXBadFBConfig
+OpenGL Interop support is optional for RTX renderer in the latest build,
+and is only needed for Storm renderer. However, such failures typically
+reveals other system setup issues that might also affect Vulkan
+applications.
+
+A few potential issues:
+
+Unsupported driver or hardware. Currently, OpenGL 4.6 is the minimum required.
+Uninstall OpenGL utilities such as Mesa-utils and re-install your NVIDIA driver.
+
+
+
+
+
+Q9) How to specify what GPUs to run Omniverse apps on
+
+Single-GPU mode: Follow Q8 instructions to set the desired main GPU for presentation, and then set index of that GPU with the following option during launch if it is not zero.
+--/renderer/activeGpu=1
+Multi-GPU mode: Follow Q8 instructions and then set indices of the desired GPUs with the following option during launch. The first device in the list performs the presentation and should be set in Xorg config.
+--/renderer/multiGpu/activeGpus='1,2'
+
+
+Note
+
+Always verify that your desired GPUs are set as Active with a
+“Yes” in the GPU table of omniverse .log file under
+[gpu.foundation]. GPU index in above options are from this table
+and not from nvidia-smi.
+CUDA_VISIBLE_DEVICES and other CUDA commands cannot change
+what GPUs to run on for Vulkan applications.
+
+
+
+
+Q10) Viewport is gray and nothing is rendered.
+This means that RTX renderer has failed and the reason of the failure will be printed in the full .log file as errors, such as an unsupported driver, hardware or etc. The log file is typically located at /home/USERNAME/**/logs/**/*.log
+
+
+Q11) Getting spam of failures: Failed to create change watch for xxx: errno=28, No space left on device
+This is a file change watcher limitation on Linux which is usually set to 8k. Either close other applications that use watchers, or increase max_user_watches to 512k. Note that this will increase your system RAM usage.
+
+To view the current watcher limit:
+
+
+cat/proc/sys/fs/inotify/max_user_watches
+
+
+
+
+To update the watcher limit:
+
+
+Edit /etc/sysctl.conf and add
+fs.inotify.max_user_watches=524288 line.
+Load the new value: sudo sysctl -p
+
+
+You may follow the full instructions listed for Visual Studio Code Watcher limit
+
+
+
+Q12) How to increase the file descriptor limit on Linux to render on more than 2 GPUs
+If you are rendering with multiple GPUs, file descriptor limit is
+required to be increased. The default limit is 1024, but we
+recommend a higher value, like 65535, for systems with more than 2
+GPUs. Without that, Omniverse applications will fail during the creation
+of shared resources, such as Vulkan fences, and will lead to crash at
+startup.
+
+To increase the file descriptor limit
+
+
+Modify /etc/systemd/user.conf and /etc/systemd/system.conf with the following line. This takes care of graphical login:
+DefaultLimitNOFILE=65535
+Modify /etc/security/limits.conf with the following lines. This takes care of non-GUI console login:
+hard nofile 65535
+soft nofile 65535
+Reboot your computer for changes to take effect.

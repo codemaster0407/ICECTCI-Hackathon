@@ -1,0 +1,6 @@
+Scientists from Imperial College London developed 3D virtual hearts from MRI scans to predict heart disease outcomes.
+“This is the first time computers have interpreted heart scans to accurately predict how long patients will live. It could transform the way doctors treat heart patients,” said Dr Declan O’Regan, lead author from the Imperial College London MRC London Institute of Medical Sciences (LMS).
+With the help of CUDA and a Tesla K40 GPU to train their deep learning models, the scientists used historical data from 250 patients at Imperial College Healthcare NHS Trust’s Hammersmith Hospital and analyzed moving MRI images of each patient’s heart to replicate over 30,000 points in the heart contract during each beat. With this information, they were able to create a ‘virtual 3D heart’ of each individual and automatically learned which features were the earliest predictors of heart failure and death.
+
+“The computer performs the analysis in seconds and simultaneously interprets data from imaging, blood tests and other investigations without any human intervention,” said Co-author Dr Tim Dawes, of the LMS. “It could help doctors to give the right treatments to the right patients, at the right time.”
+Read more >

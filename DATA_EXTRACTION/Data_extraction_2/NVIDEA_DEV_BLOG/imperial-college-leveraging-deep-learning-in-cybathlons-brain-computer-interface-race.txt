@@ -1,0 +1,9 @@
+58 teams from 29 countries are participating in the world’s first ever “bionic Olympics” in Zurich, Switzerland where athletes with physical disabilities will compete side-by-side in six demanding disciplines, using the latest technologies.
+Researchers from Imperial College in London teamed up with volunteer athletes to compete in four events — Brain-Computer Interface (BCI) race, Powered Wheelchair race, Powered Arm Prosthesis race, and the Functional Electrical Stimulation Bike race.
+For the BCI race, the pilot (athlete) wears a skull cap, dotted with electrodes. It picks up electrical signals in the brain, enabling the wearer to control by thought a character in a computer game and negotiate an obstacle course. Pilots are pitted against each other and the person who negotiates the digital obstacles in the quickest time wins.
+Team Imperial developed a deep learning-based algorithm, accelerated by CUDA, GeForce GTX 1080 GPUs and cuDNN with the Theano deep learning framework to decode the complex brain signals in real-time via the EEG brain cap.
+
+The team says it is the first use of deep learning to decode the intention of the user by analyzing their brain signals. This could give the team a competitive advantage in the BCI race.
+Today, brain-computer interfaces are able to measure brain signals, but researchers are developing the technology further that will allow people with quadriplegia to control different kinds of devices, such as computers, robotic arms, and wheelchairs.
+Read more >
+ 

@@ -1,0 +1,6 @@
+Gradient boosting is a powerful machine learning algorithm used to achieve state-of-the-art accuracy on a variety of tasks such as regression, classification and ranking. It has achieved notice in machine learning competitions in recent years by “winning practically every competition in the structured data category”. If you don’t use deep neural networks for your problem, there is a good chance you use gradient boosting.
+In a post on the NVIDIA Developer Blog, Rory Mitchell looks at the popular gradient boosting algorithm XGBoost and shows how to apply CUDA and parallel algorithms to greatly decrease training times in decision tree algorithms. GPU acceleration is now available in the popular open source XGBoost library as well as a part of the H2O GPU Edition by H2O.ai.
+H2O GPU Edition is a collection of GPU-accelerated machine learning algorithms including gradient boosting, generalized linear modeling and unsupervised methods like clustering and dimensionality reduction. H2O.ai is also a founding member of the GPU Open Analytics Initiative, which aims to create common data frameworks that enable developers and statistical researchers to accelerate data science on GPUs.
+
+The graph above plots the decrease in test error over time for the CPU and GPU algorithms. As you can see, the test error decreases much more rapidly with GPU acceleration.
+Read more >

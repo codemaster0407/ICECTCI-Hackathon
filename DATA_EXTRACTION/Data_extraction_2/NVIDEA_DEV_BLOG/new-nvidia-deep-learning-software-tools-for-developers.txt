@@ -1,0 +1,3 @@
+Aided by developers’ requests, NVIDIA announced a significant update to the NVIDIA SDK, which includes tools, libraries and enhancements to the CUDA programming model to help developers accelerate and build the next generation of AI and HPC applications.
+The level of interest in GPU computing has exploded, fueled by advancements in AI.
+The latest SDK updates introduce new capabilities and performance optimizations for GPU-accelerated applications:Read more >

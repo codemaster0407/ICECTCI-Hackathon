@@ -1,0 +1,36 @@
+Scripting
+
+Overview
+Kit Core comes with a python interpreter and a scripting system. It is mainly used to write extensions in python, but it can also be used to make simple python scripts. Each extension can register a set of script search folders. Scripts can be run via command line or API.
+
+
+How to add a script folder
+Multiple ways:
+
+Use the /app/python/scriptFolders setting. As with any setting it can be changed in the core config, in the app config, via the command line or at runtime using settings API.
+Use IAppScripting API, e.g. carb::getCachedInterface<omni::kit::IApp>()->getPythonScripting()->addSearchScriptFolder("myfolder").
+Specify in the extension.toml, in the [[python.scriptFolder]] section:
+
+[[python.scriptFolder]]
+path = "scripts"
+
+
+
+
+How to run a script
+
+Command line:
+
+Example: > kit.exe --exec "some_script.py arg1 arg2"  --exec "open_stage"
+
+Settings:
+
+Example: > kit.exe --app/exec/0="some_script.py arg1"
+
+API:
+
+C++ Example: carb::getCachedInterface<omni::kit::IApp>()->getPythonScripting()->executeFile("script.py")
+Python Example: omni.kit.app.get_app_interface().get_python_scripting().execute_file("script.py") see (omni.kit.app.IAppScripting.execute_file()) for more details.
+
+Note
+The script extension (.py) can be omitted.

@@ -1,0 +1,7 @@
+Matthias Niessner of Stanford University shares how his team of researchers are using TITAN X GPUs and CUDA to manipulate YouTube videos with real-time facial reenactment that works with any commodity webcam.
+The project called ‘Face2Face’ captures the facial expressions of both the source and target video using a dense photometric consistency measure. Reenactment is then achieved by fast and efficient deformation transfer between source and target. The mouth interior that best matches the re-targeted expression is retrieved from the target sequence and warped to produce an accurate fit. Finally, their approach re-renders the synthesized target face on top of the corresponding video stream that seamlessly blends with the real-world illumination.
+
+For more details, read the research paper ‘Face2Face: Real-time Face Capture and Reenactment of RGB Videos’.
+Share your GPU-accelerated science with us at http://nvda.ly/Vpjxr and with the world on #ShareYourScience.
+Watch more scientists and researchers share how accelerated computing is benefiting their work at http://nvda.ly/X7WpH
+ 

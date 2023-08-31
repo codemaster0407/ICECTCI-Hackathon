@@ -1,0 +1,7 @@
+Researchers from Microsoft and Hong Kong University of Science and Technology developed a deep learning method that can transfer the style and color from multiple reference images onto another photograph.
+“Our approach is applicable for cases where images may be very different in appearance but semantically similar,” mentioned the researches in their research paper. “Essentially, the images should be of the same type of scene containing elements of the same classes, e.g. cityscape scenes featuring buildings, streets, trees, and cars. We aim to achieve precise local color transfer from semantically similar references, which is essential to automatic and accurate image editing, such as makeup transfer and creating timelapses from images.”
+Using an NVIDIA Tesla GPU and CUDA, the researchers trained their convolutional neural networks on features from the pre-trained VGG-19 model for semantic matching. For obtaining the multiple reference images, their network automatically searches the internet for the closest subset of five images based on the keywords provided by the user (e.g. “restaurant night” or “building beach”).
+
+The current method takes 80 seconds with an approximate resolution of 700×500.
+Read more >
+ 

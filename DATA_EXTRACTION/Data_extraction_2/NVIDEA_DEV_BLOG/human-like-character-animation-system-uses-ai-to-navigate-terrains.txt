@@ -1,0 +1,7 @@
+Researchers from University of Edinburgh and Method Studios developed a real-time character control mechanism using deep learning that can help virtual characters walk, run and jump a little more naturally. 
+
+“Data-driven motion synthesis using neural networks is attracting researchers in both the computer animation and machine learning communities thanks to its high scalability and runtime efficiency,” mentioned the researchers in their paper.
+Using CUDA, NVIDIA GeForce GPUs and cuDNN with the Theano deep learning framework, their “Phase-Functioned Neural Network” is a time-series approach that can predict the pose of the character given the user inputs and the previous state of the character. The system is trained on data that includes the character moving over different terrains which then helps the character automatically adapt to the geometry of the environment during runtime.
+
+The innovative work by Daniel Holden (now a researcher at Ubisoft Montreal), Taku Komura (University of Edinburgh) and Jun Saito (Method Studios) can possibly change the future of video game development.
+Read more >

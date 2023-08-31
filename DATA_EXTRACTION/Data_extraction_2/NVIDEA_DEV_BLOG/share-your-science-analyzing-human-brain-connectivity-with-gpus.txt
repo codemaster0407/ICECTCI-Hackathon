@@ -1,0 +1,6 @@
+Moises Hernandez Fernandez, PhD student at University of Oxford shares how GPUs are being used to accelerate the analysis of the human brain’s underlying anatomical and structural organization, which can lead to a better understanding of neurological disorders like Alzheimer’s or Multiple Sclerosis.
+Using Tesla K80 GPUs and CUDA, the group at Oxford Centre for Functional MRI of the Brain developed a computationally demanding analysis toolkit for diffusion MRI (dMRI) data to help reveal the wiring diagram of the brain and estimate tissue microstructures.
+
+Share your GPU-accelerated science with us at http://nvda.ly/Vpjxr and with the world on #ShareYourScience.
+Watch more scientists and researchers share how accelerated computing is benefiting their work at http://nvda.ly/X7WpH
+ 

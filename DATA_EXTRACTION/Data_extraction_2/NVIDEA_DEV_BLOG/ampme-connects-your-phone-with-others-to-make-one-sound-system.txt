@@ -1,0 +1,6 @@
+After crossing 1.5M downloads, the free music-syncing app AmpMe now allows users to party without an internet connection using a new machine learning-powered predictive syncing technology.
+AmpMe streams music to multiple devices in perfect sync so friends can enjoy music together anywhere, without setting up a sound system. In the latest version, the new Predictive Sync” feature allows AmpMe to synchronize directly with other devices using a local Wi-Fi hotspot created by the phone that is hosting the party.
+“We think of it as a portable Sonos,” AmpMe’s founder and CEO Martin-Luc Archambault told The New York Post.
+
+The “Predictive Sync” capability was created by training their neural network models using the NVIDIA CUDA Deep Neural Network library (cuDNN) to analyze thousands of devices and hardware configurations. Based on those results, AmpMe is able to predict the ‘music offset’ of each device and can now be in perfect sync automatically 95%+ of the time, eliminating the extra step of requiring users to manually sync their devices via audio fingerprint. This means proximity to the host device and background noise will no longer inhibit AmpMe users from joining the party.
+Read more >>

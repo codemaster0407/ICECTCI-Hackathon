@@ -1,0 +1,91 @@
+Using Python pip Packages
+There are 2 ways to use python pip packages in extensions:
+
+Install them at runtime and use them right away.
+Install them at build-time and pre-package into another extension.
+
+
+Runtime installation using omni.kit.pipapi
+Installing at runtime is probably the most convenient way to quickly prototype and play around with tools. The omni.kit.pipapi extension conveniently wraps pip (which is already included into python by default) and provides an API to install pip packages. You just have to declare a dependency on this extension, and call the omni.kit.pipapi.install("package_name")() function. Right after this line, you can import and start using the installed package.
+# Package name and module can be different (although rarely is in practice):
+import omni.kit.pipapi
+omni.kit.pipapi.install("Pillow", module="PIL")
+import PIL
+
+
+However installing at runtime has a couple of downsides:
+
+Can be slow. Usually it ends up blocking the process, waiting for the download and installation upon first startup.
+Requires internet access and pip index availability.
+Has security and licensing implications.
+
+Even if the version is locked, which should always be the case, the package can still become unavailable at some point, or the content could change. It opens up the opportunity for certain types of attacks, and from a legal perspective we can’t ship any extensions/apps that perform a pip installation at runtime. The end-user can decide to write, test, and execute such code, but it shouldn’t come from NVIDIA.
+
+
+Build-time installation using repo_build
+The recommended way to install pip packages is at build time, and to embed it into an extension. For most packages, it is as simple as installing it into a folder inside an extension. As long it is added to the sys.path, python can import it. Sometimes, packages require certain shared libraries or other system software, which goes out of the scope of this guide and had to be dealt on case by case basis.
+We also provide tooling to simplify the process of build time package installation. The repo_build tool, when run, can process special config file(s). By default: deps/pip.toml. Here you can specify a list of packages to install and a target folder:
+[[dependency]]
+packages = [
+    "watchdog==0.10.4",             # SWIPAT filed under: http://nvbugs/123456
+]
+target = "../_build/target-deps/pip_prebundle"
+
+
+The version must be specified (locked).
+The repo_build tool performs an installation only once. It then hashes the whole config file and uploads the installed packages into packman. On the next launch, it will download the uploaded package from packman, instead of using the pip index. This is much faster and removes the necessity of vendoring dependencies. The build also won’t depend on the availability of the pip index.
+Then, this folder where packages were installed into is linked (or copied) into an extension. The only reason we don’t install it directly into the extension target folder is because debug and release configurations can share the same pip packages. It is convenient to install it once and link the folder into both build flavors. Linking the folder is done in the premake5.lua file of an extension.
+-- Include pip packages installed at build time
+repo_build.prebuild_link {
+    { "%{root}/_build/target-deps/pip_prebundle", ext.target_dir.."/pip_prebundle" },
+}
+
+
+Also, after installation, repo_build gathers up pip package license information (including N-order dependencies) into the gather_licenses_path. They must be included into an extension too, for legal reasons.
+After the build, you can make sure that everything looks correct by looking into the extension target folder, e.g.: _build/$platform/$config/exts/example.mixed_ext/pip_prebundle .
+Finally, in the extension.toml, we need to make sure that this folder is added to sys.path.
+# Demonstrate how to add another folder to sys.path. Here we add pip packages installed at build time.
+[[python.module]]
+path = "pip_prebundle"
+
+
+When the extension starts, it adds all [[python.module]] entries with their path relative to extension root to the sys.path. The order of those entries can be important if you have other code in the extension that for instance performs an import watchdog.
+All the extensions that are loaded as dependees can also make use of those packages as well. This way one extension can bring several pip packages for other extensions to use. They just need to add a dependency on the package providing them.
+
+
+pip packages included in Kit: omni.kit.pip_archive
+Exactly as described above, Kit comes with the omni.kit.pip_archive extension that includes many commonly used packages, like numpy or PIL. To use them just add dependency:
+[dependecies]
+"omni.kit.pip_archive" = {}
+
+
+The Kit repo serves as another great example of this setup.
+
+
+Code Examples
+
+Install pip package at runtime
+# PIP/Install pip package
+
+# omni.kit.pipapi extension is required
+import omni.kit.pipapi
+
+# It wraps `pip install` calls and reroutes package installation into user specified environment folder.
+# That folder is added to sys.path.
+# Note: This call is blocking and slow. It is meant to be used for debugging, development. For final product packages
+# should be installed at build-time and packaged inside extensions.
+omni.kit.pipapi.install(
+    package="semver",
+    version="2.13.0",
+    module="semver", # sometimes module is different from package name, module is used for import check
+    ignore_import_check=False,
+    ignore_cache=False,
+    use_online_index=True,
+    surpress_output=False,
+    extra_args=[]
+)
+
+# use
+import semver
+ver = semver.VersionInfo.parse('1.2.3-pre.2+build.4')
+print(ver)

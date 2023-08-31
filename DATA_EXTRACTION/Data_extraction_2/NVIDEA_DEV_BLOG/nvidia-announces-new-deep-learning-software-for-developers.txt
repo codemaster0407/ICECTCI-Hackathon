@@ -1,0 +1,12 @@
+Just in time for the International Supercomputing show (ISC 2016) and International Conference on Machine Learning (ICML 2016), NVIDIA announced three new deep learning software tools for data scientists and developers to make the most of the vast opportunities in deep learning.
+NVIDIA DIGITS 4  
+A new workflow for training object detection neural networks to find instances of faces, pedestrians and other objects in images – such as tracking vehicles in satellite imagery.
+DIGITS 4 also can automatically train neural networks across a range of tuning parameters, significantly reducing the time required to arrive at the most accurate solution.
+cuDNN
+cuDNN continues to deliver performance improvements in each new release. Version 5.1 provides high-performance building blocks for deep learning used by all leading deep learning frameworks.
+GPU Inference Engine (GIE)
+A high performance neural network inference engine for production deployment of deep learning applications that delivers up to 16x better performance per watt on an NVIDIA Tesla M4 GPU vs. the CPU-only systems commonly used for inference today.
+GIE optimizes your trained neural networks for runtime performance and delivers GPU-accelerated inference for data center, embedded and automotive applications.
+A blog post on Parallel Forall explores in details how you can use GIE to get the best efficiency and performance out of your trained deep neural networks in GPU-accelerated deployment platform.
+All three tools are part of the NVIDIA SDK which is organized by application domain, making it easy for developers to quickly gain access to what they need.
+Read more >>

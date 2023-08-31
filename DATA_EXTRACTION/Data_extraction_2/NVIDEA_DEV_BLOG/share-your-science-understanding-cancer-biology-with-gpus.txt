@@ -1,0 +1,6 @@
+Gil Speyer, Senior Postdoctoral Fellow at the Translational Genomics Research Institute (TGen) shares how NVIDIA technology is accelerating the computer processing of transcriptomes from thousands of cells gleaned from patient tumor samples.
+Using NVIDIA Tesla K40 GPUs and CUDA, the scientists developed a statistical analysis tool called EDDY (evaluation of differential dependency) that examines in precise detail how cells’ DNA controls protein production and how proteins interact with each other and with other molecules. The tool will advance the practice of precision medicine by quickly informing doctors with the best options for attacking each individual patient’s cancer.
+The TGen team was recently awarded $200,000 from the NVIDIA Foundation, our employee-led philanthropic arm, to further develop EDDY.
+
+Share your GPU-accelerated science with us at http://nvda.ws/2cpa2d4.
+Watch more scientists and researchers share how accelerated computing is benefiting their work at http://nvda.ly/X7WpH

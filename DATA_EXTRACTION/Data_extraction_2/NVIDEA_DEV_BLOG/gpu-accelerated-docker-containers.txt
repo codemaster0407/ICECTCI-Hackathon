@@ -1,0 +1,7 @@
+Containers wrap applications into an isolated virtual environment to simplify data center deployment. By including all application dependencies (binaries and libraries), application containers can run seamlessly in any data center environment.
+Docker, the leading container platform, can now be used to containerize GPU-accelerated applications. To make it easier to deploy GPU-accelerated applications in software containers, NVIDIA has released open-source utilities to build and run Docker container images for GPU-accelerated applications. This means you can now easily containerize and isolate accelerated applications without any modifications and deploy them on any GPU-enabled infrastructure.
+
+“This NVIDIA Docker repo is awesome because it allows NVIDIA GPUs to be accessed in containers,” Docker Software Engineer Jesse Frazelle said in the ‘Docker Team’s Favorites from 2015’ blog. “It’s even crazier than running Steam in a container (which has been done!). And it’s awesome to see the NVIDIA folks jump on board the graphics in containers train.”
+The NVIDIA Docker Recipe, instructions, and examples are now available on Github. Building a Docker image with support for CUDA is easy with a single command.
+Mostafa Abdulhamid, a Senior Software Engineer at Cake Solutions recently published a blog detailing how to install NVIDIA DIGITS, an interactive deep learning GPU training system, using the NVIDIA Docker container.
+Visit the NVIDIA Docker Repository >> 

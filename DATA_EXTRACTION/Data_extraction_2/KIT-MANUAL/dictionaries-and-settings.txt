@@ -1,0 +1,65 @@
+Dictionaries and Settings
+Settings is a generalized subsystem designed to provide a simple to use interface to Kit’s various subsystems, which can be automated, enumerated, serialized and so on. It is accessible from both C++ and scripting bindings such as Python bindings. carb.settings is a Python namespace (and, coincidentally, a C++ plugin name) for the Settings subsystem.
+Settings uses carb.dictionary under the hood, and is effectively a singleton dictionary with a specialized API to streamline access.
+carb.dictionary is a Dictionary subsystem, which provides functionality to work with the data structure type known as dictionary, associative array, map, and so on.
+
+Dictionaries
+For the low-level description of the design and general principles, please refer to the Carbonite documentation for the carb.dictionary interfaces.
+
+
+Settings
+As mentioned above, the settings subsystem is using carb.dictionary under the hood, and to learn more about the low-level description of the design and general principles, please refer to the Carbonite documentation.
+On a higher level, there are several important principles and guidelines for using settings infrastructure, and best practices for using settings within Omniverse Kit.
+
+Default values
+Default values need to be set for settings at the initialization stage of the plugin, and in the extension configuration file.
+A rule of thumb is that no setting should be read when there is no value for it. As always, there are exceptions to this rule, but in the vast majority of cases, settings should be read after the setting owner sets a default value for this particular setting.
+
+
+Notifications
+To ensure optimal performance, it is recommended to use notifications instead of directly polling for settings, to avoid the costs of accessing the settings backend when the value didn’t change.
+DON’T: This is an example of polling in a tight loop, and it is not recommended to do things this way:
+while (m_settings->get<bool>("/snippet/app/isRunning"))
+{
+    doStuff();
+    // Stop the loop via settings change
+    m_settings->set("/snippet/app/isRunning", false);
+}
+
+
+DO: Instead, use the notification APIs, and available helpers that simplify the notification subscription code, to reduce the overhead significantly:
+carb::settings::ThreadSafeLocalCache<bool> valueTracker;
+valueTracker.startTracking("/snippet/app/isRunning");
+while (valueTracker.get())
+{
+    doStuff();
+    // Stop the loop via settings change
+    m_settings->set("/snippet/app/isRunning", false);
+}
+valueTracker.stopTracking();
+
+
+With the bool value, getting and setting the value is cheap, but in cases of more complicated types, e.g. string, marking and clearing dirty marks could be used in the helper.
+In case a helper is not sufficient for the task at hand - it is always possible to use the settings API in such a way as subscribeToNodeChangeEvents/subscribeToTreeChangeEvents and unsubscribeToChangeEvents to achieve what’s needed with greater flexibility.
+
+
+Settings structure
+Settings are intended to be easily tweakable, serializable and human readable. One of the use-cases is automatic UI creation from the settings snapshot to help users view and tweak settings at run time.
+DO: Simple and readable settings like /app/rendering/enabled
+DON’T: Internal settings that don’t make sense to anyone outside the core developer group, things like:
+/component/modelArray/0=23463214
+/component/modelArray/1=54636715
+/component/modelArray/2=23543205
+...
+/component/modelArray/100=66587434
+
+
+
+
+Reacting to and consuming settings
+Ideally settings should be monitored for changes and plugin/extensions should be reacting to the changes accordingly. But exceptions are possible, and in these cases, the settings changes should still be monitored and user should be given a warning that the change in setting is not going to affect the behavior of a particular system.
+
+
+Combining API and settings
+Often, there are at least two ways to modify behavior: via the designated API function call, or via changing the corresponding setting. The question is how to reconcile these two approaches.
+One way to address this problem - API functions should only change settings, and the core logic tracks settings changes and react to them. Never change the core logic value directly when the corresponding setting value is present. By adding a small detour into the settings subsystem from API calls, you can make sure that the value stored in the core logic and corresponding setting value are never out of sync.

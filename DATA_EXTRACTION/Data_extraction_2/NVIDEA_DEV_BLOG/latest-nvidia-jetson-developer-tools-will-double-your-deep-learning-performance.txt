@@ -1,0 +1,6 @@
+Today NVIDIA released a major update of the JetPack SDK with new developer tools and libraries that doubles the performance of deep learning applications on the Jetson TX1 Developer Kit, the world’s highest performance platform for deep learning on embedded systems.
+JetPack 2.3 is available as a free download and is focused on making it easier for developers to add complex AI and deep learning capabilities to intelligent machines. This update includes the new TensorRT deep learning inference engine, the latest versions of CUDA 8 and cuDNN 5.1, and tighter camera and multimedia integration to easily add complex AI and deep learning abilities to intelligent machines.
+See footnotes below.
+In addition, NVIDIA announced a new partnership with Leopard Imaging Inc., a Jetson Preferred Partner that specializes in the creation of camera solutions. The new camera API included in the JetPack 2.3 release delivers enhanced functionality to ease developer integration.
+Download JetPack 2.3 today.
+Chart footnotes:

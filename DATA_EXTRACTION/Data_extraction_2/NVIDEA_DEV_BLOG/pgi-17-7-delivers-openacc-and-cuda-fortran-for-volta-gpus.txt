@@ -1,0 +1,3 @@
+PGI compilers & tools are used by scientists and engineers who develop applications for high-performance computing (HPC) systems. They deliver world-class multicore CPU performance, an easy on-ramp to GPU computing with OpenACC directives, and performance portability across all major HPC platforms. 17.7 is available now for users with current PGI Professional support.
+Performance measured August, 2017 using PGI 17.7 compilers and are considered estimates per SPEC run and reporting rules. SPEC® and SPEC ACCEL® are registered trademarks of the Standard Performance Evaluation Corporation (www.spec.org).
+New Features in PGI 17.7Learn more >

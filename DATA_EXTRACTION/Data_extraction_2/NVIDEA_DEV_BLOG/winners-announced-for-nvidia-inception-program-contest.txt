@@ -1,0 +1,14 @@
+Late last year, the NVIDIA Inception Program hosted a “Cool Demo Contest” for GPU-accelerated startups that are applying deep learning to their innovations.
+A variety of companies from around the world submitted their demos, ranging from defense to healthcare applications. Below are highlights from three of the 14 winners who each won a Pascal TITAN X GPU.
+Eating Smart Just Got Smart
+Now available on Indiegogo, SmartPlate TopView by Fitly is the world’s first Intelligent Nutrition Platform that instantly analyzes everything you eat. Instead of manually logging your food items, SmartPlate’s AI technology is able to analyze, and track everything you eat in seconds. With the help of TITAN X Pascal GPUs and Caffe deep learning framework, the product can successfully detect over 1,000 different types of food.
+
+AI for Medical Image Analysis
+Montreal-based Imagia, founded by serial entrepreneurs, provides AI-based actionable predictive oncology analytics atop medical imaging data to give radiologists an accurate and timely second opinion on cancer detection. The startup is using cuDNN and NVIDIA GPUs for both training their deep learning models and for classifying possible types of cancer.
+
+Real-Time Detection and Alignment of 3D Objects
+
+TLD Vision, located in the Czech Republic, developed a new product codenamed ‘xTLD’ that uses CUDA, TITAN X GPUs and cuDNN to do real-time facial detection and 360° pose estimation in HD video. The company plans to adapt their recognition technology for different objects – and not just faces, such as tracking a shark from a drone for coastline protection, or detection of poles for power-line inspections.
+
+The other demo contest winners were Aetros, Airxsys, Colorful Clouds, CTAAdventure, Iceberg Hockey Analytics, Imagr, Malong, NLP Logix, and Understand.AI.
+Is your startup revolutionizing the retail industry using artificial intelligence and GPUs? If so, submit your application for the Inception Program Retail Contest by February 24, 2017.

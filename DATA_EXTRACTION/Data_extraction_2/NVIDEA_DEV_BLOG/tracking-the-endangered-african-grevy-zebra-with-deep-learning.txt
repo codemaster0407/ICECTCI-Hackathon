@@ -1,0 +1,11 @@
+In January, nearly 120 teams of scientists, schoolchildren and the U.S. ambassador to Kenya took part in the first ever Great Grevy’s Rally — driving over 25,000 square km to census the Grevy’s zebra, one of the most endangered mammals on the planet.
+In the 1970s there were 15,000 Grevy’s zebras and now there is less than 2,500 in the wild. It’s one of the most drastic population declines of any African mammal, driven by climate change, habitat loss, and competition with livestock.
+Using GPS-enabled cameras, 40,000 images were taken over two days in an effort to capture the unique stripes of each Grevy’s zebra. About half of the images captured the right flank of individual zebras.
+The data is currently being analyzed by a multi-disciplinary team of WildMe.org, University of Illinois-Chicago, Princeton, and Rensselaer Polytechnic Institute. TITAN X GPUs, CUDA, and cuDNN are being used to train and run their deep convolutional neural networks to help locate animals in images, to label their species, to determine the viewpoint on the animal, to judge the image quality, and to learn to segment their boundaries.
+ 
+
+This information can make conservation programs smarter.
+“We will be able to tell governments that this type of landscape is where they like to be. Let’s preserve it. This landscape is an important corridor. They move through there, they don’t stay there, but without it they can’t get from A to B,” said Princeton professor Daniel Rubenstein, one of the chief researchers organizing the rally.
+Census estimates will be released on September 3 on the Great Grevy’s Rally website. The data collected will be able to advise governments how to best preserve the zebras.
+The researchers plan to use this same technology to study the traits of other animals, including giraffe spots and elephant ears.
+Read more >>

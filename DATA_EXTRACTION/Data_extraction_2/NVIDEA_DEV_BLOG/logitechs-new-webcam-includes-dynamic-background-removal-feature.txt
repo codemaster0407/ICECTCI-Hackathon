@@ -1,0 +1,7 @@
+Announced at TwitchCon in San Diego, Logitech introduced their newest webcam designed to meet the needs for serious streamers.
+“With the C922 Pro Stream Webcam, we are taking game casting to the next level so you can easily broadcast your gameplay like a pro, better engage with your community, and stand out from the crowd,” said Guillaume Bourelly, portfolio and product manager of webcams at Logitech.
+The most important new feature of the webcam is its deep learning-based dynamic background replacement software that lets users change their scenery while broadcasting live or on Skype and WebEx – instead of needing a costly green screen.
+Powered by Personify’s new ChromoCam technology, the “intelligent shape recognition” software was developed using TITAN X GPUs, CUDA and the cuDNN-accelerated Caffe deep learning framework – which is able to identify the user and automatically cuts the human from the background.
+
+Personify also launched a new GPU-accelerated product called Fusion—the world’s first truly immersive multi-person video calling experience that teleports you and your friends onto your desktop using their dynamic green screen technology. Play video games together, watch a movie, or experience live sports as if you are in the same room together.
+Read more >

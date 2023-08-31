@@ -1,0 +1,6 @@
+Teams worldwide competed in the Amazon Picking Challenge, held at RoboCup 2016 in Leipzig, Germany, to see who’s robot can autonomously recognize objects and pick, and stow, the desired targets from a range of unsorted items.
+Working in collaboration with Delft Robotics, the team from Delft University of Technology in the Netherlands won the competition after being able to detect objects in only 150 milliseconds. The students used a TITAN X GPU and the cuDNN-accelerated Caffe deep learning network to train their model on 20,000 images.
+“After these results, we at Delft Robotics are currently working on implementing the knowledge of GPU computing that we acquired during the challenge and deploying these algorithms in industrial systems,” said Hans Gaiser, computer vision programmer at Delft Robotics.
+
+The team from Japan’s Preferred Networks finished second in the picking challenge. They deployed Chainer, a deep learning framework built on CUDA and cuDNN, and used 100,000 images rendered in 3D using Blender, also accelerated by GPUs, as well as 1,500 human-annotated photos.
+Read more >>

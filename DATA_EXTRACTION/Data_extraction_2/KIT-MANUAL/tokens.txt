@@ -1,0 +1,161 @@
+Tokens
+Kit supports tokens to make the configuration more flexible. They take the form of ${token}. They are implemented in carb.tokens Carbonite plugin.
+Most of the tokens in settings are resolved when configuration is loaded. Some settings are set later and for those, it is each extension’s responsibility to resolve tokens in them.
+Tokens are most often used to build various filesystem paths. List of commonly used tokens, that are always available:
+
+App Tokens
+
+${app_name} - Application name, e.g.: Create, View, omni.create (/app/name setting, othewise name of kit file)
+${app_filename} - Application kit filename, e.g.: omni.create, omni.app.mini
+${app_version} - Application version, e.g.: 2022.3.0-rc.5 (/app/version setting, otherwise version in kit file)
+${app_version_short} - Application major.minor version, e.g. 2022.3 (version of the app from kit file)
+${kit_version} - Kit version, e.g.: 105.0+master.123.b1255276.tc
+${kit_version_short} - Kit major.minor version, e.g.: 105.0
+${kit_git_hash} - Kit git hash, e.g.: b1255276
+
+When running without an app, e.g. kit.exe --enable [ext], then ${app_name} becomes kit and app version equals to the kit version.
+
+
+Environment Variable Tokens
+Tokens can be used to read environment variables:
+
+${env:VAR_NAME} - Environment variable, e.g.: ${env:USERPROFILE}
+
+
+
+Path Tokens
+There are a few important folders that Kit provides for extensions to read and write to. While may look similar there are conceptual differences between them.
+For each of them, there are a few tokens. They point to app specific and Omniverse wide versions of a folder. They also influenced by running in “portable mode” (developer mode, --portable) or not.
+For some token ${folder} that represents a folder named [FOLDER NAME] it will look like this:
+
+${folder} - Kit app specific version:
+
+portable mode: [PORTABLE ROOT]/[FOLDER NAME]/Kit/${app_name}/${app_version_short}.
+non-portable mode: [SYSTEM PATH]/[FOLDER NAME]/Kit/${app_name}/${app_version_short}.
+
+
+${omni_folder} - Omniverse wide version:
+
+portable mode: [PORTABLE ROOT]/[FOLDER NAME].
+non-portable mode: [SYSTEM PATH]/[FOLDER NAME].
+
+
+${omni_global_folder} - Omniverse wide version, that is not influenced by portable mode:
+
+portable mode: [SYSTEM PATH]/[FOLDER NAME].
+non-portable mode: [SYSTEM PATH]/[FOLDER NAME].
+
+
+
+
+Data Folder
+Data folder is a per user system folder to store persistent data. This system folder is different for every OS user.
+Data folder is where an application can write anything that must reliably persist between sessions. For example, user settings are stored there.
+
+${data} - kit app specific version, e.g.: C:/Users/[user]/AppData/Local/ov/data/Kit/${app_name}/${app_version_short}.
+${omni_data} - Omniverse wide version, e.g.: C:/Users/[user]/AppData/Local/ov/data.
+${omni_global_data} - Omniverse wide version, that is not influenced by portable mode:
+
+
+
+Program data
+Program data folder is a global system folder to store persistent data. This system folder is shared by all OS users.
+Otherwise it can be used the same way as data folder.
+
+{app_program_data} - kit app specific version, e.g.: C:/ProgramData/NVIDIA Corporation/kit/${app_name}.
+{shared_program_data} - Kit wide version, e.g.: C:/ProgramData/NVIDIA Corporation/kit.
+${omni_program_data} - System wide version, e.g.: C:/ProgramData
+
+
+
+Documents folder
+Documents folder is a system folder to store user’s data. Typically it is like a user home directory, where user can store anything. For example, default location when picking where to save a stage.
+
+${app_documents} - kit app specific version, e.g.: C:/Users/[user]/Documents/Kit/apps/${app_name}.
+${shared_documents} - kit wide version, e.g.: C:/Users/[user]/Documents/Kit/shared.
+${omni_documents} - Omniverse wide version, e.g.: C:/Users/[user]/Documents/Kit.
+
+
+
+Cache folder
+Cache folder is a system folder to be used for caching. It can be cleaned up between runs (usually it is not). And application should be able to rebuild the cache if it is missing.
+This one is using Kit version and git hash. So, always shared between apps. You can build app specific version manually using tokens like ${app_name}.
+
+[KIT VERSION SHORT] - Kit major.minor version, like 105.0
+[KIT GIT HASH] - Kit git hash, like a1b2c4d4
+${cache} - kit specific version, e.g.: C:/Users/[user]/AppData/Local/ov/cache/Kit/[KIT VERSION SHORT]/[KIT GIT HASH].
+${omni_cache} - Omniverse wide version, e.g.: C:/Users/[user]/AppData/Local/ov/cache.
+${omni_global_cache} - Omniverse wide version, that is not influenced by portable mode.
+
+
+
+Logs folder
+System folder to store logs.
+
+${logs} - kit app specific version, e.g.: C:/Users/[user]/.nvidia-omniverse/logs/Kit/${app_name}/${app_version_short}
+${omni_logs} - Omniverse wide version, e.g.: C:/Users/[user]/.nvidia-omniverse/logs
+${omni_global_logs} - Omniverse wide version, that is not influenced by portable mode:
+
+
+
+Config folder
+System folder where Omniverse config omniverse.toml is read from:
+
+${omni_config} - Omniverse wide version, e.g.: C:/Users/[user]/.nvidia-omniverse/config
+${omni_global_config} - Omniverse wide version, that is not influenced by portable mode:
+
+
+
+Temporary folder
+Temporary folder is cleaned between runs and provided by OS.
+
+${temp} - e.g.: C:/Users/[user]/AppData/Local/Temp/xplw.0
+
+
+
+Other useful paths
+
+${kit} - path to Kit folder, where the Kit executable is (it is not always the same executable as was used to run currently, because someone could run from python.exe).
+${app} - path to app, if loaded with --merge-config that will be a folder where this config is.
+${python} - path to python interpreter executable.
+
+
+
+Platform tokens
+
+${config} - whether debug or release build is running.
+${platform} - target platform Kit is running on, e.g. windows-x86_64.
+${lib_ext} - .dll on Windows, .so on Linux, .dylib on Mac OS.
+${lib_prefix} - empty on Windows, lib on Linux and Mac OS.
+${bindings_ext} - .pyd on Windows, .so on Linux and Mac OS.
+${exe_ext} - .exe on Windows, empty on Linux and Mac OS.
+${shell_ext} - .bat on Windows, .sh on Linux and Mac OS.
+
+
+
+Extension tokens
+Each extension sets a token with the extension name and extension folder path. See Extension Tokens.
+
+
+
+Overriding Tokens
+Some tokens can be overridden by using /app/tokens setting namespace. E.g.: --/app/tokens/data="C:/data".
+
+
+Checking Token Values
+Kit logs all tokens in INFO log level, search for Tokens:. Either look in a log file or run with -v.
+You can also print all tokens using settings:
+import carb.settings
+settings = carb.settings.get_settings()
+print(settings.get("/app/tokens"))
+
+
+
+
+Resolving your path
+To make your path (or string) support tokens you must resolve it before using it, like this:
+path = carb::tokens::resolveString(carb::getCachedInterface<carb::tokens::ITokens>(), path);
+
+
+import carb.tokens
+path = carb.tokens.get_tokens_interface().resolve(path)

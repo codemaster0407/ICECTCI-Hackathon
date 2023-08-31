@@ -1,0 +1,8 @@
+Taiwanese startup Viscovery recently raised $10M to further develop their Artificial Intelligence system that scans the video content you’re watching and then brings up a relative ad.
+Using CUDA, TITAN X Pascal GPUs and cuDNN to train their deep learning models, their Video Discovery Service is able to detect the content in videos, including face, image, text, audio, motion, objects and scene. The data is then analyzed in order to determine the best context.
+For example, if you’re streaming a movie and the characters walk past a Starbucks, the system will display an ad for the latest Starbuck’s Frappuccino creation.
+“Viscovery’s video data analysis can effectively find the opportunity or the best scene to put advertisements for any kind of commodity or brand,” said Amos Huang, founder and CEO of Viscovery. “Google AdSense has already proved that contextual ads are effective; when the text provides related information at the right place and the right time, the users’ click through rate (CTR) will increase. It also works on video content; after our online test, we found that video contextual ads have in average 32 per cent more CTR than traditional video ads, and it even had an 86 per cent growth on tablet devices.”
+
+“We’ve just started to collaborate with a giant,” says Huang, but he’s keeping tight-lipped on which Chinese site that is.
+Read more >
+ 

@@ -1,0 +1,4 @@
+California-based startup GoFindAI launched their new fashion app that makes shopping for clothes a breeze. Simply snap a photo of something you like, and the app’s AI-powered search engine scours over one million products from 1,000 online retailers looking for the same or similar items.
+Using CUDA and Tesla K80 GPUs on the Amazon and IBM SoftLayer clouds, the startup trained their deep learning models on over 20 million images from 600+ US-based eCommerce stores. Once trained, the app’s intelligence analyzes patterns, structures, styles, colors and other details to recommend the product you’re looking for.
+
+GoFind is currently only available on iTunes, and the Android version will be available soon. The startup who is fundraising for seed rounds has plans of launching a similar mobile app, but for furniture discovery in February 2017.

@@ -1,0 +1,6 @@
+Researchers from Purdue University developed a deep learning-based system to automatically detect cracks in the steel components of nuclear power plants and has been shown to be more accurate than other automated systems.
+“Periodic inspection of the components of nuclear power plants is important to avoid accidents and ensure safe operation,” said Mohammad R. Jahanshahi, an assistant professor in Purdue University’s Lyles School of Civil Engineering and co-author of the paper. “However, current inspection practices are time consuming, tedious and subjective because they involve an operator manually locating cracks in metallic surfaces.”
+Using TITAN X Pascal GPUs and GTX 1070 GPUs with CUDA and cuDNN to train their deep learning models, the system assigns “conﬁdence levels” automatically assessing whether the detected cracks are real, outlining the cracks with color-coded boxes that correspond to these confidence levels.
+
+The automated approach could help improve the state of the nation’s infrastructure, recently given an overall grade of D+ by the American Society of Civil Engineers, he said.
+Read more >

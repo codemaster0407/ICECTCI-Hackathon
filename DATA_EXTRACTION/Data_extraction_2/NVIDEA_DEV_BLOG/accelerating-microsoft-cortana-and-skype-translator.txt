@@ -1,0 +1,7 @@
+Alexey Kamenev, Software Engineer at Microsoft Research talks about their open-source Computational Network Toolkit (CNTK) for deep learning, which describes neural networks as a series of computational steps via a directed graph. Kamenev also shares a bit about how they’re using GPUs, the CUDA Toolkit and GPU-accelerated libraries for the variety of Microsoft products that benefit from deep learning, such as speech recognition for Skype Translator and Cortana.
+“Basically, right now the whole world of deep learning is using GPUs and Microsoft is not an exception,” said Alexey.
+
+Watch Alexey’s presentation about CNTK in the NVIDIA GPU Technology Theater at SC15: Watch Now 
+ 
+Share your GPU-accelerated science with us at http://nvda.ly/Vpjxr
+Watch more scientists and researchers share how accelerated computing is #thepathforward: Watch Now

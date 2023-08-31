@@ -1,0 +1,8 @@
+Stanford researchers developed a deep learning-based algorithm to visually diagnose potential cancer.
+“We realized it was feasible, not just to do something well, but as well as a human dermatologist,” said Sebastian Thrun, an adjunct professor in the Stanford Artificial Intelligence Laboratory. “That’s when our thinking changed. That’s when we said, ‘Look, this is not just a class project for students, this is an opportunity to do something great for humanity.’”
+Using CUDA, TITAN X GPUs and cuDNN for the deep learning work, the researchers collaborated with Stanford Medicine researchers to identify nearly 13,000 images of skin lesions representing over 2,000 different diseases to train their deep convolutional neural network.
+“There’s no huge dataset of skin cancer that we can just train our algorithms on, so we had to make our own,” said Brett Kuprel, co-lead author of the paper and a graduate student in the Thrun lab. “We gathered images from the internet and worked with the medical school to create a nice taxonomy out of data that was very messy – the labels alone were in several languages, including German, Arabic and Latin.”
+Image of the researchers deep convolutional neural network – data flow is from left to right.
+In testing, the AI algorithm matched the performance of 21 different professional dermatologists – assessed through three key diagnostic tasks: keratinocyte carcinoma classification, melanoma classification, and melanoma classification when viewed using dermoscopy.
+The team would like to make the algorithm smartphone compatible in the future, but they admit the system needs to be further tested in clinical settings before that happens.
+Read more >

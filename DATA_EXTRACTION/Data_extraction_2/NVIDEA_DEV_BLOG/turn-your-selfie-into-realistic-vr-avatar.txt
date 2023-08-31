@@ -1,0 +1,7 @@
+California-based startup ObEN uses artificial intelligence to create a personalized and realistic 3D virtual self with just one smartphone image, and transports your virtual self into any AR and VR environment.
+ObEN, who was also chosen as one of 33 companies to participate in HTC’s VIVE X accelerator program, raised nearly $8 million for their software that would historically take expensive hardware, and hours in a professional studio.
+“You can just take a quick selfie and a small sample of your voice and we combine it for you,” obEN CEO and co-founder Nikhil R. Jain explained. “It makes a very personalized avatar which is speaking in your voice and moving like you. Once we have your voiceprint we can actually create new content in your voice, which would be attached to your avatar. And it can be employed into different kinds of scenarios. So you could actually tell this avatar, ‘Read a book to put my kids to sleep.’ ”
+Using CUDA and GPUs on the Amazon cloud to train their deep learning models, their technology is able to capture the tone and intonation of a user’s voice based on just a little voice recording.
+
+ObEN’s first product will launch in the beginning of 2017.
+Read more >
