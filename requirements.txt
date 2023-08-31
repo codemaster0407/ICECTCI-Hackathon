@@ -1,0 +1,12 @@
+bitsandbytes
+git+https://github.com/huggingface/transformers.git@e03a9cc
+git+https://github.com/huggingface/peft.git@42a184f
+git+https://github.com/huggingface/accelerate.git@c9fbb71
+datasets
+loralib
+einops
+torch
+pprint
+pandas
+locale
+rouge
