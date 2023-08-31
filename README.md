@@ -1,5 +1,4 @@
-# ICECTCI-Hackathon
-Creating an LLM.
+
 # ICECTCI-Hackathon
 
 # PROBLEM STATEMENT
