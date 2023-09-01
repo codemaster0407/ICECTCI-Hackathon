@@ -1,9 +1,0 @@
-Steps to follow to run the LLM model:
-
-1. Download all the libraries and dependencies mentioned in the requirements.txt file < pip install -U -r requirements.txt>
-
-2. After downloading all the libraries, run all the cells present in the xxxxx.ipynb file to predict on the testing data
-
-3. You can view all the predictions in the results.csv file.
-
-
