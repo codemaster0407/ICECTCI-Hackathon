@@ -1,0 +1,17 @@
+[
+    {
+        "question": "I'm using NSight Compute GUI (ncu-ui) to profile kernels in a certain app. My app invokes kernel my_kernel_1 thousands of times, then invokes my_kernel_2 thousands of times. I don't want to profile all invocations of all kernels; I just want to profile a single invocation of my_kernel_2 (e.g. the tenth one, or the middle one). I know that, when profiling is paused, I can continue to the next kernel invocation; but - I don't want to press that button a thousand times. Is there a way to continue to the next invocation of a kernel with a specific name? Or alternatively, to provide a list of kernel names which are not to be profiled?",
+        "answers": [
+            [
+                "If you use GUI version, look at Activity &gt; Profile &gt; Filter in connection window."
+            ],
+            [
+                "Completing HyunwooKim' answer: You can arrange for skipping the invocations of the kernel you're not interested in, and some invocations of your kernel of interest - but only before profiling starts; and only in non-interactive profiling mode: Press the Connect button to get the Connection dialog: Choose the \"Common\" tab. Enter an output filename; profiling will be non-interactive, so a file is needed. Switch to the \"Filter\" tab: In the \"Kernel name\" field, enter regex:^my_kernel_2$ - to only match your kernel of interest. Choose the number of invocations you want to skip (of the second kernel - you don't care about the invocations of my_kernel_1, which is not matched. There are multiple options. If you don't want to profile all remaining invocations of your kernel of interest, also choose the number to profile. Press Launch. After profiling is completed and the process has existed, the report will be loaded up."
+            ]
+        ],
+        "votes": [
+            1.0000001,
+            1.0000001
+        ]
+    }
+]

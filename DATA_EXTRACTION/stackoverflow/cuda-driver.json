@@ -1,0 +1,480 @@
+[
+    {
+        "question": "I am trying to use cuMemGetAccess to identify whether a unified memory access is mapped on the gpu or remains on host after running a kernel. However, I keep getting an invalid argument at the call to cuMemGetAccess. What is the correct way to use this function? main.c #include &lt;assert.h&gt; #include &lt;err.h&gt; #include &lt;math.h&gt; #include &lt;stdio.h&gt; #include &lt;stdlib.h&gt; #include &lt;cuda.h&gt; #define CUDA_OK(ans) \\ do { \\ CUresult err = ans; \\ const char *buf; \\ cuGetErrorString(err, &amp;buf); \\ if (err != CUDA_SUCCESS) { \\ printf(\"Cuda assertion failed!\\nerror code = %d, \"\\ \"\\\"%s\\\" at %d\\n\", \\ err, buf, __LINE__); \\ exit(EXIT_FAILURE); \\ } \\ } while (0) #define GRIDDIM 256 #define BLOCKDIM 256 int buflen = 1 &lt;&lt; 20; int main(void) { CUcontext ctx; CUdevice dev; CUmodule mod; CUfunction kernel; CUdeviceptr buf; int i; void *args[2]; float max_error; CUDA_OK(cuInit(0)); CUDA_OK(cuDeviceGet(&amp;dev, 0)); CUDA_OK(cuCtxCreate(&amp;ctx, 0, dev)); CUDA_OK(cuModuleLoad(&amp;mod, \"increment.ptx\")); CUDA_OK(cuModuleGetFunction(&amp;kernel, mod, \"increment\")); CUDA_OK(cuMemAllocManaged(&amp;buf, buflen * sizeof(float), CU_MEM_ATTACH_GLOBAL)); for (i = 0; i &lt; buflen; ++i) ((float *)buf)[i] = 0.f; args[0] = &amp;buflen; args[1] = &amp;buf; CUDA_OK(cuLaunchKernel( kernel, GRIDDIM, 1, 1, BLOCKDIM, 1, 1, 0, NULL, args, NULL)); CUDA_OK(cuCtxSynchronize()); CUmemLocation loc = { .type=CU_MEM_LOCATION_TYPE_DEVICE, .id=dev }; unsigned long long flags; CUDA_OK(cuMemGetAccess(&amp;flags, &amp;loc, (CUdeviceptr) buf)); printf(\"flags: %llx\\n\", flags); max_error = 0.f; for (i = 0; i &lt; buflen; ++i) max_error = fmax(max_error, fabs(((float *)buf)[i] - 1.f)); printf(\"Maximum error: %f\", max_error); CUDA_OK(cuMemFree(buf)); return EXIT_SUCCESS; } increment.cu: extern \"C\" __global__ void increment(int n, float *x) { int i; for ( i = blockIdx.x * blockDim.x + threadIdx.x; i &lt; n; i += blockDim.x * gridDim.x) ++x[i]; }",
+        "answers": [],
+        "votes": []
+    },
+    {
+        "question": "I am searching for information about cuGetExportTable or cudaGetExportTable. In particular, I want to know what functions are included in the table. A previous post (cudaGetExportTable a total hack) mentions that I concluded that the export table is a list of function pointers into internal driver functions If this post is correct, there are functions that are not included in the CUDA driver API. So there is a way to perform allocations, frees, memcpy to the GPU without using cuMemAlloc etc? Or the functions included in the export table are some kind of GPU management functions?",
+        "answers": [],
+        "votes": []
+    },
+    {
+        "question": "The CUDA documentation for scheduling the launching a host function (cuLaunchHostFunc) says: Completion of the function does not cause a stream to become active except as described above. I couldn't quite figure out what's \"described above\". As far as I understand how streams work - the next consecutive piece of work scheduled on the stream after the host function should begin right after the host function execution concludes, i.e. the stream should \"become active\". Am I missing something? Perhaps I'm misunderstanding what being \"active\" means?",
+        "answers": [],
+        "votes": []
+    },
+    {
+        "question": "If you have a pair of devices for which cuDeviceCanAccessPeer() is true, and you try If you try to disable peer access cuCtxDisablePeerAccess() - you may get a failure, CUDA_ERROR_PEER_ACCESS_NOT_ENABLED. So, there's ability to access, and there's enablement of access. How does one check the state of enablement of access? That is, without disabling access?",
+        "answers": [],
+        "votes": []
+    },
+    {
+        "question": "The CUDA driver API call CUresult CUDAAPI cuMemGetAccess( unsigned long long * flags, const CUmemLocation * location, CUdeviceptr ptr); takes a pointer to a builtin C(++) language type rather than any type definition. Yet - it's pretty obvious what this type definition should be: It is CUmemAccess_flags: typedef enum CUmemAccess_flags_enum { CU_MEM_ACCESS_FLAGS_PROT_NONE = 0x0, /**&lt; Default, make the address range not accessible */ CU_MEM_ACCESS_FLAGS_PROT_READ = 0x1, /**&lt; Make the address range read accessible */ CU_MEM_ACCESS_FLAGS_PROT_READWRITE = 0x3, /**&lt; Make the address range read-write accessible */ CU_MEM_ACCESS_FLAGS_PROT_MAX = 0x7FFFFFFF } CUmemAccess_flags; right? So, why doesn't it take that enum? Are the semantics different somehow?",
+        "answers": [],
+        "votes": []
+    },
+    {
+        "question": "Typical CUDA memory allocations - e.g. using cuMemAlloc() are specific to the current CUDA (driver) context. Is this also true for memory pools? Perhaps for allocations from pools? The driver API for memory pools explicitly mentions devices, but not (AFAICT) contexts, which makes me wonder.",
+        "answers": [],
+        "votes": []
+    },
+    {
+        "question": "One of the attributes of CUDA memory pools is CU_MEMPOOL_ATTR_REUSE_ALLOW_OPPORTUNISTIC, described in the doxygen as follows: Allow reuse of already completed frees when there is no dependency between the free and allocation. If a free (a cuFreeAsync() I presume) depends on an allocation - how can that free be completed when the allocation needs to happen? Or - am I misunderstanding what this attribute allows?",
+        "answers": [
+            [
+                "This flag is explained in the CUDA programming guide. 11.9.2. cudaMemPoolReuseAllowOpportunistic According to the cudaMemPoolReuseAllowOpportunistic policy, the allocator examines freed allocations to see if the free\u2019s stream order semantic has been met (such as the stream has passed the point of execution indicated by the free). When this is disabled, the allocator will still reuse memory made available when a stream is synchronized with the CPU. Disabling this policy does not stop the cudaMemPoolReuseFollowEventDependencies from applying. cudaMallocAsync(&amp;ptr, size, originalStream); kernel&lt;&lt;&lt;..., originalStream&gt;&gt;&gt;(ptr, ...); cudaFreeAsync(ptr, originalStream); // after some time, the kernel finishes running wait(10); // When cudaMemPoolReuseAllowOpportunistic is enabled this allocation request // can be fulfilled with the prior allocation based on the progress of originalStream. cudaMallocAsync(&amp;ptr2, size, otherStream);"
+            ]
+        ],
+        "votes": [
+            2.0000001
+        ]
+    },
+    {
+        "question": "CUDA 12 indicates that these two functions: CUresult cuModuleGetSurfRef (CUsurfref* pSurfRef, CUmodule hmod, const char* name); CUresult cuModuleGetTexRef (CUtexref* pTexRef, CUmodule hmod, const char* name); which obtain a reference to surface or a texture, respectively, from a loaded module - are deprecated. What are they deprecated in favor of? Are surfaces and textures in modules to be accessed differently? Will they be entirely out of modules? If it's the latter, how would one work with them using the CUDA driver API?",
+        "answers": [
+            [
+                "So, based on @talonmies' comment, it seems the \"replacement\" are \"texture objects\" and \"surface objects\". The main difference - as far as is evident in the API - is that the new \"objects\" have less API calls, which take richer descriptors. Thus, the user sets fields themselves, and does not need the large number of cuTexRefGetXXXX and cuTexRefSetXXXX calls. There are also \"tensor map objects\", appearing with Compute Capability 9.0 and later."
+            ]
+        ],
+        "votes": [
+            1.0000001
+        ]
+    },
+    {
+        "question": "Consider the CUDA API function CUresult cuMemcpy3DAsync (const CUDA_MEMCPY3D* pCopy, CUstream hStream); described here. It takes a CUDA_MEMCPY3D structure by pointer ; and this pointer is not to some CUDA-driver-created entity - it's to a structure the user has created. My question: Do we need to keep the pointed-to structure alive past the call to this function returning? e.g. until after we've sycnrhonized the stream we've enqueued the copy on? Or - can we just discard it immediately? I'm guessing it should be the former, but the documentation doesn't really say.",
+        "answers": [],
+        "votes": []
+    },
+    {
+        "question": "I'm trying to decode h.265 frame with nvidia_video_codec_sdk, video size is 192x168, but cuvidCreateDecoder asserts CUDA_ERROR_INVALID_VALUE. int NvDecoder::HandleVideoSequence(CUVIDEOFORMAT* pVideoFormat) { int nDecodeSurface = pVideoFormat-&gt;min_num_decode_surfaces; // eCodec has been set in the constructor (for parser). Here it's set again // for potential correction m_eCodec = pVideoFormat-&gt;codec; m_eChromaFormat = pVideoFormat-&gt;chroma_format; m_nBitDepthMinus8 = pVideoFormat-&gt;bit_depth_luma_minus8; m_nBPP = m_nBitDepthMinus8 &gt; 0 ? 2 : 1; m_eOutputFormat = cudaVideoSurfaceFormat_NV12; m_videoFormat = *pVideoFormat; CUVIDDECODECREATEINFO videoDecodeCreateInfo = {0}; videoDecodeCreateInfo.CodecType = pVideoFormat-&gt;codec; videoDecodeCreateInfo.ChromaFormat = pVideoFormat-&gt;chroma_format; videoDecodeCreateInfo.OutputFormat = m_eOutputFormat; videoDecodeCreateInfo.bitDepthMinus8 = pVideoFormat-&gt;bit_depth_luma_minus8; if (pVideoFormat-&gt;progressive_sequence) videoDecodeCreateInfo.DeinterlaceMode = cudaVideoDeinterlaceMode_Weave; else videoDecodeCreateInfo.DeinterlaceMode = cudaVideoDeinterlaceMode_Adaptive; videoDecodeCreateInfo.ulNumOutputSurfaces = 2; // With PreferCUVID, JPEG is still decoded by CUDA while video is decoded by // NVDEC hardware videoDecodeCreateInfo.ulCreationFlags = cudaVideoCreate_PreferCUVID; videoDecodeCreateInfo.ulNumDecodeSurfaces = nDecodeSurface; videoDecodeCreateInfo.vidLock = m_ctxLock; videoDecodeCreateInfo.ulWidth = pVideoFormat-&gt;coded_width; videoDecodeCreateInfo.ulHeight = pVideoFormat-&gt;coded_height; if (m_nMaxWidth &lt; (int)pVideoFormat-&gt;coded_width) m_nMaxWidth = pVideoFormat-&gt;coded_width; if (m_nMaxHeight &lt; (int)pVideoFormat-&gt;coded_height) m_nMaxHeight = pVideoFormat-&gt;coded_height; videoDecodeCreateInfo.ulMaxWidth = m_nMaxWidth; videoDecodeCreateInfo.ulMaxHeight = m_nMaxHeight; videoDecodeCreateInfo.ulTargetWidth = m_nWidth; videoDecodeCreateInfo.ulTargetHeight = m_nLumaHeight; m_nChromaHeight = (int)(ceil(m_nLumaHeight * GetChromaHeightFactor(m_eOutputFormat))); m_nNumChromaPlanes = GetChromaPlaneCount(m_eOutputFormat); m_nSurfaceHeight = videoDecodeCreateInfo.ulTargetHeight; m_nSurfaceWidth = videoDecodeCreateInfo.ulTargetWidth; m_displayRect.b = videoDecodeCreateInfo.display_area.bottom; m_displayRect.t = videoDecodeCreateInfo.display_area.top; m_displayRect.l = videoDecodeCreateInfo.display_area.left; m_displayRect.r = videoDecodeCreateInfo.display_area.right; videoDecodeCreateInfo.ulIntraDecodeOnly = 1; CUDA_DRVAPI_CALL(cuCtxPushCurrent(m_cuContext)); NVDEC_API_CALL(cuvidCreateDecoder(&amp;m_hDecoder, &amp;videoDecodeCreateInfo)); // asserts fail, return 1 CUDA_DRVAPI_CALL(cuCtxPopCurrent(NULL)); return nDecodeSurface; } My environment NVIDIA GeForce RTX 3060 NVIDIA-SMI 470.141.03 Driver Version: 470.141.03 CUDA Version: 11.4 nvidia_video_codec_sdk 11.1.5",
+        "answers": [
+            [
+                "I have found the reason. Nvidia video codec sdk requires minimum 144x144 resolution. Use cuvidGetDecoderCaps to get the device decode capabilities, as below:"
+            ]
+        ],
+        "votes": [
+            1.0000001
+        ]
+    },
+    {
+        "question": "The CUDA graph API exposes a function call for adding a \"batch memory operations\" node to a graph: CUresult cuGraphAddBatchMemOpNode ( CUgraphNode* phGraphNode, CUgraph hGraph, const CUgraphNode* dependencies, size_t numDependencies, const CUDA_BATCH_MEM_OP_NODE_PARAMS* nodeParams ); but the documentation for this API call does not explain what the flags field of ... is used for, and what one should set the flags to. So what value should I be passing?",
+        "answers": [
+            [
+                "A related API function is cuStreamBatchMemOp CUresult cuStreamBatchMemOp ( CUstream stream, unsigned int count, CUstreamBatchMemOpParams* paramArray, unsigned int flags ); it essentially takes the fields of CUDA_BATCH_MEM_OP_NODE_PARAMS as its separate parameters. Its documentation says that flags is \"reserved for future expansion; must be 0\"."
+            ]
+        ],
+        "votes": [
+            1.0000001
+        ]
+    },
+    {
+        "question": "CUDA 12 introduces two new API calls, cuStreamGetId() and cuCtxGetId() which return \"unique ID\"s associated with a stream or a context respectively. I'm struggling to understand why this is useful, or how this would be used. Are the handles for streams and contexts not unique? i.e. does CUDA create copies of CUstream_st and CUctx_st structures with the same values, or which describe the same entities? If it does - under what circumstances?",
+        "answers": [],
+        "votes": []
+    },
+    {
+        "question": "cuDeviceGetGraphMemAttribute() takes a void pointer to a result variable. But - what type does it expect the pointed-to value to be? The documentation (for CUDA v12.0) doesn't say. I'm guessing it's an unsigned 64-bit type, but I want to make sure.",
+        "answers": [
+            [
+                "For all current attributes you can get with this function, the void * must point to a cuuint64_t. Thanks goes to @AbatorAbeter for pointing out where this is stated."
+            ]
+        ],
+        "votes": [
+            1.0000001
+        ]
+    },
+    {
+        "question": "Consider the CUDA graphs API function cuFindNodeInClone(). The documentation says, that it: Returns: CUDA_SUCCESS, CUDA_ERROR_INVALID_VALUE This seems problematic to me. How can I tell whether the search failed (e.g. because there is no copy of the passed node in the graph), or whether the node or graph are simply invalid (e.g. nullptr)? Does the second error value signify both? Can I get a third error value which is just not mentioned?",
+        "answers": [
+            [
+                "When using the runtime API, the returned node is nullptr if the original node does not exist in the cloned graph. For nullptr original node or nullptr cloned graph, the output node is left unmodified. #include &lt;iostream&gt; #include &lt;cassert&gt; int main(){ cudaError_t status; cudaGraph_t graph; status = cudaGraphCreate(&amp;graph, 0); assert(status == cudaSuccess); cudaGraphNode_t originalNode; status = cudaGraphAddEmptyNode(&amp;originalNode, graph, nullptr, 0); assert(status == cudaSuccess); cudaGraph_t graphclone; status = cudaGraphClone(&amp;graphclone, graph); assert(status == cudaSuccess); cudaGraphNode_t anotherNode; status = cudaGraphAddEmptyNode(&amp;anotherNode, graph, nullptr, 0); assert(status == cudaSuccess); cudaGraphNode_t nodeInClone = (cudaGraphNode_t)7; status = cudaGraphNodeFindInClone(&amp;nodeInClone, originalNode, graphclone); std::cout &lt;&lt; cudaGetErrorString(status) &lt;&lt; \" \" &lt;&lt; (void*)nodeInClone &lt;&lt; \"\\n\"; nodeInClone = (cudaGraphNode_t)7; status = cudaGraphNodeFindInClone(&amp;nodeInClone, nullptr, graphclone); std::cout &lt;&lt; cudaGetErrorString(status) &lt;&lt; \" \" &lt;&lt; (void*)nodeInClone &lt;&lt; \"\\n\"; nodeInClone = (cudaGraphNode_t)7; status = cudaGraphNodeFindInClone(&amp;nodeInClone, originalNode, nullptr); std::cout &lt;&lt; cudaGetErrorString(status) &lt;&lt; \" \" &lt;&lt; (void*)nodeInClone &lt;&lt; \"\\n\"; nodeInClone = (cudaGraphNode_t)7; status = cudaGraphNodeFindInClone(&amp;nodeInClone, anotherNode, graphclone); std::cout &lt;&lt; cudaGetErrorString(status) &lt;&lt; \" \" &lt;&lt; (void*)nodeInClone &lt;&lt; \"\\n\"; } On my machine with CUDA 11.8, this prints no error 0x555e3cf287c0 invalid argument 0x7 invalid argument 0x7 invalid argument 0"
+            ]
+        ],
+        "votes": [
+            2.0000001
+        ]
+    },
+    {
+        "question": "Suppose I have a GPU and driver version supporting unified addressing; two GPUs, G0 and G1; a buffer allocated in G1 device memory; and that the current context C0 is a context for G0. Under these circumstances, is it legitimate to cuMemcpy() from my buffer to host memory, despite it having been allocated in a different context for a different device? So far, I've been working under the assumption that the answer is \"yes\". But I've recently experienced some behavior which seems to contradict this assumption.",
+        "answers": [
+            [
+                "Calling cuMemcpy from another context is legal, regardless of which device the context was created on. Depending on which case you are in, I recommend the following: If this is a multi-threaded application, double-check your program and make sure you are not releasing your device memory before the copy is completed If you are using the cuMallocAsync/cuFreeAsync API to allocate and/or release memory, please make sure that operations are correctly stream-ordered Run compute-sanitizer on your program If you keep experiencing issues after these steps, you can file a bug with NVIDIA here."
+            ]
+        ],
+        "votes": [
+            1.0000001
+        ]
+    },
+    {
+        "question": "Suppose that, for a device without an activated primary context, I: Call cuDevicePrimaryCtxRetain() and get a CUcontext value. Call cuDevicePrimaryCtxRelease(); the context gets deactivated. Call cuDevicePrimaryCtxRetain() and get another CUcontext value. In my (limited and anecdotal) experience, I get the same handle from both calls. Are we guaranteed this behavior? That is, will all subsequent calls to cuDevicePrimaryCtxRetain() (in the same process) always use the same handle, even though the primary context may have been disactivated and other work done?",
+        "answers": [],
+        "votes": []
+    },
+    {
+        "question": "From the CUDA driver API documentation: enum CUmemAllocationHandleType Flags for specifying particular handle types Values CU_MEM_HANDLE_TYPE_NONE = 0x0 Does not allow any export mechanism. CU_MEM_HANDLE_TYPE_POSIX_FILE_DESCRIPTOR = 0x1 Allows a file descriptor to be used for exporting. Permitted only on POSIX systems. (int) CU_MEM_HANDLE_TYPE_WIN32 = 0x2 Allows a Win32 NT handle to be used for exporting. (HANDLE) CU_MEM_HANDLE_TYPE_WIN32_KMT = 0x4 Allows a Win32 KMT handle to be used for exporting. (D3DKMT_HANDLE) CU_MEM_HANDLE_TYPE_MAX = 0x7FFFFFFF What is the HANDLE type? i.e. what is its definition? And - can I define it manually, or must I include some Windows header for it?",
+        "answers": [
+            [
+                "Well, an answer to this question: What is a Windows Handle? suggests that: typedef void* HANDLE; may be a valid thing to do. I'm not sure that's the case, but will give it a try."
+            ],
+            [
+                "HANDLE is defined in winnt.h. It's a pretty sizable file though, ~22000 lines. Minimal but hardly innocuous. You can reduce the API surface somewhat with #defines: #define WINAPI_FAMILY WINAPI_FAMILY_SERVER A precompiled header is your friend, if the compiler allows."
+            ]
+        ],
+        "votes": [
+            1e-07,
+            1e-07
+        ]
+    },
+    {
+        "question": "NVIDIA has recently announced they are open-sourcing (a variant of) their GPU Linux kernel driver. They are not, however, open-sourcing the user-mode driver libraries (e.g. libcuda.so). It's a gradual process and not all GPUs are supported initially, but regardless of these details: Is there some way that developers of user-space code can leverage this open-sourcing? Or is it only interesting/useful for kernel developers? What I would personally love to be able to do is avoid having to make libcuda calls to get the current context. If that piece of information were somehow readable now from userspace, that could be neat. Of course that's just wishful thinking on my part - I don't know how to check what the driver directly \"exposes\" - if anything.",
+        "answers": [],
+        "votes": []
+    },
+    {
+        "question": "(Following Is NVIDIA's JIT compilation cache used when you don't use NVCC?) NVIDIA's JIT compilation cache (which we find in ~/.nv/CompilationCache on Linux systems) has a somewhat opaque structure, with a non-textual index. I would like to be able to interact with, or manipulate, this cache: Parse the index. Determine if my program/kernel/PTX/etc is cached. Read the cached data (e.g. as a cubin or some other way) Add a new entry to the cache. Is that possible (without reverse-engineering)?",
+        "answers": [],
+        "votes": []
+    },
+    {
+        "question": "As we should all know (but not enough people do), when you build a CUDA program with NVCC, and run it on a device for which fully-compiled (SASS) code for the specific device is not included in the binary - the intermediate PTX code is JITed, and the result is actually used for running your kernels. During this JITing, a JIT compilation cache kicks in, so that, next time you run the same executable, the compilation can be skipped in favor of just loading the result. Now, suppose I'm writing C++ file which compiles a kernel dynamically, at run-time, rather than using NVCC, e.g.: I use NVRTC's nvrtcCompileProgram() to compile CUDA C++ code, targeting a concrete architecture (e.g. sm_70). I use the CUDA driver's cuModuleLoad() to load a PTX file with the kernel. will the compilation result be placed in that cache?",
+        "answers": [
+            [
+                "The caching behaviour you are describing has nothing to do with either nvcc or nvrtc. The caching of runtime JIT compiled code is a driver level mechanism which is provided primarily for implementing compatibility of newer hardware with older code. There are exactly three cases to consider when running CUDA code using either the runtime or driver API to run a kernel: The application provides compatible SASS to the driver (be that a statically linked payload in a runtime API application, or SASS loaded from a file, or SASS emitted by using nvrtc with a physical architecture as a target). In this case the SASS is loaded and executed. No caching is involved. The application provides valid PTX code (be that from a fatbinary payload in the case where there is no compatible SASS present, or loaded via the driver API, whatever the source of that payload is, which includes nvrtc in the case where a virtual architecture is used as a target). In this case the driver triggers JIT compilation of the PTX and loads the results SASS to execute. This is where caching occurs. The driver will check the user specific private cache of the JIT output, if it exists and if it finds a match to PTX it has previously compiled, it retrieves the SASS from the cache and uses it rather than compile the same PTX again. This mechanism can be defeated by setting CUDA_CACHE_DISABLE to 1. A fuller discussion of this mechanism and its controls can be found here. If the PTX is invalid, an invalid (or incompatible) PTX error message will be returned to the caller and execution fails The application provides neither compatible SASS, nor PTX. In this case a no binary for GPU (or its runtime API equivalent) error will be returned to the caller and execution fails. The driver PTX cache plays no role in this case. So to your two scenarios: I use NVRTC's nvrtcCompileProgram() to compile CUDA C++ code, targeting a concrete architecture (e.g. sm_70). In this scenario, you fall into the first or third cases above. The binary payload will be loaded and executed if valid, or fail with an error if invalid. No caching occurs. I use the CUDA driver's cuModuleLoad() to load a PTX file with the kernel. In this scenario case 2 applies. The driver does a cache check and either reuses a previous JIT pass output from the cache, or attempts to perform a JIT compile and cache the results if a cache miss occurs. If the PTX is valid and compatible, the kernel runs."
+            ],
+            [
+                "From my empirical observations, the answer seems to be: Compilation with JIT cache used? NVRTC targeting concrete architecture No NVRTC targeting \"virtual\" architecture ??? Loading a module with the CUDA driver Yes But I've not explored this extensively; perhaps there's a more official guarantee."
+            ]
+        ],
+        "votes": [
+            2.0000001,
+            1e-07
+        ]
+    },
+    {
+        "question": "Suppose I have a cubin file, or perhaps to make it easier, a cubin file I loaded into memory (so that I have a void* to the data). Using the CUDA Driver API for modules, I can try loading the data into a module within the current context; and this would fail if compiled code is not available for a relevant target (and there's no PTX which could be JITed instead). But - what I actually want to do is check which targets have code in the module data (or module file)? Non-programmatically, I know I can invoke: cuobjdump my.fatbin and get a listing of what's in there. But I want to do it from within my application's code. Is this possible?",
+        "answers": [
+            [
+                "You could call cuobjdump from within your program and parse its output. #include &lt;cstdlib&gt; #include &lt;string&gt; __global__ void kernel(){ } int main(int argc, char** argv){ std::string command{}; command += \"cuobjdump \"; command += argv[0]; command += \" &gt; out.txt\"; int sysret = system(command.c_str()); kernel&lt;&lt;&lt;1,1&gt;&gt;&gt;(); cudaDeviceSynchronize(); return sysret; }"
+            ],
+            [
+                "You may be able do this using an ELF parser. It seems that cubin files are actually slightly-non-standard ELF files. Specifically, they have an .nv_fatbin ELF section, containing regions with compiled code for different targets; see this analysis. If you used an ELF library, and made it accept some invalid/different magic numbers / version numbers, it would probably parse the cubin file in a way you could then easily extract your meta-data of interest from, including the target architecture for each region. See also how a cubin file is generated, using an ELF library, here (but note that's Python code with a lot of magic numbers and somewhat difficult to follow). Now it's just the \"simple matter of coding\", adapting an ELF parser to collect and expose what you need. The remaining question is whether all of the relevant information is in the ELF meta-data or whether you also need to do further parsing of the contents."
+            ]
+        ],
+        "votes": [
+            1.0000001,
+            1e-07
+        ]
+    },
+    {
+        "question": "Suppose I call cuEventRecord(0, my_event_handle). cuEventRecord() requires the stream and the event to belong to the same context. Now, one can interpret the 0 as \"the default stream in the appropriate context\" - the requirements are satisfied and this should work; but one can also interpret it as \"the default stream in the current context\" - in which case if the current context is not the event's context - this should fail. Or it may all just be undefined/inconsistent behavior. My question: Is cuEventRecord() guaranteed to prefer one interpretation over the other?",
+        "answers": [
+            [
+                "My personal tinkering suggests that the CUDA driver expects the current context to be the event and the stream's context. Perhaps it even expects that for any stream, not just the default one. Try this program: #include &lt;cuda/api.hpp&gt; #include &lt;iostream&gt; #include &lt;stdexcept&gt; int main() { cuda::initialize_driver(); auto pc_0 = cuda::device::primary_context::detail_::obtain_and_increase_refcount(0); auto pc_1 = cuda::device::primary_context::detail_::obtain_and_increase_refcount(1); cuda::context::current::detail_::push(pc_1); CUevent eh = cuda::event::detail_::create_raw_in_current_context(0); cuda::context::current::pop(); // At this point, the context stack is empty cuda::context::current::detail_::push(pc_0); CUstream default_stream_handle = nullptr; cuda::event::detail_::enqueue_in_current_context(default_stream_handle, eh); } with this commit of my cuda-api-wrappers library to see for yourself; if you replace pc_0 with pc_1 - it all works."
+            ]
+        ],
+        "votes": [
+            1e-07
+        ]
+    },
+    {
+        "question": "The CUDA Driver API defines CUDA_VERSION (in cuda.h), and the CUDA Runtime API defines CUDART_VERSION (in cuda_runtime_api.h). However - CUDART_VERSION is not defined as CUDA_VERSION but directly as a number. Are they always supposed to have the exact same value, or are there circumstances in which they might differ?",
+        "answers": [
+            [
+                "They will be the same observationally, but not linked. As you already know at runtime, the CUDA version can be different than the CUDART version. Therefore (or, insofar as that answer describes) there is no connection between the two. However, both cuda.h and cuda_runtime_api.h will be installed by a CUDA installer. So with respect to what that installer installs, they will match. The installer installs both a driver and a development environment where the CUDA (driver API) version and CUDA runtime API version match. But later on that can change (if you update the driver, for example.) That is to say, the runtime versions can change depending on subsequent install activity. But the cuda.h installed by the CUDA toolkit installer and the cuda_runtime_api.h installed by the CUDA toolkit installer will remain what they were, as installed by the toolkit installer. cuda_runtime_api.h does not depend on cuda.h. For that reason, one define is not simply a define of the other. You can build CUDA runtime API applications that don't depend on cuda.h (the deviceQuery sample code is an example) and so there is no reason for cuda_runtime_api.h to build a define based on something in cuda.h - that would require you to always include cuda.h whenever you include cuda_runtime_api.h, and the CUDA designers had no intention of that."
+            ]
+        ],
+        "votes": [
+            4.0000001
+        ]
+    },
+    {
+        "question": "I create 2 cuda context \u201cctx1\u201d and \"ctx2\" and set current context to \"ctx1\" and allocate 8 bytes of memory and switch current context to ctx2. Then free Memory alloc in ctx1. Why does this return CUDA_SUCCESS? And when I destroy ctx1 and then free Memory, it will cause CUDA_INVALID_VALUE. In my opinion, each context contain their unique resources and not allowed access by other Context. Can someone explain this behaviour? int main() { using std::cout; CUresult answer; CUdeviceptr dptr = 4; int device_enum = 0; CUcontext ctx1,ctx2; cuInit(0); CUdevice able_dev = 0; CUresult create_ctx1 = cuCtxCreate(&amp;ctx1,CU_CTX_SCHED_AUTO,able_dev); CUresult create_ctx2 = cuCtxCreate(&amp;ctx2,CU_CTX_SCHED_AUTO,able_dev); assert(cuCtxSetCurrent(ctx1) == CUDA_SUCCESS); answer = cuMemAlloc(&amp;dptr,8); cout &lt;&lt; \"maloc result1 = \" &lt;&lt; answer &lt;&lt; '\\n'; assert(cuCtxSetCurrent(ctx2) == CUDA_SUCCESS); cout &lt;&lt; \"free in ctx2 result = \" &lt;&lt; cuMemFree(dptr) &lt;&lt; '\\n'; }",
+        "answers": [
+            [
+                "Why does this return CUDA_SUCCESS? Why should it not return CUDA_SUCCESS? I don't see anywhere in the documentation that says a free operation is only valid if the referenced pointer is associated to the current context. This seems perfectly valid, and your test case seems to confirm it. And when I destroy ctx1 and then free Memory, it will cause CUDA_INVALID_VALUE. That is expected behavior. You allocated dptr in ctx1. When you destroy ctx1, all state associated with that context, including any associated allocations, are destroyed. Attempting to free a pointer that has already been freed via context destruction is invalid. In case you thought, as someone else indicated in the comments, that the context would be \"needed\" for the free operation: It's not documented It's not necessary in a UVA setting. A pointer is introspectable in a UVA setting partly because the UVA setting ensures that relevant address spaces do not overlap."
+            ]
+        ],
+        "votes": [
+            2.0000001
+        ]
+    },
+    {
+        "question": "CUDA's low-level virtual memory management mechanism involves: Physical allocations Virtual address range reservations Mappings between the above Conveniently, if you map a physical allocation to some address range - you can \"free\" the physical allocation and keep using it until it is unmapped. Can we also do this for virtual address range reservations? i.e. will they be kept alive until the mappings are gone? The documentation doesn't say.",
+        "answers": [
+            [
+                "You can't early-free reserved address ranges. Virtual memory address range reservations apparently don't have the reference-counting mechanism which physical allocations have; the driver expects them to be released when they are no longer in use, period. An attempt to free the reservation will fail with CUDA_ERROR_INVALID_VALUE."
+            ]
+        ],
+        "votes": [
+            1e-07
+        ]
+    },
+    {
+        "question": "Consider the following program (written in C syntax): #include &lt;cuda.h&gt; #include &lt;stdio.h&gt; #include &lt;stdlib.h&gt; int main() { CUresult result; unsigned int init_flags = 0; result = cuInit(init_flags); if (result != CUDA_SUCCESS) { exit(EXIT_FAILURE); } CUcontext ctx; unsigned int ctx_create_flags = 0; CUdevice device_id = 0; result = cuCtxCreate(&amp;ctx, ctx_create_flags, device_id); // Note: The created context is also made the current context, // so we are _in_ a context from now on. if (result != CUDA_SUCCESS) { exit(EXIT_FAILURE); } CUdeviceptr requested = 0; CUdeviceptr reserved; size_t size = 0x20000; size_t alignment = 0; // default unsigned long long reserve_flags = 0; // ----------------------------------- // ==&gt;&gt; FAILURE on next statement &lt;&lt;== // ----------------------------------- result = cuMemAddressReserve(&amp;reserved, size, alignment, requested, reserve_flags); if (result != CUDA_SUCCESS) { const char* error_string; cuGetErrorString(result, &amp;error_string); fprintf(stderr, \"cuMemAddressReserve() failed: %s\\n\", error_string); exit(EXIT_FAILURE); } return 0; } This fails when trying to make the reservation: cuMemAddressReserve() failed: invalid argument what's wrong with my arguments? Is it the size? the alignment? Requesting an address of 0? If it's the latter - how can I even know what address to request, when I don't really care?",
+        "answers": [
+            [
+                "If I recall correctly ,the sizes for virtual memory management functions must be a multiple of CUDAs allocation granularity. See cuMemGetAllocationGranularity and this blog post https://developer.nvidia.com/blog/introducing-low-level-gpu-virtual-memory-management/ The following works on my machine. #include &lt;cuda.h&gt; #include &lt;stdio.h&gt; #include &lt;stdlib.h&gt; int main() { CUresult result; unsigned int init_flags = 0; result = cuInit(init_flags); if (result != CUDA_SUCCESS) { exit(EXIT_FAILURE); } CUcontext ctx; unsigned int ctx_create_flags = 0; CUdevice device_id = 0; result = cuCtxCreate(&amp;ctx, ctx_create_flags, device_id); // Note: The created context is also made the current context, // so we are _in_ a context from now on. if (result != CUDA_SUCCESS) { exit(EXIT_FAILURE); } CUdeviceptr requested = 0; CUdeviceptr reserved; size_t size = 0x20000; size_t alignment = 0; // default unsigned long long reserve_flags = 0; size_t granularity; CUmemAllocationProp prop; prop.type = CU_MEM_ALLOCATION_TYPE_PINNED; prop.location.type = CU_MEM_LOCATION_TYPE_DEVICE; prop.location.id = (int)0; prop.win32HandleMetaData = NULL; result = cuMemGetAllocationGranularity (&amp;granularity, &amp;prop, CU_MEM_ALLOC_GRANULARITY_MINIMUM ); if (result != CUDA_SUCCESS) { exit(EXIT_FAILURE); } printf(\"minimum granularity %lu\\n\", granularity); size_t padded_size = ((granularity + size - 1) / granularity) * granularity; result = cuMemAddressReserve(&amp;reserved, padded_size, alignment, requested, reserve_flags); if (result != CUDA_SUCCESS) { const char* error_string; cuGetErrorString(result, &amp;error_string); fprintf(stderr, \"cuMemAddressReserve() failed: %s\\n\", error_string); exit(EXIT_FAILURE); } return 0; }"
+            ],
+            [
+                "tl;dr: Your reserved region size is not a multiple of (some device's) allocation granularity. As @AbatorAbetor suggested, cuMemAddressReserve() implicitly requires the size of the memory region to be a multiple of some granularity value. And despite 0x20000 seeming like a generous enough value for that (2^21 bytes ... system memory pages are typically 4 KiB = 2^12 bytes) - NVIDIA GPUs are very demanding here. For example, a Pascal GTX 1050 Ti GPU with ~4GB of memory has a granularity of 0x200000, or 2 MiB - 16 times more than what you were trying to allocate. Now, what would happen if we had two devices with different granularity values? Would we need to use the least-common-multiple? Who knows. Anyway, bottom line: Always check the granularity both before allocating and before reserving. I have filed this as a documentation bug with NVIDIA, bug 3486420 (but you may not be able to follow the link, because NVIDIA hide their bugs from their users)."
+            ]
+        ],
+        "votes": [
+            3.0000001,
+            -2.9999999
+        ]
+    },
+    {
+        "question": "Suppose I want to copy some memory between different CUDA contexts (possibly on different devices). The CUDA Driver API offers me: cuMemcpyPeer - for plain old device global memory cuMemcpy3DPeer - for 3D arrays/textures But there doesn't seem to be a similar API function for 2D arrays. Why? And - what do I do? Should I go through plain global memory buffers in both contexts? PS - Same question for asynchronous copies; we have the plain and 3D cases covered, but no 2D.",
+        "answers": [],
+        "votes": []
+    },
+    {
+        "question": "How do I programmatically get the actual CUDA driver version (e.g. 470.57.02, not 11.4 like the corresponding CUDA version nor 11040)? We know that it's not cudaDriverGetVersion()...",
+        "answers": [
+            [
+                "You can get it as a string using NVML's nvmlSystemGetDriverVersion() function: char version_str[NVML_DEVICE_PART_NUMBER_BUFFER_SIZE+1]; retval = nvmlSystemGetDriverVersion(version_str, NVML_DEVICE_PART_NUMBER_BUFFER_SIZE); if (retval != NVML_SUCCESS) { fprintf(stderr, \"%s\\n\",nvmlErrorString(retval)); return 1; } printf(\"Driver version: %s\\n\", version_str); This will result in something like: Driver version: 470.57.02"
+            ]
+        ],
+        "votes": [
+            3.0000001
+        ]
+    },
+    {
+        "question": "The CUDA Runtime API has the functions cudaGetSymbolAddress() and cudaGetSymbolSize() for working with device-side globals from host-side code, using their names (source-code identifiers) as handles. In the Driver API, we have cuModuleGetGlobal(), which lets us do the same thing... except that it takes a CUmodule which the global symbol is situated in. If you're working with code that you dynamically compiled and loaded/added into a module then you're all set. But what if those globals are part of your program, compiled statically using NVCC rather than loaded dynamically? I would assume that there's some sort of \"primary module\" or \"default module\" for each compiled program, with its baked-in globals and functions. Can I get a handle for it?",
+        "answers": [
+            [
+                "I would assume that there's some sort of \"primary module\" or \"default module\" for each compiled program, with its baked-in globals and functions. There is, and if you pull apart the runtime API emitted host boilerplate code which makes it work and some runtime traces, you will see it relies on a lot of statically defined symbols and a couple of undocumented runtime API functions which internally maintain the module the runtime API uses. Can I get a handle for it? Using the driver API, no. If you need to interact with the runtime API, then use the runtime API."
+            ]
+        ],
+        "votes": [
+            1e-07
+        ]
+    },
+    {
+        "question": "The CUDA Runtime has a notion of a \"current device\", while the CUDA Driver does not. Instead, the driver has a stack of context, where the \"current context\" is at the top of the stack. How do the two interact? That is, how do Driver API calls affect the Runtime API's current device, and how does changing the current device affect the Driver API's context stack or other state? Somewhat-related question: how can I mix cuda driver api with cuda runtime api?",
+        "answers": [
+            [
+                "Runtime current device -&gt; Driver context stack If you set the current device (with cudaSetDevice()), then the primary context of the chosen device is placed at the top of the stack. If the stack had been empty, it's pushed onto the stack. If the stack had been non-empty, it replaces the top of the stack. Driver context stack -&gt; Runtime current device (This part I'm not 100% sure about, so take it with a grain of salt.) The Runtime will report the current device to be the device of the current context - whether it's a primary context or not. If the context stack is empty, the Runtime's current device will be reported as 0. A program to illustrate this behavior: #include &lt;cuda/api.hpp&gt; #include &lt;iostream&gt; void report_current_device() { std::cout &lt;&lt; \"Runtime believes the current device index is: \" &lt;&lt; cuda::device::current::detail_::get_id() &lt;&lt; '\\n'; } int main() { namespace context = cuda::context::detail_; namespace cur_dev = cuda::device::current::detail_; namespace pc = cuda::device::primary_context::detail_; namespace cur_ctx = cuda::context::current::detail_; using std::cout; cuda::device::id_t dev_idx[2]; cuda::context::handle_t pc_handle[2]; cuda::initialize_driver(); dev_idx[0] = cur_dev::get_id(); report_current_device(); dev_idx[1] = (dev_idx[0] == 0) ? 1 : 0; pc_handle[0] = pc::obtain_and_increase_refcount(dev_idx[0]); cout &lt;&lt; \"Obtained primary context handle for device \" &lt;&lt; dev_idx[0]&lt;&lt; '\\n'; pc_handle[1] = pc::obtain_and_increase_refcount(dev_idx[1]); cout &lt;&lt; \"Obtained primary context handle for device \" &lt;&lt; dev_idx[1]&lt;&lt; '\\n'; report_current_device(); cur_ctx::push(pc_handle[1]); cout &lt;&lt; \"Pushed primary context handle for device \" &lt;&lt; dev_idx[1] &lt;&lt; \" onto the stack\\n\"; report_current_device(); auto ctx = context::create_and_push(dev_idx[0]); cout &lt;&lt; \"Created a new context for device \" &lt;&lt; dev_idx[0] &lt;&lt; \" and pushed it onto the stack\\n\"; report_current_device(); cur_ctx::push(ctx); cout &lt;&lt; \"Pushed primary context handle for device \" &lt;&lt; dev_idx[0] &lt;&lt; \" onto the stack\\n\"; report_current_device(); cur_ctx::push(pc_handle[1]); cout &lt;&lt; \"Pushed primary context for device \" &lt;&lt; dev_idx[1] &lt;&lt; \" onto the stack\\n\"; report_current_device(); pc::decrease_refcount(dev_idx[1]); cout &lt;&lt; \"Deactivated/destroyed primary context for device \" &lt;&lt; dev_idx[1] &lt;&lt; '\\n'; report_current_device(); } ... which results in: Runtime believes the current device index is: 0 Obtained primary context handle for device 0 Obtained primary context handle for device 1 Runtime believes the current device index is: 0 Pushed primary context handle for device 1 onto the stack Runtime believes the current device index is: 1 Created a new context for device 0 and pushed it onto the stack Runtime believes the current device index is: 0 Pushed primary context handle for device 0 onto the stack Runtime believes the current device index is: 0 Pushed primary context for device 1 onto the stack Runtime believes the current device index is: 1 Deactivated/destroyed primary context for device 1 Runtime believes the current device index is: 1 The program uses this library of mine."
+            ]
+        ],
+        "votes": [
+            1.0000001
+        ]
+    },
+    {
+        "question": "The cuGetPointerAttribute() is passed a pointer to one of multiple types, filled according to the actual attribute requested. Some of those types are stated explicitly or may be deduced implicitly to deduce, but some - not so much. Specifically... what are the types to which a pointer must be passed for the attributes: CU_POINTER_ATTRIBUTE_BUFFER_ID - probably a numeric ID, but what's its type? CU_POINTER_ATTRIBUTE_ALLOWED_HANDLE_TYPES - a bitmask, supposedly, but how wide? The CUDA driver API doesn't seem to answer these questions. PS - Even for the boolean attributes it's not made clear enough whether you should pass an int* or a bool*.",
+        "answers": [
+            [
+                "According to the documentation, the buffer id is stored as unsigned long long: CU_POINTER_ATTRIBUTE_BUFFER_ID: Returns in *data a buffer ID which is guaranteed to be unique within the process. data must point to an unsigned long long. When I try to pass a char* with CU_POINTER_ATTRIBUTE_ALLOWED_HANDLE_TYPES, valgrind reports an invalid write of size 8. Passing std::size_t* does not cause errors. Similarly, using char* with CU_POINTER_ATTRIBUTE_IS_LEGACY_CUDA_IPC_CAPABLE, reports an invalid write of size 4, which is not the case with int* (using NVCC V11.5.119)"
+            ]
+        ],
+        "votes": [
+            1.0000001
+        ]
+    },
+    {
+        "question": "I'm trying to use the CUDA Driver API to copy data into a 2D array, in the program listed below, but am getting an \"invalid value\" error when I pass my copy parameters. What value in them is wrong? #include &lt;cuda.h&gt; #include &lt;iostream&gt; #include &lt;iomanip&gt; #include &lt;numeric&gt; #include &lt;limits&gt; #include &lt;cstring&gt; [[noreturn]] void die_(const std::string&amp; message) { std::cerr &lt;&lt; message &lt;&lt; \"\\n\"; exit(EXIT_FAILURE); } void die_if_error(CUresult status, const std::string&amp; extra_message) { if (status != CUDA_SUCCESS) { const char* error_string; cuGetErrorString(status, &amp;error_string); die_(extra_message + \": \" + error_string); } } template &lt;typename T = void&gt; T* as_pointer(CUdeviceptr address) noexcept { return reinterpret_cast&lt;T*&gt;(address); } CUdeviceptr as_address(void* ptr) noexcept { return reinterpret_cast&lt;CUdeviceptr&gt;(ptr); } int main() { CUresult status; int device_id = 0; status = cuInit(0); die_if_error(status, \"Initializing the CUDA driver\"); CUcontext pctx; status = cuDevicePrimaryCtxRetain(&amp;pctx, device_id); die_if_error(status, \"Obtaining the primary device context\"); cuCtxSetCurrent(pctx); struct { unsigned width, height; } dims = { 3, 3 }; std::cout &lt;&lt; \"Creating a \" &lt;&lt; dims.width &lt;&lt; \" x \" &lt;&lt; dims.height &lt;&lt; \" CUDA array\" &lt;&lt; std::endl; CUarray arr_handle; { CUDA_ARRAY_DESCRIPTOR array_descriptor; array_descriptor.Width = dims.width; array_descriptor.Height = dims.height; array_descriptor.Format = CU_AD_FORMAT_FLOAT; array_descriptor.NumChannels = 1; status = cuArrayCreate(&amp;arr_handle, &amp;array_descriptor); die_if_error(status, \"Failed creating a 2D CUDA array\"); } auto arr_size = dims.width * dims.height; CUdeviceptr dptr; status = cuMemAllocManaged(&amp;dptr, arr_size, CU_MEM_ATTACH_GLOBAL); die_if_error(status, \"Failed allocating managed memory\"); float* ptr_in = as_pointer&lt;float&gt;(dptr); std::iota(ptr_in, ptr_in + arr_size, 0); CUmemorytype ptr_in_memory_type; status = cuPointerGetAttribute(&amp;ptr_in_memory_type, CU_POINTER_ATTRIBUTE_MEMORY_TYPE, as_address(ptr_in)); if (not (ptr_in_memory_type == CU_MEMORYTYPE_UNIFIED or ptr_in_memory_type == CU_MEMORYTYPE_DEVICE)) { die_(\"Unexpected memory type for ptr_in\"); } std::cout &lt;&lt; \"The memory type of ptr_in is \" &lt;&lt; (ptr_in_memory_type == CU_MEMORYTYPE_DEVICE ? \"DEVICE\" : \"UNIFIED\") &lt;&lt; std::endl; std::cout &lt;&lt; \"Will copy from ptr_in into a 2D CUDA array\" &lt;&lt; std::endl; CUDA_MEMCPY2D cp; { // Source cp.srcXInBytes = 0; cp.srcY = 0; // No offset cp.srcMemoryType = ptr_in_memory_type; cp.srcDevice = as_address(ptr_in); // no extra source pitch cp.srcPitch = dims.width * sizeof(float); // Destination cp.dstXInBytes = 0; cp.dstY = 0; // No destination offset cp.dstMemoryType = CU_MEMORYTYPE_ARRAY; cp.dstArray = arr_handle; cp.WidthInBytes = dims.width * sizeof(float); cp.Height = dims.height; } status = cuMemcpy2D(&amp;cp); die_if_error(status, \"cuMemcpy2D failed\"); cuMemFree(as_address(ptr_in)); } Full output of this program: Creating a 3 x 3 CUDA array The memory type of ptr_in is DEVICE Will copy from ptr_in into a 2D CUDA array cuMemcpy2D failed: invalid argument Additional information: CUDA toolkit version: 11.4 NVIDIA driver version: 470.57.02 OS distribution: Devuan Chimaera GNU/Linux GPU: GeForce 1050 TI Boost (Compute Capability 6.1) Host architecture: amd64",
+        "answers": [
+            [
+                "The error is here: auto arr_size = dims.width * dims.height; CUdeviceptr dptr; status = cuMemAllocManaged(&amp;dptr, arr_size, CU_MEM_ATTACH_GLOBAL); ^^^^^^^^ That should be arr_size*sizeof(float) cuMemAllocManaged(), like malloc() takes a size argument in bytes. This size needs to be consistent with (greater than or equal to) your implied size of transfer in the cuMemcpy2D call."
+            ],
+            [
+                "tl;dr: \"invalid value\" can be a pointer without sufficient allocated memory (@RobertCrovella noticed the error, but I want to emphasize a point:) We are used to APIs not being able to scrutinize pointers too much, accepting them on faith, then possibly failing with invalid access errors (segmentation fault on the host side, invalid memory access on the device side etc.) However, CUDA (in particular, the CUDA driver) scrutinizes pointers more. You already know this to be the case, seeing how it can tell you what memory type a pointer points to. Well, it seems cuMemCpy2D() also checks the amount of memory allocated at ptr_in - and figures out that it's not enough to suffice for filling the area, i.e. it would copy from unallocated memory. That's why it returns the \"invalid value\" error. So the error code is valid, albeit rather vague. Specifically, and as @RobertCrovella points out, you did not allocate enough memory for 3x3 floats - your arr_size is in elements, i.e. 9, while you need to allocate 9 floats, i.e. 36 bytes. You lucked out writing to it, probably because of CUDA's memory allocation quantum, or memory page granularity etc."
+            ]
+        ],
+        "votes": [
+            2.0000001,
+            -0.9999999
+        ]
+    },
+    {
+        "question": "Before device link-time optimization (DLTO) was introduced in CUDA 11.2, it was relatively easy to ensure forward compatibility without worrying too much about differences in performance. You would typically just create a fatbinary containing PTX for the lowest possible arch and SASS for the specific architectures you would normally target. For any future GPU architectures, the JIT compiler would then assemble the PTX into SASS optimized for that specific GPU arch. Now, however, with DLTO, it is less clear to me how to ensure forward compatibility and maintain performance on those future architectures. Let\u2019s say I compile/link an application using nvcc with the following options: Compile -gencode=arch=compute_52,code=[compute_52,lto_52] -gencode=arch=compute_61,code=lto_61 Link -gencode=arch=compute_52,code=[sm_52,sm_61] -dlto This will create a fatbinary containing PTX for cc_52, LTO intermediaries for sm_52 and sm_61, and link-time optimized SASS for sm_52 and sm_61 (or at least this appears to be the case when dumping the resulting fatbin sections using cuobjdump -all anyway). Assuming the above is correct, what happens when the application is run on a later GPU architecture (e.g. sm_70)? Does the JIT compiler just assemble the cc_52 PTX without using link-time optimization (resulting in less optimal code)? Or does it somehow link the LTO intermediaries using link-time optimization? Is there a way to determine/guide what the JIT compiler is doing?",
+        "answers": [
+            [
+                "According to an NVIDIA employee on the CUDA forums the answer is \"not yet\": Good question. We are working on support for JIT LTO, but in 11.2 it is not supported. So in the example you give at JIT time it will JIT each individual PTX to cubin and then do a cubin link. This is the same as we have always done for JIT linking. But we should have more support for JIT LTO in future releases."
+            ]
+        ],
+        "votes": [
+            3.0000001
+        ]
+    },
+    {
+        "question": "I'm trying to build the following program: #include &lt;iostream&gt; #include &lt;cuda.h&gt; int main() { const char* str; auto status = cuInit(0); cuGetErrorString(status, &amp;str); std::cout &lt;&lt; \"status = \" &lt;&lt; str &lt;&lt; std::endl; int device_id = 0; CUcontext primary_context_id; status = cuDevicePrimaryCtxRetain(&amp;primary_context_id, device_id); cuGetErrorString(status, &amp;str); std::cout &lt;&lt; \"status = \" &lt;&lt; str &lt;&lt; std::endl; status = cuDevicePrimaryCtxRelease(device_id); cuGetErrorString(status, &amp;str); std::cout &lt;&lt; \"status = \" &lt;&lt; str &lt;&lt; std::endl; } Compilation always goes fine; but, with CUDA 10.2, linking works, while with CUDA 11.2, I get: /usr/bin/ld: a.o: in function `main': a.cpp:(.text+0xcc): undefined reference to `cuDevicePrimaryCtxRelease_v2' collect2: error: ld returned 1 exit status Why is this happening and how can I fix it? Note: I'm using Devuan Beowulf with driver version 440.82 (have not installed a new driver for CUDA 11.2).",
+        "answers": [
+            [
+                "Well, I think I have an idea of why this happens. This is about how cuDevicePrimaryCtxRelease() is defined. Let's run: grep PrimaryCtxRelease /usr/local/cuda/include/cuda.h | grep -v \"^ \" In CUDA 10.2, we get: CUresult CUDAAPI cuDevicePrimaryCtxRelease(CUdevice dev); while in CUDA 11.2, we get: #define cuDevicePrimaryCtxRelease cuDevicePrimaryCtxRelease_v2 CUresult CUDAAPI cuDevicePrimaryCtxRelease(CUdevice dev); That is, the API name has changed, but the header file leaves an alias to the new name. (And that's a confusing piece of code, I would say.) Now, let's peer into the object files I get in the two different versions of CUDA, using objdump -t | c++filt | grep cu. With CUDA 10.2, it's: 0000000000000000 *UND* 0000000000000000 cuInit 0000000000000000 *UND* 0000000000000000 cuGetErrorString 0000000000000000 *UND* 0000000000000000 cuDevicePrimaryCtxRetain 0000000000000000 *UND* 0000000000000000 cuDevicePrimaryCtxRelease while with CUDA 11.2, it's: 0000000000000000 *UND* 0000000000000000 cuInit 0000000000000000 *UND* 0000000000000000 cuGetErrorString 0000000000000000 *UND* 0000000000000000 cuDevicePrimaryCtxRetain 0000000000000000 *UND* 0000000000000000 cuDevicePrimaryCtxRelease_v2 (note the _v2). so it's probably the case that the installed driver only contains the non-_v2 symbol, hence the undefined symbol. What I would still appreciate help with is how to work around this issue other than by updating the driver."
+            ]
+        ],
+        "votes": [
+            3.0000001
+        ]
+    },
+    {
+        "question": "I'm profiling a kernel compiled (with debug and lineinfo) using the nvrtc library. In the profiling results, many of the samples are listed as being within __nv_nvrtc_builtin_header.h. However - there is obviously no such file on disk, and naturally (?) the NVIDIA Compute source view can't locate it. My questions: What is actually in the __nv_nvrtc_builtin_header.h? Is it possible for me to view the contents of this mysterious header? (If it helps, assume the code I use to perform the compilation can be adapted/added to.)",
+        "answers": [
+            [
+                "What is actually in the __nv_nvrtc_builtin_header.h? All the standard definitions you would otherwise get in the standard CUDA includes and internal toolchain/host compiler headers the toolchain automagically includes during compilation. Just all assembled into one huge file. Is it possible for me to view the contents of this mysterious header? The header is contained within the the nvrtc-builtins library, and you should be able to use the requisite library dump utility on your platform to view it. for example: $ objdump -s libnvrtc-builtins.so [snipped for brevity] Contents of section .rodata: 0007a0 2f2a0a20 2a20436f 70797269 67687420 /*. * Copyright 0007b0 31393933 2d323031 36204e56 49444941 1993-2016 NVIDIA 0007c0 20436f72 706f7261 74696f6e 2e202041 Corporation. A 0007d0 6c6c2072 69676874 73207265 73657276 ll rights reserv 0007e0 65642e0a 202a0a20 2a204e4f 54494345 ed.. *. * NOTICE 0007f0 20544f20 4c494345 4e534545 3a0a202a TO LICENSEE:. * 000800 0a202a20 54686973 20736f75 72636520 . * This source 000810 636f6465 20616e64 2f6f7220 646f6375 code and/or docu 000820 6d656e74 6174696f 6e202822 4c696365 mentation (\"Lice 000830 6e736564 2044656c 69766572 61626c65 nsed Deliverable 000840 73222920 6172650a 202a2073 75626a65 s\") are. * subje 000850 63742074 6f204e56 49444941 20696e74 ct to NVIDIA int 000860 656c6c65 63747561 6c207072 6f706572 ellectual proper 000870 74792072 69676874 7320756e 64657220 ty rights under 000880 552e532e 20616e64 0a202a20 696e7465 U.S. and. * inte 000890 726e6174 696f6e61 6c20436f 70797269 rnational Copyri 0008a0 67687420 6c617773 2e0a202a 0a202a20 ght laws.. *. * 0008b0 54686573 65204c69 63656e73 65642044 These Licensed D 0008c0 656c6976 65726162 6c657320 636f6e74 eliverables cont (probable EULA violations if I show more...)"
+            ],
+            [
+                "Adding to @talonmies answer: If you remove the objdump header lines, you can pass the actual dump lines through xxd -r to get the __nv_nvrtc_builtin_header.h text proper: $ objdump -s --section=.rodata /usr/local/cuda/lib64/libnvrtc-builtins.so | tail --lines=+5 | xxd -r | sed -r '1s/^.*\\//\\//;' | less /* * Copyright 1993-2016 NVIDIA Corporation. All rights reserved. * * NOTICE TO LICENSEE: * * This source code and/or documentation (\"Licensed Deliverables\") are * subject to NVIDIA intellectual property rights under U.S. and * international Copyright laws. * * These Licensed Deliverables contained herein is PROPRIETARY and * CONFIDENTIAL to NVIDIA and is being provided under the terms and (the last sed removes some junk at the beginning of the 6th line - as for CUDA 11.6)"
+            ]
+        ],
+        "votes": [
+            3.0000001,
+            1e-07
+        ]
+    },
+    {
+        "question": "When you perform a wait-on-value operation using the CUDA driver API call cuStreamWaitValue32(), you can specify the flag CU_STREAM_WAIT_VALUE_FLUSH. Here's what the documentation says it does: Follow the wait operation with a flush of outstanding remote writes. This means that, if a remote write operation is guaranteed to have reached the device before the wait can be satisfied, that write is guaranteed to be visible to downstream device work. My question is: What counts as a \"remote write\" in this context? Is it only calls to cuStreamWriteValue32() / cuStreamWriteValue64()? Is it any kind of write involving a different device or the host? Including cudaMemcpy() and friends?",
+        "answers": [
+            [
+                "Remote Writes are writes issued by a third party device targeting the GPU device memory. This is related to GPUDirect RDMA. By extension, that also includes writes by issued by the CPU via GDRCopy mappings."
+            ]
+        ],
+        "votes": [
+            1.0000001
+        ]
+    },
+    {
+        "question": "I'm trying to launch a kernel using the CUDA driver API. Specifically I'm calling CUresult CUDAAPI cuLaunchKernel( CUfunction f, unsigned int gridDimX, unsigned int gridDimY, unsigned int gridDimZ, unsigned int blockDimX, unsigned int blockDimY, unsigned int blockDimZ, unsigned int sharedMemBytes, CUstream hStream, void **kernelParams, void **extra); I'm only using kernelParams, and passing nullptr for extra. Now, for one of my kernels, I get CUDA_ERROR_INVALID_VALUE. The documentation says: The error CUDA_ERROR_INVALID_VALUE will be returned if kernel parameters are specified with both kernelParams and extra (i.e. both kernelParams and extra are non-NULL). well, I'm not doing that, and am still getting CUDA_ERROR_INVALID_VALUE. To be extra-safe, I synch'ed the stream right before launching the kernel - but to no avail. What are the other reasons for getting CUDA_ERROR_INVALID_VALUE when trying to launch?",
+        "answers": [
+            [
+                "Apparently, you can get a CUDA_ERROR_INVALID_VALUE error in multiple cases involving issues with your kernelParams and/or extras arguments: Both kernelParams and extras are null, but the kernel takes parameters. Both kernelParams and extras are non-null (this is what's officially documented) The number of elements in kernelParams before the terminating nullptr value doesn't match the number of kernel parameters. and this is not an exhaustive list. Probably misusing extras can cause this too."
+            ]
+        ],
+        "votes": [
+            1.0000001
+        ]
+    },
+    {
+        "question": "Suppose I have an active CUDA context associated with device i, and I now call cudaSetDevice(i). What happens? : Nothing? Primary context replaces the top of the stack? Primary context is pushed onto the stack? It actually seems to be inconsistent. I've written this program, running on a machine with a single device: #include &lt;cuda.h&gt; #include &lt;cuda_runtime_api.h&gt; #include &lt;cassert&gt; #include &lt;iostream&gt; int main() { CUcontext ctx1, primary; cuInit(0); auto status = cuCtxCreate(&amp;ctx1, 0, 0); assert (status == (CUresult) cudaSuccess); cuCtxPushCurrent(ctx1); status = cudaSetDevice(0); assert (status == cudaSuccess); void* ptr1; void* ptr2; cudaMalloc(&amp;ptr1, 1024); assert (status == cudaSuccess); cuCtxGetCurrent(&amp;primary); assert (status == (CUresult) cudaSuccess); assert(primary != ctx1); status = cuCtxPushCurrent(ctx1); assert (status == (CUresult) cudaSuccess); cudaMalloc(&amp;ptr2, 1024); assert (status == (CUresult) cudaSuccess); cudaSetDevice(0); assert (status == (CUresult) cudaSuccess); int i = 0; while (true) { status = cuCtxPopCurrent(&amp;primary); if (status != (CUresult) cudaSuccess) { break; } std::cout &lt;&lt; \"Next context on stack (\" &lt;&lt; i++ &lt;&lt; \") is \" &lt;&lt; (void*) primary &lt;&lt; '\\n'; } } and I get the following output: context ctx1 is 0x563ec6225e30 primary context is 0x563ec61f5490 Next context on stack (0) is 0x563ec61f5490 Next context on stack (1) is 0x563ec61f5490 Next context on stack(2) is 0x563ec6225e3 This seems like the behavior is sometimes a replacement, and sometimes a push. What's going on?",
+        "answers": [
+            [
+                "TL;DR: Based on the code you have provided, in both instances of your particular usage, it seems that cudaSetDevice() is replacing the context at the top of the stack. Let's modify your code a bit, and then see what we can infer about the effect of each API call in your code on the context stack: $ cat t1759.cu #include &lt;cuda.h&gt; #include &lt;cuda_runtime_api.h&gt; #include &lt;cassert&gt; #include &lt;iostream&gt; void check(int j, CUcontext ctx1, CUcontext ctx2){ CUcontext ctx0; int i = 0; while (true) { auto status = cuCtxPopCurrent(&amp;ctx0); if (status != CUDA_SUCCESS) { break; } if (ctx0 == ctx1) std::cout &lt;&lt; j &lt;&lt; \":Next context on stack (\" &lt;&lt; i++ &lt;&lt; \") is ctx1:\" &lt;&lt; (void*) ctx0 &lt;&lt; '\\n'; else if (ctx0 == ctx2) std::cout &lt;&lt; j &lt;&lt; \":Next context on stack (\" &lt;&lt; i++ &lt;&lt; \") is ctx2:\" &lt;&lt; (void*) ctx0 &lt;&lt; '\\n'; else std::cout &lt;&lt; j &lt;&lt; \":Next context on stack (\" &lt;&lt; i++ &lt;&lt; \") is unknown:\" &lt;&lt; (void*) ctx0 &lt;&lt; '\\n'; } } void runtest(int i) { CUcontext ctx1, primary = NULL; cuInit(0); auto dstatus = cuCtxCreate(&amp;ctx1, 0, 0); // checkpoint 1 assert (dstatus == CUDA_SUCCESS); if (i == 1) {check(i,ctx1,primary); return;}// checkpoint 1 dstatus = cuCtxPushCurrent(ctx1); // checkpoint 2 assert (dstatus == CUDA_SUCCESS); if (i == 2) {check(i,ctx1,primary); return;}// checkpoint 2 auto rstatus = cudaSetDevice(0); // checkpoint 3 assert (rstatus == cudaSuccess); if (i == 3) {check(i,ctx1,primary); return;}// checkpoint 3 void* ptr1; void* ptr2; rstatus = cudaMalloc(&amp;ptr1, 1024); // checkpoint 4 assert (rstatus == cudaSuccess); if (i == 4) {check(i,ctx1,primary); return;}// checkpoint 4 dstatus = cuCtxGetCurrent(&amp;primary); // checkpoint 5 assert (dstatus == CUDA_SUCCESS); assert(primary != ctx1); if (i == 5) {check(i,ctx1,primary); return;}// checkpoint 5 dstatus = cuCtxPushCurrent(ctx1); // checkpoint 6 assert (dstatus == CUDA_SUCCESS); if (i == 6) {check(i,ctx1,primary); return;}// checkpoint 6 rstatus = cudaMalloc(&amp;ptr2, 1024); // checkpoint 7 assert (rstatus == cudaSuccess); if (i == 7) {check(i,ctx1,primary); return;}// checkpoint 7 rstatus = cudaSetDevice(0); // checkpoint 8 assert (rstatus == cudaSuccess); if (i == 8) {check(i,ctx1,primary); return;}// checkpoint 8 return; } int main(){ for (int i = 1; i &lt; 9; i++){ cudaDeviceReset(); runtest(i);} } $ nvcc -o t1759 t1759.cu -lcuda -std=c++11 $ ./t1759 1:Next context on stack (0) is ctx1:0x11087e0 2:Next context on stack (0) is ctx1:0x1741160 2:Next context on stack (1) is ctx1:0x1741160 3:Next context on stack (0) is unknown:0x10dc520 3:Next context on stack (1) is ctx1:0x1c5aa70 4:Next context on stack (0) is unknown:0x10dc520 4:Next context on stack (1) is ctx1:0x23eaa00 5:Next context on stack (0) is ctx2:0x10dc520 5:Next context on stack (1) is ctx1:0x32caf30 6:Next context on stack (0) is ctx1:0x3a44ed0 6:Next context on stack (1) is ctx2:0x10dc520 6:Next context on stack (2) is ctx1:0x3a44ed0 7:Next context on stack (0) is ctx1:0x41cfd90 7:Next context on stack (1) is ctx2:0x10dc520 7:Next context on stack (2) is ctx1:0x41cfd90 8:Next context on stack (0) is ctx2:0x10dc520 8:Next context on stack (1) is ctx2:0x10dc520 8:Next context on stack (2) is ctx1:0x4959c70 $ Based on the above, as we proceed through each API call in your code: 1. auto dstatus = cuCtxCreate(&amp;ctx1, 0, 0); // checkpoint 1 1:Next context on stack (0) is ctx1:0x11087e0 The context creation also pushes the newly created context on the stack, as mentioned here. 2. dstatus = cuCtxPushCurrent(ctx1); // checkpoint 2 2:Next context on stack (0) is ctx1:0x1741160 2:Next context on stack (1) is ctx1:0x1741160 No surprise, pushing the same context on the stack creates another stack entry for it. 3. auto rstatus = cudaSetDevice(0); // checkpoint 3 3:Next context on stack (0) is unknown:0x10dc520 3:Next context on stack (1) is ctx1:0x1c5aa70 The cudaSetDevice() call has replaced the top of the stack with an \"unknown\" context. (Only unknown at this point because we have not retrieved the handle value of the \"other\" context). 4. rstatus = cudaMalloc(&amp;ptr1, 1024); // checkpoint 4 4:Next context on stack (0) is unknown:0x10dc520 4:Next context on stack (1) is ctx1:0x23eaa00 No difference in stack configuration due to this call. 5. dstatus = cuCtxGetCurrent(&amp;primary); // checkpoint 5 5:Next context on stack (0) is ctx2:0x10dc520 5:Next context on stack (1) is ctx1:0x32caf30 No difference in stack configuration due to this call, but we now know that the top of stack context is the current context (and we can surmise it is the primary context). 6. dstatus = cuCtxPushCurrent(ctx1); // checkpoint 6 6:Next context on stack (0) is ctx1:0x3a44ed0 6:Next context on stack (1) is ctx2:0x10dc520 6:Next context on stack (2) is ctx1:0x3a44ed0 No real surprise here. We are pushing ctx1 on the stack, and so the stack has 3 entries, the first one being the driver API created context, and the next two entries being the same as the stack configuration from step 5, just moved down one stack location. 7. rstatus = cudaMalloc(&amp;ptr2, 1024); // checkpoint 7 7:Next context on stack (0) is ctx1:0x41cfd90 7:Next context on stack (1) is ctx2:0x10dc520 7:Next context on stack (2) is ctx1:0x41cfd90 Again, this call has no effect on stack configuration. 8. rstatus = cudaSetDevice(0); // checkpoint 8 8:Next context on stack (0) is ctx2:0x10dc520 8:Next context on stack (1) is ctx2:0x10dc520 8:Next context on stack (2) is ctx1:0x4959c70 Once again, we see that the behavior here is that the cudaSetDevice() call has replaced the top of stack context with the primary context. The conclusion I have from your test code is that I see no inconsistency of behavior of the cudaSetDevice() call when intermixed with various runtime and driver API calls as you have in your code. From my perspective, this sort of programming paradigm is insanity. I can't imagine why you would want to intermix driver API and runtime API code this way."
+            ]
+        ],
+        "votes": [
+            6.0000001
+        ]
+    },
+    {
+        "question": "You can (?) determine whether a CUDA context is the primary one by calling cuDevicePrimaryCtxRetain() and comparing the returned pointer to the context you have. But - what if nobody's created the primary context yet? Is there a cheaper way to obtain the negative answer then? Or - is it impossible for a non-primary context to exist while the primary does not?",
+        "answers": [
+            [
+                "You can check whether the primary context has been created (\"activated\") or not: inline bool primary_context_is_active(int device_id) { unsigned flags; int is_active; CUresult status = cuDevicePrimaryCtxGetState(device_id, &amp;flags, &amp;is_active); if (status != CUDA_SUCCESS) { /* error handling here */ } return is_active; } Now, if the primary context is not active, then you know your context is not the primary one; if it is active, you can use cuDevicePrimaryCtxRetain(), and - unless you're doing something multi-threaded or using coroutines etc. - you know it'll be a cheap call. This of course depends on assuming your context is not an invalid primary context handle after disactivation."
+            ]
+        ],
+        "votes": [
+            1.0000001
+        ]
+    },
+    {
+        "question": "Reading the CUDA Runtime API and Driver API docs, it seems that the two functions: CUresult cuDevicePrimaryCtxReset ( CUdevice dev ); __host__ \u200bcudaError_t cudaDeviceReset ( void ); do the same thing (upto having to cudaSetDevice(dev) before the runtime API call): Destroy all allocations and reset all state on the primary context. for the first and Destroy all allocations and reset all state on the current device in the current process. Do they, indeed, do the same? Or are there perhaps subtle differences that I'm missing or that aren't documented? e.g. something related to threads-vs-processes?",
+        "answers": [
+            [
+                "They're quite different. Examining the program @RobertCrovella linked to, it seems that: cuDevicePrimaryCtxReset() only destroys/resets the primary context, not touching other contexts. cudaDeviceReset() destroys all contexts for the specified device, removing them from the context stack."
+            ]
+        ],
+        "votes": [
+            1.0000001
+        ]
+    },
+    {
+        "question": "I'm launching a CUDA kernel I've compiled, using the cudLaunchKernel() driver API function. I'm passing my parameters in a kernelParams array, and passing nullptr for the extra argument. Unfortunately, this fails, with the error: CUDA_ERROR_INVALID_HANDLE. Why? I checked the Driver API documentation to see how the function might fail in what cases, and edit it discusses the failure with CUDA_ERROR_INVALID_VALUE (not the same thing). It doesn't discuss the error I get. Since there is more than one parameter to cuLaunchKernel() which is some sort of a handle - what does this failure mean? (And if there are multiple options - what are they?)",
+        "answers": [
+            [
+                "One possibility is a failure due to a CUDA driver context switch. You may have inadvertently performed some action which pushes or replaces the current context for the CUDA device; and loaded modules are part of context - so your compiled and loaded kernel can no longer be loaded in the current context. This triggers a CUDA_ERROR_INVALID_HANDLE failure. Assuming this is the case, switch the context before the launch, e.g. this way: cuCtxPushCurrent(my_driver_context); cuLaunchKernel(/*etc. etc. */); /* possibly */ cuCtxPopCurrent(NULL); or like so: cuCtxSetCurrent(my_driver_context); cuLaunchKernel(/*etc. etc. */); Note that you may be risking memory leaks, if you pop and ignore the only reference to a valid context; and you may also risk some other code assuming that the context it has put in place is still the active one."
+            ],
+            [
+                "Well, in my case it was an OOM error (Out of Memory) error which for some reason was not reported as such. When I reduced the batch size of my model it worked. Maybe you should check if this is the case also."
+            ]
+        ],
+        "votes": [
+            2.0000001,
+            -0.9999999
+        ]
+    },
+    {
+        "question": "As a side question to Use Vulkan VkImage as a CUDA cuArray, how could I get more details on what's wrong on a CUDA Driver API call that returns CUDA_ERROR_INVALID_VALUE? Specifically, the call is to cuExternalMemoryGetMappedMipmappedArray() and the documentation does not list CUDA_ERROR_INVALID_VALUE among its return values. Any suggestions on how to go about debugging this issue?",
+        "answers": [
+            [
+                "Specifically, the call is to cuExternalMemoryGetMappedMipmappedArray() and the documentation does not list CUDA_ERROR_INVALID_VALUE among its return values. That appears to be have been a transient documentation error. The current documentation linked in the question (CUDA 11.5 at the time of writing), shows CUDA_ERROR_INVALID_VALUE as an expected return value. As for the debugging part, the function only has two inputs, the memory object handle, and the array descriptor. One of those is invalid. It should be trivial to debug if you know that the function call is returning the error, and not a prior call."
+            ]
+        ],
+        "votes": [
+            1.0000001
+        ]
+    },
+    {
+        "question": "When I run my code with TensorFlow directly, everything is normal. However, when I run it in a screen window, I get the following error. ImportError: libcuda.so.1: cannot open shared object file: No such file or directory I have tried the command: source /etc/profile But it doesn't work. Cause I use ssh to connect to the servers, the screen is necessary. How can I fix it?",
+        "answers": [
+            [
+                "Steps to follow: Find libcuda.so.1: echo $LD_LIBRARY_PATH #path sudo find /usr/ -name 'libcuda.so.*' #version Then add to $LD_LIBRARY_PATH, in my case /usr/local/cuda-10.0/compat, with the following command, in terminal: export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-10.0/compat"
+            ],
+            [
+                "Background libcuda.so.1 is the library for interacting with the CUDA driver (as opposed to CUDA's \"Runtime API\", for which you need libcudart.so.*). Now, it's quite possible to have the CUDA Toolkit properly installed, without the driver being properly installed. And this error could be the result of building a (non-statically-linked) CUDA application in this situation. Alternatively, it could be the case that there's some misconfiguration of the library search path - because normally, libcuda.so.* are supposed to be installed in some directory on that path! So, what's on that search path? As explained here, it is: directories from $LD_LIBRARY_PATH directories from /etc/ld.so.conf /lib /usr/lib A typical scenario would be for /etc/ld.so.conf to add, say, /usr/lib/x86_64-linux-gnu; and for libcuda.so.* to be there. Bottom line Here's what you should do: Make sure a(n up-to-date) CUDA driver has been properly installed. If it hasn't, download and install it, problem solved. Locate the libcuda.so.1 file (e.g. using locate). If it's been placed somewhere weird that's not in the library search path - act as in step 1. If you wanted the driver library installed someplace weird, then add that path to your user's $LD_LIBRARY_PATH."
+            ],
+            [
+                "Try to put libcuda.so.1 path to LD_LIBRARY_PATH environment variable. example: export LD_LIBRARY_PATH=/path/of/libcuda.so.1:$LD_LIBRARY_PATH"
+            ],
+            [
+                "As my condition, I develop in docker container environment, I do the following steps: Confirm your docker container have run with nvidia gpu Find libcuda.so.1: sudo find /usr/ -name 'libcuda.so.*' Then add to $LD_LIBRARY_PATH, in my case /usr/local/cuda-11.5/compat, with the following command, in terminal: export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-11.5/compat"
+            ],
+            [
+                "If you're trying to run the job inside a container, try starting it with nvidia-docker run instead of docker run. Additional instructions can be found here: https://github.com/NVIDIA/nvidia-docker"
+            ]
+        ],
+        "votes": [
+            9.0000001,
+            5.0000001,
+            3.0000001,
+            1e-07,
+            1e-07
+        ]
+    },
+    {
+        "question": "I have a kernel, which might call asm(\"trap;\") inside kernel. But when that happens, the CUDA error code is set to launch fail, and I cannot reset it. In CUDA Runtime API, we can use cudaGetLastError to get the last error and in the mean time, reset it to cudaSuccess. Is there a way to do that with Driver API?",
+        "answers": [
+            [
+                "This type of error cannot be reset with the CUDA Runtime API cudaGetLastError() function. There are two types of CUDA runtime errors: \"sticky\" and \"non-sticky\". \"non-sticky\" errors are those which do not corrupt the context. For example, a cudaMalloc request that is asking for more than the available memory will fail, but it will not corrupt the context. Such an error is \"non-sticky\". Errors that involve unexpected termination of a CUDA kernel (including your trap example, also in-kernel assert() failures, also runtime detected execution errors such as out-of-bounds accesses) are \"sticky\". You cannot clear \"sticky\" errors with cudaGetLastError(). The only method to clear these errors in the runtime API is cudaDeviceReset() (which eliminates all device allocations, and wipes out the context). The corresponding driver API function is cuDevicePrimaryCtxReset() Note that cudaDeviceReset() by itself is insufficient to restore a GPU to proper functional behavior. In order to accomplish that, the \"owning\" process must also terminate. See here."
+            ]
+        ],
+        "votes": [
+            8.0000001
+        ]
+    },
+    {
+        "question": "What are compute capabilities supported by each of: CUDA 5.5? CUDA 6.0? CUDA 6.5?",
+        "answers": [
+            [
+                "CUDA Version Min CC Deprecated CC Default CC Max CC 5.5 (and prior) 1.0 N/A 1.0 ? 6.0 1.0 1.0 1.0 ? 6.5 1.1 1.x 2.0 ? 7.x 2.0 N/A 2.0 ? 8.0 2.0 2.x 2.0 6.2 9.x 3.0 N/A 3.0 7.0 10.x 3.0 N/A * 3.0 7.5 11.x 3.5 \u2020 3.x 5.2 11.0:8.0, 11.1:8.6, 11.8:9.0 12.x 5.0 N/A 5.2 9.0 * Compute Capability 3.0 was deprecated in 10.2. \u2020 CUDA 11.5 still \"supports\" cc3.5 devices; the R495 driver in CUDA 11.5 installer does not. Column descriptions: Min CC = minimum compute capability that can be specified to nvcc (for that toolkit version) Deprecated CC = If you specify this CC, you will get a deprecation message, but compile should still proceed. Default CC = The architecture that will be targetted if no -arch or -gencode switches are used Max CC = The highest compute capability you can specify on the compile command line via arch switches (compute_XY, sm_XY)"
+            ]
+        ],
+        "votes": [
+            47.0000001
+        ]
+    },
+    {
+        "question": "I have a CUarray that I got from my OpenGL-context via cuGraphicsSubResourceGetMappedArray(). Is there a possiblity to use it with cuMemset*()?",
+        "answers": [
+            [
+                "Nope. You can't get a device pointer into a CUDA array (to pass to cuMemset*()), and NVIDIA has never shipped a memset function for CUDA arrays. You have to zero out some host memory and do a memcpy (or memcpy's) into the CUDA array, or (if your app runs only on SM 2.0 or later) roll your own with surface stores."
+            ]
+        ],
+        "votes": [
+            4.0000001
+        ]
+    }
+]
